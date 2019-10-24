@@ -1,0 +1,13 @@
+<div *ngIf="showSplash" class="splash">  
+<!--<div class="texto titulo">Relevamiento Visual</div>-->  
+  <div class="spinner heartBeat"></div>
+  <div class="texto nombre">Mariano Madou</div>
+</div>
+
+<ion-app>
+  <ion-router-outlet></ion-router-outlet>
+</ion-app>
+
+<div class="spinnerInterceptor heartBeat" *ngIf="showSpinner">
+  <img src="../assets/icon/icon.png">
+</div>

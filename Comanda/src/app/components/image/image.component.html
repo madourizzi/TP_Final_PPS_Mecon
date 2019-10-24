@@ -1,0 +1,24 @@
+<ion-slides class="slider" pager [options]="slideOpts" zoom>
+  <ion-slide class="slider-slides" *ngFor="let image of images; let i = index" [attr.data-index]="i">
+    <ion-grid fixed no-padding>
+      <ion-row align-items="center" justify-content="center">
+        <ion-col size="12" class="image--background" [ngStyle]="{'background-image': 'url(' + image.image + ')'}">
+          <div class="mail-box">
+            
+            <ion-text color="light"><h5>{{image.umail}}</h5> <h2><strong>{{this.cantidadDeVotos(i)}}</strong> votos</h2></ion-text>
+          </div>
+          <ion-fab *ngIf="image.uid != this.uid" vertical="center" horizontal="center">
+            <ion-fab-button color="success" (click)="votar(i)">
+              <ion-icon size="large" [name]="this.verificarVotacion(i) ? 'thumbs-down' :'thumbs-up'"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+          <ion-fab *ngIf="image.uid == this.uid" vertical="bottom" horizontal="end">
+            <ion-fab-button color="danger" (click)="eliminar(i)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-slide>
+</ion-slides>
