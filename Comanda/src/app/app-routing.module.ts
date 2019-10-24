@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'list/cosasLindas', loadChildren: './pages/list/list.module#ListPageModule', canActivate: [AuthGuard] },
   { path: 'list/cosasFeas', loadChildren: './pages/list/list.module#ListPageModule', canActivate: [AuthGuard] },
   { path: 'list/cosasLindas/stats', loadChildren: './pages/stats/stats.module#StatsPageModule', canActivate: [AuthGuard]  },
-  { path: 'list/cosasFeas/stats', loadChildren: './pages/stats/stats.module#StatsPageModule', canActivate: [AuthGuard]  }
+  { path: 'list/cosasFeas/stats', loadChildren: './pages/stats/stats.module#StatsPageModule', canActivate: [AuthGuard]  },
+  { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' }
 ];
 @NgModule({
   imports: [

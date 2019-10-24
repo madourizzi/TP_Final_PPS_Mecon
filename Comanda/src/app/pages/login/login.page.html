@@ -1,7 +1,6 @@
-<app-header titulo="Relevamiento Kinéctico" color="success" [backButton]="false"></app-header>
+<app-header titulo="La Comanda - MadouRizzi" color="success" [backButton]="false"></app-header>
 
 <ion-content padding color="dark">
-  <img src="/assets/icon/icon.png">
   <form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
     <ion-item color="light">
       <ion-icon name="mail" slot="start"></ion-icon>
@@ -29,6 +28,8 @@
     <ion-button color="success" expand="block" type="submit" [disabled]="!form.valid">
       Entrar
     </ion-button>
+
+    <ion-button expand="block" color="secondary" routerLink="/register">Registrar</ion-button>
 
     <br>
 

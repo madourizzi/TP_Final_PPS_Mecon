@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.relkinectic" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Relevamiento Kinéctico</name>
-    <description>Relevamiento Kinéctico - Mariano Madou</description>
-    <author email="marianomadou@gmail.com" href="http://github.com/marianomadou">Mariano Madou</author>
+<widget id="io.comanda.madourizzi" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>La Comanda</name>
+    <description>La Comanda - Mariano Madou - Lucila Rizzi</description>
+    <author email="madourizzi@gmail.com" href="https://github.com/madourizzi/TP_Final_PPS_Mecon/">Mariano Madou - Lucila Rizzi</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

@@ -43,4 +43,54 @@ export class AuthService {
   getCurrentUserMail(): string {
     return this.angularFireAuth.auth.currentUser.email;
   }
+
+  async onRegister(user: User) {
+    var contenido = document.getElementById('contenido');
+    try {
+      this.nativeAudio.play("txt-alert");
+      return await this.angularFireAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+    } catch (error) {
+      console.log('Error on Register: ', error);
+      if (error.code == "auth/invalid-email") {
+        contenido.innerHTML = `
+        <div class="container mt-5" >
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h4>El email <strong>${user.email}</strong> que acaba de ingresar es erroneo .</h4><br>
+        <strong>El email debe ser del tipo "ejemplo@email.com" .</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      </div>
+        `;
+      }else if (error.code == "auth/weak-password") {
+        contenido.innerHTML = `
+        <div class="container mt-5">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4>El password debe tener al menos 6 caracteres.</h4> <br><strong>Reingrese una clave válida</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      </div>
+        `;
+      }
+      else{
+        contenido.innerHTML = `
+        <div class="container mt-5">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4>ERROR: debe ingresar email y contraseña válidos.</h4>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      </div>
+        `;
+      }
+
+
+    }
+  }
+
+
 }

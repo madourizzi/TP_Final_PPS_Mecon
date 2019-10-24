@@ -7,13 +7,14 @@ export const environment = {
 };
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyD4R8q8RklP4GYf89vgqg4M6lfD8pXfJhM",
-    authDomain: "relevamientovisual-f186f.firebaseapp.com",
-    databaseURL: "https://relevamientovisual-f186f.firebaseio.com",
-    projectId: "relevamientovisual-f186f",
-    storageBucket: "relevamientovisual-f186f.appspot.com",
-    messagingSenderId: "34716139627",
-    appId: "1:34716139627:web:3e58114d3745f8acadf12e"
+  apiKey: "AIzaSyAVhwce5JmRFPQ9m8v-X0LECZjOo2IZk54",
+  authDomain: "lacomandapps.firebaseapp.com",
+  databaseURL: "https://lacomandapps.firebaseio.com",
+  projectId: "lacomandapps",
+  storageBucket: "lacomandapps.appspot.com",
+  messagingSenderId: "1096979809038",
+  appId: "1:1096979809038:web:114d99af33f8ae58a44d5f",
+  measurementId: "G-2PF084EC23"
 
 };
 
