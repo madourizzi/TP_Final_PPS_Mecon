@@ -30,7 +30,7 @@ import { Shake } from '@ionic-native/shake/ngx';
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({ animated: false }),
     AppRoutingModule,
     ComponentsModule,
     AngularFireModule.initializeApp(firebaseConfig),

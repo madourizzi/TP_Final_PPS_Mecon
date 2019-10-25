@@ -57,7 +57,8 @@ export class LoginPage implements OnInit {
     const credential= await this.authService.login(this.form.get('mail').value, this.form.get('password').value)
       .then(res => {
 
-        this.authService.traerTodosUsuarios().subscribe(user => {
+        this.authService.traerTodosUsuarios().subscribe(user => 
+          {
           user.forEach(userData => {
             let data = userData.payload.doc.data() as User;
             let id = userData.payload.doc.id;

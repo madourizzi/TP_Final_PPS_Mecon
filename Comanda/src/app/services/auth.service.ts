@@ -29,7 +29,7 @@ export class AuthService {
     console.log(email + ' ' + password);
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
-
+ 
 /**
  * 
  */

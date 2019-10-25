@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'list/cosasLindas/stats', loadChildren: './pages/stats/stats.module#StatsPageModule', canActivate: [AuthGuard]  },
   { path: 'list/cosasFeas/stats', loadChildren: './pages/stats/stats.module#StatsPageModule', canActivate: [AuthGuard]  },
   { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
+//////
   { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },
   { path: 'cliente', loadChildren: './pages/cliente/cliente.module#ClientePageModule' },
   { path: 'barman', loadChildren: './pages/barman/barman.module#BarmanPageModule' },
