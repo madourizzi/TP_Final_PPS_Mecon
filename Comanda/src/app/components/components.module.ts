@@ -3,19 +3,23 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
 import { ImageComponent } from './image/image.component';
+import { AdmPerfilUsuarioComponent } from './adm-perfil-usuario/adm-perfil-usuario.component';
+import { CargarProductoComponent } from './cargar-producto/cargar-producto.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    ImageComponent
+    ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent
   ],
   exports: [
     HeaderComponent,
-    ImageComponent
+    ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule, ReactiveFormsModule
   ]
 })
 export class ComponentsModule { }

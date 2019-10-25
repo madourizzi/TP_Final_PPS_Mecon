@@ -1,23 +1,13 @@
-<ion-header>
-    <ion-toolbar color="dark" style="max-height: 50px">
-        <ion-title>
-            Admin
-
-            <ion-icon name="log-out" (click)="salir()" style="color: blanchedalmond; font-size: 16pt"></ion-icon>
-
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
+<app-header [titulo]="title" [backButton]="true"></app-header>
 <ion-content no-bounce>
-    <div class="unGranDiv" style="height: 93vh;">
+    <div class="unGranDiv" style="height: 93vh;" *ngIf="botonera">
         <ion-row style="height:50%; ">
             <ion-col class="col-6" style="height:98%; background-color: red; color: seashell;  border-radius: 15px; ">
-                <ion-icon name="camera" style="color: white; zoom: 4;   vertical-align: auto; " (click)="camara() ">
+                <ion-icon name="people" style="color: white; zoom: 4;   vertical-align: auto; " (click)="cambiarPerfilUsuario()">
                 </ion-icon>
             </ion-col>
             <ion-col class="col-6 " style="height:98%; background-color: rgb(10, 98, 104); color: seashell; border-radius: 15px; ">
-                <ion-icon name="albums" style="color: white; zoom: 4;  vertical-align: auto; " (click)="mostrarGaleria() ">
+                <ion-icon name="albums" style="color: white; zoom: 4;  vertical-align: auto; " (click)="cargarProductos() ">
                 </ion-icon>
             </ion-col>
         </ion-row>
@@ -31,4 +21,11 @@
             </ion-col>
         </ion-row>
     </div>
+
+    <ion-content *ngIf="adminPerfilUser">
+        <app-adm-perfil-usuario></app-adm-perfil-usuario>
+    </ion-content>
+    <ion-content *ngIf="cargarProducto">
+        <app-cargar-producto></app-cargar-producto>
+    </ion-content>
 </ion-content>
