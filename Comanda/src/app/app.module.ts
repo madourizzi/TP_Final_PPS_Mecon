@@ -48,7 +48,7 @@ import { Shake } from '@ionic-native/shake/ngx';
     AngularFirestore,
     AngularFireDatabase,
     Base64,
-    Camera,
+    Camera, 
     ImagePicker,
     Shake,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

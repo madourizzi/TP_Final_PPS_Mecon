@@ -1,15 +1,12 @@
 export class User {
-    private mail: String;
-    private perfil: String;
-    private sexo: String;
+    // unificar los mail
+
     email: string;
     password: string;
-    /**
-     *
-     */
-    constructor(mail: string, perfil: string, sexo: string) {
-        this.mail = mail;
-        this.perfil = perfil;
-        this.sexo = sexo;
+    perfil: String;
+    uid;
+
+    constructor() {
+        this.perfil = "cliente";
     }
 }

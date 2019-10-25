@@ -11,37 +11,62 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 })
 export class AuthService {
 
-  constructor(private angularFireAuth: AngularFireAuth,  private router: Router,
-    private db: AngularFirestore, private spinner: SpinnerService, private nativeAudio: NativeAudio) {
-      this.nativeAudio.preloadSimple('logout', 'assets/sounds/login.mp3').catch(error => { });
-     }
-
+  constructor(
+    private angularFireAuth: AngularFireAuth,
+    private router: Router,
+    private db: AngularFirestore,
+    private spinner: SpinnerService,
+    private nativeAudio: NativeAudio) {
+    this.nativeAudio.preloadSimple('logout', 'assets/sounds/login.mp3').catch(error => { });
+  }
+/**
+ * 
+ * @param email 
+ * @param password 
+ */
   login(email: string, password: string) {
     this.spinner.show();
     console.log(email + ' ' + password);
-    return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
-/*     .then(res => {
-      this.nativeAudio.play("logout").catch(error => { });
-      this.spinner.hide();
-      console.log(this.angularFireAuth.auth.currentUser);
-      return res;
-    }); */
+    return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
+/**
+ * 
+ */
   logout() {
     this.angularFireAuth.auth.signOut()
-    .then( res => {
-      this.nativeAudio.play("logout").catch(error => { });
-      this.router.navigate(['/login']);
-    });
+      .then(res => {
+        this.nativeAudio.play("logout").catch(error => { });
+        this.router.navigate(['/login']);
+      });
   }
-
+/**
+ * 
+ */
   getCurrentUserId(): string {
     return this.angularFireAuth.auth.currentUser ? this.angularFireAuth.auth.currentUser.uid : null;
   }
 
+  /**
+   * 
+   */
   getCurrentUserMail(): string {
     return this.angularFireAuth.auth.currentUser.email;
+  }
+
+  
+  enviarUsuario(nuevoUsuario: User) {
+    return this.db.collection('users').add(JSON.parse(JSON.stringify(nuevoUsuario)));
+
+  }
+
+  traerTodosUsuarios() {
+    return this.db.collection('users').snapshotChanges();
+  }
+  
+  
+  traerUnUsuarios(uid) {
+    return this.db.collection('productos').doc(uid).valueChanges();
   }
 
   async onRegister(user: User) {
@@ -63,7 +88,7 @@ export class AuthService {
       </div>
       </div>
         `;
-      }else if (error.code == "auth/weak-password") {
+      } else if (error.code == "auth/weak-password") {
         contenido.innerHTML = `
         <div class="container mt-5">
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -75,7 +100,7 @@ export class AuthService {
       </div>
         `;
       }
-      else{
+      else {
         contenido.innerHTML = `
         <div class="container mt-5">
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -91,6 +116,7 @@ export class AuthService {
 
     }
   }
+
 
 
 }

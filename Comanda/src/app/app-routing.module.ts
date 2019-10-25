@@ -12,7 +12,14 @@ const routes: Routes = [
   { path: 'list/cosasFeas', loadChildren: './pages/list/list.module#ListPageModule', canActivate: [AuthGuard] },
   { path: 'list/cosasLindas/stats', loadChildren: './pages/stats/stats.module#StatsPageModule', canActivate: [AuthGuard]  },
   { path: 'list/cosasFeas/stats', loadChildren: './pages/stats/stats.module#StatsPageModule', canActivate: [AuthGuard]  },
-  { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' }
+  { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
+  { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },
+  { path: 'cliente', loadChildren: './pages/cliente/cliente.module#ClientePageModule' },
+  { path: 'barman', loadChildren: './pages/barman/barman.module#BarmanPageModule' },
+  { path: 'cervecero', loadChildren: './pages/cervecero/cervecero.module#CerveceroPageModule' },
+  { path: 'candy-bar', loadChildren: './pages/candy-bar/candy-bar.module#CandyBarPageModule' },
+  { path: 'cocina', loadChildren: './pages/cocina/cocina.module#CocinaPageModule' },
+  { path: 'mozo', loadChildren: './pages/mozo/mozo.module#MozoPageModule' }
 ];
 @NgModule({
   imports: [
