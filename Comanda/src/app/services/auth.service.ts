@@ -20,12 +20,12 @@ export class AuthService {
     this.spinner.show();
     console.log(email + ' ' + password);
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
-    .then(res => {
+/*     .then(res => {
       this.nativeAudio.play("logout").catch(error => { });
       this.spinner.hide();
       console.log(this.angularFireAuth.auth.currentUser);
       return res;
-    });
+    }); */
   }
 
   logout() {
