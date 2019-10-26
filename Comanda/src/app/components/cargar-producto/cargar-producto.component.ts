@@ -98,6 +98,7 @@ export class CargarProductoComponent implements OnInit {
   cancelar() {
     this.opcionElegida = 0;
     this.selectedFiles = false;
+    
   }
 
 
