@@ -64,10 +64,18 @@ export class AuthService {
     return this.db.collection('users').snapshotChanges();
   }
   
-  
   traerUnUsuarios(uid) {
-    return this.db.collection('productos').doc(uid).valueChanges();
+    return this.db.collection('users').doc(uid).valueChanges();
   }
+  
+  
+
+  traerTodos(tipo) {
+    return this.db.collection(tipo).snapshotChanges();
+  }
+  
+  
+
 
   async onRegister(user: User) {
     var contenido = document.getElementById('contenido');

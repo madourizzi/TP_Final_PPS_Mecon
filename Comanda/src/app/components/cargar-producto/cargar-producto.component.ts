@@ -38,7 +38,20 @@ export class CargarProductoComponent implements OnInit {
     'nombreProducto': [
       { type: 'required', message: 'Debe ingresar un nombre de Producto' },
       { type: 'text', message: 'Solo texto.' }
-    ]
+    ],
+    'descripcion': [
+      { type: 'required', message: 'Debe ingresar una Descripcion' },
+      { type: 'text', message: 'Solo texto.' }
+    ],
+    'stock': [
+      { type: 'required', message: 'Debe ingresar stock' },
+      { type: 'number', message: 'Solo Números.' }
+    ],
+    'precio': [
+      { type: 'required', message: 'Debe ingresar precio' },
+      { type: 'number', message: 'Solo Números.' }
+    ],
+
   };
 
   constructor(
@@ -50,10 +63,24 @@ export class CargarProductoComponent implements OnInit {
     private smartAudioService: SmartAudioService,
     private vibration: Vibration,
     private afs: AngularFirestore,
+
     private archivos: ArchivosService) {
 
     this.form = this.formBuilder.group({
       nombreProducto: new FormControl('', Validators.compose([
+        Validators.required,
+
+      ])),
+      descripcion: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.required,
+      ])),
+      stock: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.required,
+      ])),
+      precio: new FormControl('', Validators.compose([
+        Validators.required,
         Validators.required,
       ]))
 
@@ -61,21 +88,22 @@ export class CargarProductoComponent implements OnInit {
 
 
     this.productoActual = new Producto();
-    this.productoActual.nombre=" birrita";
-    this.productoActual.descripcion=" birrita en la terraza";
-    this.productoActual.stock=100;
-    this.productoActual.precio=100;
-    this.productoActual.url="./qr_img.png";
-  
+
 
   }
 
   ngOnInit() {
-    this.opcionElegida=0;
+    this.opcionElegida=3;
   }
 
 
   onSubmitProducto() {
+    this.productoActual.nombre=this.form.get('nombreProducto').value;
+    this.productoActual.descripcion=this.form.get('descripcion').value;
+    this.productoActual.stock=this.form.get('stock').value;
+    this.productoActual.precio=this.form.get('precio').value;
+    this.productoActual.url="./qr_img.png";
+  
     console.log(this.form.get('nombreProducto').value);
     this.subirFoto();
   }
@@ -98,7 +126,7 @@ export class CargarProductoComponent implements OnInit {
   cancelar() {
     this.opcionElegida = 0;
     this.selectedFiles = false;
-    
+
   }
 
 
@@ -117,6 +145,10 @@ export class CargarProductoComponent implements OnInit {
         this.archivos.uploadWeb(this.selectedFiles, 'producto', this.productoActual);
         this.selectedFiles = false;
 
+        break;
+      case 3:
+        this.selectedFiles = false;
+        this.afs.collection('producto').add(JSON.parse(JSON.stringify(this.productoActual)))
         break;
       default:
         alert("carga cancelada");
