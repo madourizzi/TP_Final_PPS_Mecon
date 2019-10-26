@@ -12,6 +12,8 @@ import { ImagesService } from 'src/app/services/images.service';
 import { Image } from 'src/app/models/image';
 import { ImageComponent } from '../image/image.component';
 import { GalleryType } from 'src/app/models/enums/gallery-type.enum';
+import { ArchivosService } from 'src/app/services/archivos.service';
+import { Producto } from 'src/app/models/producto';
 
 
 
@@ -24,7 +26,12 @@ export class CargarProductoComponent implements OnInit {
 
 
   form: FormGroup;
-  rolesEnum : Roles;
+  rolesEnum: Roles;
+  productoActual: Producto;
+
+  selectedFiles;
+  fileName;
+  opcionElegida: number;
 
 
   validation_messages = {
@@ -35,109 +42,92 @@ export class CargarProductoComponent implements OnInit {
   };
 
   constructor(
-    private authService: AuthService,    
+    private authService: AuthService,
     private imagesService: ImagesService,
-    private formBuilder: FormBuilder, 
-    private toastService: ToastService, 
-    private router: Router, 
-    private smartAudioService: SmartAudioService, 
+    private formBuilder: FormBuilder,
+    private toastService: ToastService,
+    private router: Router,
+    private smartAudioService: SmartAudioService,
     private vibration: Vibration,
-    private afs: AngularFirestore) 
-    {
+    private afs: AngularFirestore,
+    private archivos: ArchivosService) {
 
     this.form = this.formBuilder.group({
       nombreProducto: new FormControl('', Validators.compose([
-        Validators.required, 
+        Validators.required,
       ]))
 
     });
 
+
+    this.productoActual = new Producto();
+    this.productoActual.nombre=" birrita";
+    this.productoActual.descripcion=" birrita en la terraza";
+    this.productoActual.stock=100;
+    this.productoActual.precio=100;
+    this.productoActual.url="./qr_img.png";
+  
+
   }
 
   ngOnInit() {
+    this.opcionElegida=0;
   }
 
- onSubmitProducto() {
-   
-   
-   console.log(this.form.get('nombreProducto').value);
-   
-     
+
+  onSubmitProducto() {
+    console.log(this.form.get('nombreProducto').value);
+    this.subirFoto();
   }
 
-  elegirFoto() {
-    this.imagesService.choosePhoto()
-      .then(imageData => {
-        if (imageData !== '' || imageData !== 'OK') {
-          for (let i = 0; i < imageData.length; i++) {
-            this.subirFoto(imageData[i]);
-          }
-        } else {
-          this.toastService.errorToast(
-            'No eligió una foto.'
-          );
-        }
-      })
-      .catch(error => {
-        this.toastService.errorToast('Error: No se han podido cargar las fotos. ' + error.message);
-      });
+  async tomarFoto() {
+    this.selectedFiles = await this.archivos.camara('producto');
+    this.opcionElegida = 1;
+                /* ionic cordova plugin add cordova-plugin-file
+                npm install @ionic-native/file */
   }
 
-  tomarFoto() {
-    this.imagesService
-      .takePhoto()
-      /* .then(imageData => {
-        // tslint:disable-next-line: triple-equals
-        if (imageData !== 'No Image Selected') {
-          this.subirFoto(imageData);
-        } else {
-          this.toastService.errorToast(
-            'No tomó la foto.'
-          );
-        }
-      }) */
-      .catch(error => {
-        this.toastService.errorToast('Error: No se ha podido cargar la foto. ' + error.message);
-      });
+  detectFiles(event) {
+    this.opcionElegida = 2;
+    this.selectedFiles = event;
+    this.fileName = event.target.files[0].name;
+    this.toastService.confirmationToast("ah elegido una foto");
+    console.log("ah elegido una foto");
+
+  }
+  cancelar() {
+    this.opcionElegida = 0;
+    this.selectedFiles = false;
   }
 
-  private subirFoto(imageData) {
-/*     const image: Image = new Image();
-    image.esLinda = this.tipoLista == TipoLista.CosasLindas;
-    image.uid = this.currentUserId;
-    image.umail = this.authService.getCurrentUserMail();
-    image.image = 'data:image/jpg;base64,' + imageData;
-    image.votos = new Array();
-    image.fecha = new Date().toLocaleString();
-    this.imagesService
-      .saveImage(image)
-      .then(() => {
-        this.toastService.confirmationToast(
-          'Su foto se ha guardado correctamente.'
-        );
-      })
-      .catch(error => {
-        this.toastService.errorToast(
-          'Error: No se ha podido guardar la foto. ' + error.message
-        );
-      }); */
+
+
+  private subirFoto() {
+
+    switch (this.opcionElegida) {
+      case 1:
+        let archivo = this.selectedFiles;
+        console.info(this.selectedFiles)
+        this.archivos.uploadAndroid(archivo.fileName, archivo.imgBlob, 'producto', this.productoActual);
+        this.selectedFiles = false;
+
+        break;
+      case 2:
+        this.archivos.uploadWeb(this.selectedFiles, 'producto', this.productoActual);
+        this.selectedFiles = false;
+
+        break;
+      default:
+        alert("carga cancelada");
+        break
+    }
+
+
   }
 
-  openGallery(index: number, galleryType: string) {
-   /*  console.log(index);
-    this.modalController.create({
-      component: ImageComponent,
-      backdropDismiss: true,
-      keyboardClose: true,
-      showBackdrop: true,
-      cssClass: 'my-custom-modal-css',
-      componentProps: { images: galleryType === GalleryType.AllPhotos ? this.allPhotos : this.myPhotos, startIndex: index, uid: this.currentUserId }
-    })
-      .then(modal => {
-        console.log(modal.componentProps);
-        modal.present();
-      }); */
-  }
+  
+
+
 
 
 

@@ -25,6 +25,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SpinnerInterceptor } from './services/interceptors/spinner-interceptor';
 import { Shake } from '@ionic-native/shake/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ArchivosService } from './services/archivos.service';
+import { File } from '@ionic-native/file/ngx';
+import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} from '@angular/fire/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,10 +41,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule, AngularFireStorageModule
   ],
   providers: [
-    StatusBar,  BarcodeScanner,
+    StatusBar,  BarcodeScanner, ArchivosService, File,
     SplashScreen,
     SmartAudioService,
     NativeAudio,

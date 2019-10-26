@@ -65,6 +65,12 @@
                 <ion-icon size="large" name="camera"></ion-icon>
             </ion-fab-button>
         </ion-fab-list>
+        <ion-fab-list size="large" side="end">
+            <ion-fab-button color="secondary">
+                <input type="file" e="archivo" id="archivo" (change)="detectFiles($event)">
+            </ion-fab-button>
+
+        </ion-fab-list>
 
     </ion-fab>
 

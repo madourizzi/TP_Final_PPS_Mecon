@@ -52,7 +52,8 @@ export class AdminPage implements OnInit {
   }
 
   camara() {
-    this.archivos.camara('producto');
+    
+   // this.archivos.camara('producto', null);
     /* ionic cordova plugin add cordova-plugin-file
     npm install @ionic-native/file */
 
