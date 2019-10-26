@@ -24,6 +24,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SpinnerInterceptor } from './services/interceptors/spinner-interceptor';
 import { Shake } from '@ionic-native/shake/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +41,7 @@ import { Shake } from '@ionic-native/shake/ngx';
     HttpClientModule
   ],
   providers: [
-    StatusBar,
+    StatusBar,  BarcodeScanner,
     SplashScreen,
     SmartAudioService,
     NativeAudio,

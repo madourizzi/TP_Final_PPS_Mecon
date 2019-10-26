@@ -13,19 +13,18 @@
         </ion-row>
         <ion-row style="height:50%; ">
             <ion-col class="col-6" style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
-                <ion-icon name="stats" style="color: white; zoom: 4;   vertical-align: auto; " (click)="luz() ">
-                </ion-icon>
+                <img src="../../../assets/qr_img.png" alt="" (click)="leerQr()">
             </ion-col>
-            <ion-col class="col-6" style="height:98%; background-color:rgb(10, 153, 41); color: seashell; border-radius: 15px; ">
-                <input type="file" name="archivo" id="archivo" (change)="detectFiles($event)" style="width: 50%">
+            <ion-col class=" col-6 " style="height:98%; background-color:rgb(10, 153, 41); color: seashell; border-radius: 15px; ">
+                <input type="file " name="archivo " id="archivo " (change)="detectFiles($event) " style="width: 50% ">
             </ion-col>
         </ion-row>
     </div>
 
-    <ion-content *ngIf="adminPerfilUser">
+    <ion-content *ngIf="adminPerfilUser ">
         <app-adm-perfil-usuario></app-adm-perfil-usuario>
     </ion-content>
-    <ion-content *ngIf="cargarProducto">
+    <ion-content *ngIf="cargarProducto ">
         <app-cargar-producto></app-cargar-producto>
     </ion-content>
 </ion-content>

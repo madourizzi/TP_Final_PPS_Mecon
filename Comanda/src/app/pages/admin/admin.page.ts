@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { flatMap } from 'rxjs/operators';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-admin',
@@ -13,15 +15,15 @@ export class AdminPage implements OnInit {
   cargarProducto;
   botonera;
 
-  constructor( private spinner: SpinnerService) {
+  constructor( private spinner: SpinnerService, private qr: BarcodeScanner) {
     this.adminPerfilUser=false;
     this.title=" administrador";
   }
   
   ngOnInit() {
     setTimeout(()=>    this.spinner.hide(), 1000  );
-    this.cargarProducto=true;
-    this.botonera=false;
+    this.cargarProducto=false;
+    this.botonera=true;
   }
 
 
@@ -38,6 +40,13 @@ export class AdminPage implements OnInit {
     this.cargarProducto= true;
     this.adminPerfilUser= false;
     this.botonera=false;
+
+  }
+
+  leerQr()
+  {
+ console.log("qr"+  this.qr.scan());
+
 
   }
 
