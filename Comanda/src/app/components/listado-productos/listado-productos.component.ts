@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , EventEmitter, Output} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Producto } from 'src/app/models/producto';
 import { ToastService } from 'src/app/services/toast.service';
@@ -12,6 +12,7 @@ export class ListadoProductosComponent implements OnInit {ç
 
   productosPedidos: Array<any>;
   acumuladorProductos=0;
+  @Output() enviar:  EventEmitter<any> = new EventEmitter()
 
   productos: Array<Producto>;
 
@@ -36,15 +37,18 @@ export class ListadoProductosComponent implements OnInit {ç
 
   elegir(producto)
   {
-
     //toaster y sumarlo a un array
    this.toastService.confirmationToast("eligio " + producto.nombre);
    this.acumuladorProductos++;
    this.productosPedidos.push(producto);
    console.log(this.productosPedidos);
    
-   
-   
+  }
+
+  enviarPedido()
+  {
+     this.enviar.emit(this.productosPedidos);
+        
   }
 
 }

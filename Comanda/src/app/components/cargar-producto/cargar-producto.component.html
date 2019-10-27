@@ -59,7 +59,7 @@
         </ion-fab-button>
         <ion-fab-list size="large" side="start">
             <ion-fab-button color="success">
-                <ion-icon size="large" name="camera"></ion-icon>
+                <ion-icon size="large" name="camera" (click)="tomarFoto()"></ion-icon>
             </ion-fab-button>
             <ion-fab-button color="secondary">
                 <input type="file" e="archivo" id="archivo" (change)="detectFiles($event)">

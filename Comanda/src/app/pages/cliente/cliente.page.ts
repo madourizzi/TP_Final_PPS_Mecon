@@ -13,6 +13,8 @@ export class ClientePage implements OnInit {
   title: string;
   botonera;
   menu: boolean;
+  pedido: Array<any>;
+  confirmar:boolean;
 
 
   constructor(
@@ -26,6 +28,7 @@ export class ClientePage implements OnInit {
     setTimeout(() => this.spinner.hide(), 500);
     this.botonera = true;
     this.menu = false;
+    this.confirmar=false;
   }
 
   ingresarPedido() {
@@ -45,6 +48,15 @@ export class ClientePage implements OnInit {
   volver($event) {
     this.menu = false;
     this.botonera = true;
+  }
+
+  recibirPedido($event)
+  {
+    this.pedido=$event;
+    console.log("emit cliente pedido",this.pedido);
+    this.confirmar=true;
+    this.menu = false;
+    this.botonera =false;
   }
 
 
