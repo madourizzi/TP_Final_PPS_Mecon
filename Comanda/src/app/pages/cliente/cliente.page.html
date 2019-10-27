@@ -1,9 +1,9 @@
-<app-header [titulo]="title" [backButton]="true"></app-header>
+<app-header [titulo]="title" [backButton]="true" (volver)="volver($event)"></app-header>
 <ion-content no-bounce>
     <div class="unGranDiv" style="height: 92vh;" *ngIf="botonera">
         <ion-row style="height:50%; ">
             <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
-                <img src="../../../assets/qr_img.png" alt="" (click)="leerQr()">
+                <img src="../../../assets/images/qrPedi-01.png" alt="" (click)="leerQr()">
             </ion-col>
         </ion-row>
         <ion-row style="height:50%; ">

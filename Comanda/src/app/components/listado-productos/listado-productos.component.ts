@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Producto } from 'src/app/models/producto';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-listado-productos',
@@ -9,12 +10,14 @@ import { Producto } from 'src/app/models/producto';
 })
 export class ListadoProductosComponent implements OnInit {ç
 
-  productosPedidos;
+  productosPedidos: Array<any>;
+  acumuladorProductos=0;
 
   productos: Array<Producto>;
 
-  constructor(private productosService: AuthService) {
+  constructor(private productosService: AuthService,     private toastService: ToastService) {
     this.productos = new Array();
+    this.productosPedidos = new Array();
     this.productosService.traerTodos("producto").subscribe(actions => {
       this.productos = [];
       actions.map(a => {
@@ -35,7 +38,12 @@ export class ListadoProductosComponent implements OnInit {ç
   {
 
     //toaster y sumarlo a un array
-   console.log("eligio " + producto.nombre);
+   this.toastService.confirmationToast("eligio " + producto.nombre);
+   this.acumuladorProductos++;
+   this.productosPedidos.push(producto);
+   console.log(this.productosPedidos);
+   
+   
    
   }
 
