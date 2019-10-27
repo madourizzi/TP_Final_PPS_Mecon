@@ -67,8 +67,7 @@ export class ArchivosService {
           console.log(url + "url");
           loading.onDidDismiss();
           objeto.url= url;
-          this.fireStore.collection(tipo).add(JSON.parse(JSON.stringify(objeto)))
-
+          this.fireStore.collection(tipo).add(JSON.parse(JSON.stringify(objeto))) 
         }), 3000);
       }
     });

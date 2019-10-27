@@ -6,6 +6,7 @@ export class Producto
     public descripcion: string
     public stock: number;
     public url: string;
+    public estado;
 
     constructor() {}
 }
