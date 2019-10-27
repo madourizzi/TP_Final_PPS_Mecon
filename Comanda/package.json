@@ -37,6 +37,7 @@
     "@ionic/pro": "2.0.4",
     "ajv": "^6.10.2",
     "angularfire2": "^5.2.1",
+    "animate.css": "^3.7.2",
     "chart.js": "^2.8.0",
     "com-badrit-base64": "0.2.0",
     "cordova-android": "8.0.0",
