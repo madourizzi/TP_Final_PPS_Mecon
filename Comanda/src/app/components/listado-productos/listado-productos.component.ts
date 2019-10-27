@@ -7,7 +7,9 @@ import { Producto } from 'src/app/models/producto';
   templateUrl: './listado-productos.component.html',
   styleUrls: ['./listado-productos.component.scss'],
 })
-export class ListadoProductosComponent implements OnInit {
+export class ListadoProductosComponent implements OnInit {ç
+
+  productosPedidos;
 
   productos: Array<Producto>;
 
@@ -28,5 +30,13 @@ export class ListadoProductosComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  elegir(producto)
+  {
+
+    //toaster y sumarlo a un array
+   console.log("eligio " + producto.nombre);
+   
+  }
 
 }

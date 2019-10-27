@@ -1,6 +1,6 @@
 <ion-list style="height: 75vh" color="dark">
     <ion-list-header color="dark">Elegi tu Menù</ion-list-header>
-    <ion-item *ngFor="let producto of productos" color="dark">
+    <ion-item *ngFor="let producto of productos">
         <ion-thumbnail slot="start">
             <img src="{{producto.url}}">
         </ion-thumbnail>
@@ -8,7 +8,7 @@
             <h3>{{producto.nombre}}</h3>
             <p>{{producto.descripcion}} </p>
         </ion-label>
-        <ion-button color="primary">Elegir</ion-button>
+        <ion-button color="danger" (click)="elegir(producto)">Elegir</ion-button>
     </ion-item>
 </ion-list>
 

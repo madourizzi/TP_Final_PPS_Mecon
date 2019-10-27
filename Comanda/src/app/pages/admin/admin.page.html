@@ -1,4 +1,4 @@
-<app-header [titulo]="title" [backButton]="true"></app-header>
+<app-header [titulo]="title" [backButton]="true" (volver)="volver($event)"></app-header>
 <ion-content no-bounce>
     <div class="unGranDiv" style="height: 93vh;" *ngIf="botonera">
         <ion-row style="height:50%; ">
@@ -16,19 +16,16 @@
                 <img src="../../../assets/qr_img.png" alt="" (click)="leerQr()">
             </ion-col>
             <ion-col class=" col-6 " style="height:98%; background-color:rgb(10, 153, 41); color: seashell; border-radius: 15px; ">
-                <ion-icon name="camera" style="color: white; zoom: 4;  vertical-align: auto; " (click)=" camara()">
-                </ion-icon>
-
-                <!--  <input type="file " name="archivo " id="archivo " (change)="detectFiles($event) " style="width: 50% "> -->
+                <ion-icon name="camera" style="color: white; zoom: 4;  vertical-align: auto; " (click)="camara()">
+                </ion-icon> <label for="">Camara</label>
             </ion-col>
         </ion-row>
+
     </div>
 
-    <ion-content *ngIf="adminPerfilUser ">
-        <!--  <app-adm-perfil-usuario></app-adm-perfil-usuario> -->
-        <app-listado-productos></app-listado-productos>
+    <ion-content *ngIf="adminPerfilUser">
+        <app-adm-perfil-usuario></app-adm-perfil-usuario>
     </ion-content>
-    <ion-content *ngIf="cargarProducto ">
+    <ion-content *ngIf="cargarProducto">
         <app-cargar-producto></app-cargar-producto>
     </ion-content>
-</ion-content>

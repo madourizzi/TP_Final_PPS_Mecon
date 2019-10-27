@@ -93,6 +93,8 @@ export class CargarProductoComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("entro a cargar producto");
+    
     this.opcionElegida=3;
   }
 

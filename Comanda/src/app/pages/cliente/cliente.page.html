@@ -1,9 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>cliente</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<app-header [titulo]="title" [backButton]="true"></app-header>
+<ion-content no-bounce>
+    <div class="unGranDiv" style="height: 92vh;" *ngIf="botonera">
+        <ion-row style="height:50%; ">
+            <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
+                <img src="../../../assets/qr_img.png" alt="" (click)="leerQr()">
+            </ion-col>
+        </ion-row>
+        <ion-row style="height:50%; ">
+            <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px; ">
+                <ion-icon name="menu" style="color: white; zoom: 4;  vertical-align: auto; " (click)="ingresarPedido() ">
+                </ion-icon>
+                <label for="">Menu</label>
+            </ion-col>
+        </ion-row>
+    </div>
+    <ion-content *ngIf="menu">
+        <app-listado-productos></app-listado-productos>
+    </ion-content>
