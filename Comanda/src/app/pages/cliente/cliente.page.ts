@@ -14,7 +14,8 @@ export class ClientePage implements OnInit {
   botonera;
   menu: boolean;
   pedido: Array<any>;
-  confirmar:boolean;
+  confirmar: boolean;
+  pedirMesa: boolean;
 
 
   constructor(
@@ -26,10 +27,23 @@ export class ClientePage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => this.spinner.hide(), 500);
+    this.botonera = false;
+    this.menu = false;
+    this.confirmar = false;
+    this.pedirMesa = true;
+  }
+
+  pedirMesaQr() {
     this.botonera = true;
     this.menu = false;
-    this.confirmar=false;
+    this.confirmar = false;
+    this.pedirMesa = false;
+    setTimeout(() => console.log("algo"), 1000);
+
   }
+
+
+
 
   ingresarPedido() {
     this.menu = true;
@@ -50,13 +64,12 @@ export class ClientePage implements OnInit {
     this.botonera = true;
   }
 
-  recibirPedido($event)
-  {
-    this.pedido=$event;
-    console.log("emit cliente pedido",this.pedido);
-    this.confirmar=true;
+  recibirPedido($event) {
+    this.pedido = $event;
+    console.log("emit cliente pedido", this.pedido);
+    this.confirmar = true;
     this.menu = false;
-    this.botonera =false;
+    this.botonera = false;
   }
 
 

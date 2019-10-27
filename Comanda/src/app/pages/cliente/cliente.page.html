@@ -3,7 +3,7 @@
     <div class="unGranDiv" style="height: 92vh;" *ngIf="botonera">
         <ion-row style="height:50%; ">
             <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
-                <img src="../../../assets/images/qrPedi-01.png" alt="" (click)="leerQr()">
+                <img src="../../../assets/images/qrPedi-02.png" alt="" (click)="leerQr()">
             </ion-col>
         </ion-row>
         <ion-row style="height:50%; ">
@@ -14,6 +14,15 @@
             </ion-col>
         </ion-row>
     </div>
+    <ion-content *ngIf="pedirMesa">
+        <div class="unGranDiv" style="height: 92vh;">
+            <ion-row style="height:100%; ">
+                <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; padding: 10px; ">
+                    <img src="../../../assets/images/qrPedi-01.png" alt="" (click)="pedirMesaQr()">
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-content>
     <ion-content *ngIf="menu">
         <app-listado-productos (enviar)="recibirPedido($event)"></app-listado-productos>
     </ion-content>
