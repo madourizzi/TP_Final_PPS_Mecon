@@ -1,0 +1,36 @@
+.image--background {
+    background-size: contain;
+    background-repeat: no-repeat;    
+    background-attachment: fixed;
+    background-position: center;
+ }
+
+ .mail-box {
+    margin-left: 7%;
+    margin-right: 7%;
+    color: white;
+    background-color: rgba(0, 255, 0, 0.658);
+    margin-top: 0;
+ }
+
+ ion-grid {
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    background-color: black;
+ }
+
+ ion-row {
+    flex-grow: 1;
+ }
+
+ .slider {
+    height:100vh;
+    width: 100vw;
+ }
+  
+.slider-slide {
+    height: 100vh;
+    width: 100vw;
+ }
+  

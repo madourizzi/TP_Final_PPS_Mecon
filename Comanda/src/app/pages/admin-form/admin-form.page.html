@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Administrador Alta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="dark">
+
+  <div class="ion-text-center">
+      <img class="icon" *ngIf="!foto" src="../../../assets/images/nofoto.jpg" alt="">
+    <img class="icon" *ngIf="foto" [src]="foto" alt="">
+  </div>
+
+  <form [formGroup]="altaForm" (ngSubmit)="registrarConFoto()">
+
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" formControlName="nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Apellido</ion-label>
+      <ion-input type="text" formControlName="apellido"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input type="email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">DNI</ion-label>
+      <ion-input type="number" formControlName="dni"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">CUIL</ion-label>
+      <ion-input type="number" formControlName="cuil"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Perfil</ion-label>
+      <ion-select (ionChange)="setPerfil($event.target.value)" placeholder="Seleccione su perfil: ">
+        <ion-select-option value="mozo">Mozo</ion-select-option>
+        <ion-select-option value="cocinero">Cocinero</ion-select-option>
+        <ion-select-option value="barman">Barman</ion-select-option>
+        <ion-select-option value="cervecero">Cervecero</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="danger">
+          <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list size="large" side="start">
+          <ion-fab-button color="success">
+              <ion-icon size="large" name="camera" (click)="takeFoto()"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="secondary">
+              <ion-icon size="large" name="qr-scanner" (click)="scanDNI()"></ion-icon>
+          </ion-fab-button>
+      </ion-fab-list>
+    
+  </ion-fab>
+
+
+    <ion-button expand="full" type="submit" [disabled]="!altaForm.valid">Registrarse</ion-button>
+
+  </form>
+</ion-content>
