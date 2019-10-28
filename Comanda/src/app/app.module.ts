@@ -24,23 +24,27 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SpinnerInterceptor } from './services/interceptors/spinner-interceptor';
 import { Shake } from '@ionic-native/shake/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ArchivosService } from './services/archivos.service';
+import { File } from '@ionic-native/file/ngx';
+import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} from '@angular/fire/storage';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({ animated: false }),
     AppRoutingModule,
     ComponentsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule, AngularFireStorageModule
   ],
   providers: [
-    StatusBar,
+    StatusBar,  BarcodeScanner, ArchivosService, File,
     SplashScreen,
     SmartAudioService,
     NativeAudio,
@@ -48,7 +52,7 @@ import { Shake } from '@ionic-native/shake/ngx';
     AngularFirestore,
     AngularFireDatabase,
     Base64,
-    Camera,
+    Camera, 
     ImagePicker,
     Shake,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

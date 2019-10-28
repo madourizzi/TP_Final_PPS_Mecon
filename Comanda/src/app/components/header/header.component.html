@@ -1,14 +1,10 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button *ngIf="backButton" defaultHref="/"></ion-back-button>
-    </ion-buttons>
-
-    <ion-title text-capitalize>{{ titulo }}</ion-title>
-    <ion-buttons *ngIf="this.url !== '/login'" slot="end">
-      <ion-button (click)="onLogout()" > 
-        <ion-icon class="icon" name="exit"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title text-capitalize (click)="volvereBotonera()">{{ titulo }}</ion-title>
+        <ion-buttons *ngIf="this.url !== '/login'" slot="end">
+            <ion-button (click)="onLogout()">
+                <ion-icon class="icon" name="exit"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>

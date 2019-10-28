@@ -1,0 +1,31 @@
+<ion-content *ngIf="!pedidoCOnfirmado">
+    <ion-list style="height: 75vh" color="dark">
+        <ion-list-header color="dark">Su pedido es</ion-list-header>
+        <ion-chip *ngFor="let producto of pedidoAConfirmar" style="width: 98%">
+            <ion-avatar>
+                <img src="{{producto.url}}">
+            </ion-avatar>
+            <ion-label>{{producto.nombre}}</ion-label>
+            <button ion-button clear color="dark" (click)="delete(chip3)" style="margin-left:80%">
+      <ion-icon name="close-circle" (click)="eliminar(producto)"></ion-icon>
+    </button>
+        </ion-chip>
+    </ion-list>
+
+    <ion-footer style="max-height: 20vh">
+        <ion-toolbar>
+            <ion-button color="secondary" style="width: 98%" (click)="confirmar()">Confirmar Pedido ( {{pedidoAConfirmar.length}} )</ion-button>
+        </ion-toolbar>
+    </ion-footer>
+</ion-content>
+
+<ion-content color="dark" *ngIf="pedidoCOnfirmado">
+    <div style="height: 93vh; padding: 20px" class="animated slideInLeft">
+        <ion-row style="height:100%; ">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(0, 110, 255); color: seashell;  border-radius: 15px; ">
+                <ion-icon name="alert" style="zoom: 4"></ion-icon>
+                <ion-label>Su pedido ha sido Confirmado</ion-label>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>
