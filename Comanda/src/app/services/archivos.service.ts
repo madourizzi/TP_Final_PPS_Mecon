@@ -175,7 +175,7 @@ export class ArchivosService {
   uploadToStorage(info): AngularFireUploadTask {
     this.newName = `${new Date().getTime()}.jpeg`;
     let image = `data:image/jpeg;base64,${info}`;
-    return this.storage.ref(`files/${this.newName}`).putString(image, 'data_url');
+    return this.storage.ref(`archivos/${this.newName}`).putString(image, 'data_url');
   }
 
   storeInfoDatabase(data) {

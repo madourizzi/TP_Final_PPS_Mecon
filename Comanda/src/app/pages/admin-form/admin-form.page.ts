@@ -6,6 +6,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import { Events } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/users.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-form',
@@ -25,7 +27,9 @@ export class AdminFormPage implements OnInit {
     private barcodeServ: LectorQrService,
     private toastServ: ToastService,
     private userServ: UsersService,
-    public events: Events
+    public events: Events,
+    private authSvc:AuthService, 
+    private router: Router, 
   ) { 
     this.title = " administrador";
   }
@@ -85,6 +89,7 @@ export class AdminFormPage implements OnInit {
           this.altaForm.controls['apellido'].setValue(dataSlpit[1]);
           this.altaForm.controls['nombre'].setValue(dataSlpit[2]);
           this.altaForm.controls['dni'].setValue(dataSlpit[4]);
+          this.altaForm.controls['cuil'].setValue("20-"+dataSlpit[4]+"-2");
         }
       })
       .catch(err => {
@@ -93,7 +98,7 @@ export class AdminFormPage implements OnInit {
       })
   }
 
-  altaDueno() {
+  async registrarConFoto() {
 
     console.warn(this.altaForm.value);
 
@@ -102,17 +107,22 @@ export class AdminFormPage implements OnInit {
     usuario.apellido = this.altaForm.value.apellido;
     usuario.dni = this.altaForm.value.dni;
     usuario.cuil = this.altaForm.value.cuil;
-    usuario.email = this.altaForm.value.correo;
-    usuario.password = this.altaForm.value.clave;
+    usuario.email = this.altaForm.value.email;
+    usuario.password = this.altaForm.value.password;
     usuario.perfil = this.altaForm.value.perfil;
     usuario.foto = this.urlFoto;
+    usuario.tipo="EMPLEADO";
+    usuario.activo=true;
 
-    this.userServ.saveUsuario(usuario)
-      .then(res => {
-        console.info("save user res", res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
+    const user = await this.authSvc.onRegister(usuario);
+  
+    if(user){
+      this.authSvc.enviarUsuario(usuario)
+      .then( e =>{
+        console.log('Exito, usuario creado');
+
+        this.router.navigateByUrl('/admin');
+      });
+    }
   }
 }

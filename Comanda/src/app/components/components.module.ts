@@ -8,16 +8,19 @@ import { CargarProductoComponent } from './cargar-producto/cargar-producto.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListadoProductosComponent } from './listado-productos/listado-productos.component';
 import { ConfirmarPedidoComponent } from './confirmar-pedido/confirmar-pedido.component';
+import { ListadoEmpleadosComponent} from './listado-empleados/listado-empleados.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent
+    ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent,
+    ListadoEmpleadosComponent
   ],
   exports: [
     HeaderComponent,
-    ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent
+    ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent,
+    ListadoEmpleadosComponent
   ],
   imports: [
     CommonModule,
