@@ -16,6 +16,14 @@ export class LectorQrService {
     });
     }
 
+    scan() {
+      return this.barcodeScanner.scan({ "formats": "PDF_417" }).then(barcodeData => {
+        return barcodeData;
+      }).catch(err => {
+        console.error('Error barcode', err);
+        return err;
+      });
+    }
 
 
 

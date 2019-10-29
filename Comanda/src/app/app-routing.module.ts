@@ -15,12 +15,14 @@ const routes: Routes = [
   { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
 //////
   { path: 'admin', loadChildren: './pages/admin/admin.module#AdminPageModule' },
+  { path: 'admin-form', loadChildren: './pages/admin-form/admin-form.module#AdminFormPageModule' },
   { path: 'cliente', loadChildren: './pages/cliente/cliente.module#ClientePageModule' },
   { path: 'barman', loadChildren: './pages/barman/barman.module#BarmanPageModule' },
   { path: 'cervecero', loadChildren: './pages/cervecero/cervecero.module#CerveceroPageModule' },
   { path: 'candy-bar', loadChildren: './pages/candy-bar/candy-bar.module#CandyBarPageModule' },
   { path: 'cocina', loadChildren: './pages/cocina/cocina.module#CocinaPageModule' },
-  { path: 'mozo', loadChildren: './pages/mozo/mozo.module#MozoPageModule' }
+  { path: 'mozo', loadChildren: './pages/mozo/mozo.module#MozoPageModule' },
+  { path: 'admin-form', loadChildren: './pages/admin-form/admin-form.module#AdminFormPageModule' }
 ];
 @NgModule({
   imports: [

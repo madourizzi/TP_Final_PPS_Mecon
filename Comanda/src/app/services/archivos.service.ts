@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { User } from 'firebase';
 import { AuthService } from './auth.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -24,7 +24,9 @@ export class ArchivosService {
   public finalizado = false;
   items: Array<any>;
 
-
+  newName: string;
+  dbRef: AngularFirestoreCollection<any>;
+  
   image: any = '';
   selectedFiles: any;
   fileName: string;
@@ -168,6 +170,16 @@ export class ArchivosService {
         })
         .catch(e => reject(e));
     });
+  }
+
+  uploadToStorage(info): AngularFireUploadTask {
+    this.newName = `${new Date().getTime()}.jpeg`;
+    let image = `data:image/jpeg;base64,${info}`;
+    return this.storage.ref(`files/${this.newName}`).putString(image, 'data_url');
+  }
+
+  storeInfoDatabase(data) {
+    return this.dbRef.doc(this.newName).set(data);
   }
 
 }

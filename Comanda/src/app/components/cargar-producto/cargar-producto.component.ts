@@ -32,6 +32,7 @@ export class CargarProductoComponent implements OnInit {
   selectedFiles;
   fileName;
   opcionElegida: number;
+  public url: string;
 
 
   validation_messages = {
@@ -89,6 +90,7 @@ export class CargarProductoComponent implements OnInit {
 
     this.productoActual = new Producto();
 
+    this.url = ('/admin-form/');
 
   }
 

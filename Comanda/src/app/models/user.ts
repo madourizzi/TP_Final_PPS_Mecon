@@ -3,10 +3,18 @@ export class User {
 
     email: string;
     password: string;
-    perfil: String;
+    nombre: string;
+    apellido: string;
+    perfil: string;
+    foto:string;
+    dni:number;
+    cuil:number;
     uid;
 
     constructor() {
         this.perfil = "cliente";
+        this.foto ="assets/images/nofoto.jpg";
+  
+        
     }
 }

@@ -46,7 +46,7 @@
         <ion-button color="secondary" expand="block" type="submit" [disabled]="!form.valid">
             Ingresar Nuevo Producto
         </ion-button>
-
+       
 
         <br>
 
@@ -61,6 +61,7 @@
             <ion-fab-button color="success">
                 <ion-icon size="large" name="camera" (click)="tomarFoto()"></ion-icon>
             </ion-fab-button>
+         
             <ion-fab-button color="secondary">
                 <input type="file" e="archivo" id="archivo" (change)="detectFiles($event)">
             </ion-fab-button>
