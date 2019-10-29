@@ -3,6 +3,8 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 import { flatMap } from 'rxjs/operators';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from 'src/app/services/archivos.service';
+import { User } from 'src/app/models/user';
+
 
 @Component({
   selector: 'app-admin',
@@ -12,9 +14,8 @@ import { ArchivosService } from 'src/app/services/archivos.service';
 export class AdminPage implements OnInit {
 
   adminPerfilUser;
-
-  adminPerfilUser2;
-
+  editarUsuario;
+  usuarioElegido:User;
   title: string;
   cargarProducto;
   botonera;
@@ -30,12 +31,12 @@ export class AdminPage implements OnInit {
   ngOnInit() {
     setTimeout(() => this.spinner.hide(), 500);
     this.botonera = true;
+    this.editarUsuario= false;
   }
 
 
   cambiarPerfilUsuario() {
     this.adminPerfilUser = true;
-    this.adminPerfilUser2 = true;
     this.botonera = false;
     this.cargarProducto = false;
   }
@@ -44,9 +45,7 @@ export class AdminPage implements OnInit {
   cargarProductos() {
     this.cargarProducto = true;
     this.adminPerfilUser = false;
-
     this.botonera = false;
-
   }
 
 
@@ -67,12 +66,22 @@ export class AdminPage implements OnInit {
   volver($event)
   {
     this.adminPerfilUser =false;
-    this.adminPerfilUser2 = false;
     this.botonera = true;
     this.cargarProducto = false;
-
   }
 
+  editarUsu($event)
+  {
+    console.log("$evbent", $event);
+    
+    this.adminPerfilUser =false;
+    this.editarUsuario = true;
+    this.botonera = false;
+    this.cargarProducto = false;
+    this.usuarioElegido= $event;
+    
+
+  }
 
 
 }

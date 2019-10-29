@@ -1,3 +1,4 @@
+<ion-content>
 <ion-list style="height: 75vh" color="dark">
     <ion-list-header color="dark">Elegi tu Menù</ion-list-header>
     <ion-item *ngFor="let producto of productos">
@@ -11,7 +12,7 @@
         <ion-button color="danger" (click)="elegir(producto)">Elegir</ion-button>
     </ion-item>
 </ion-list>
-
+</ion-content>
 <ion-footer style="height: 20vh">
     <ion-toolbar>
         <ion-button color="danger" style="width: 98%" (click)="enviarPedido()">Terminar Pedido ( {{acumuladorProductos}} )</ion-button>
