@@ -97,11 +97,8 @@ export class ArchivosService {
           this.URLPublica = URL;
           console.log(url + "url");
           loading.onDidDismiss();
-          objeto.url= url;
-
-          this.fireStore.collection(tipo).doc(objeto.id).update(objeto);
-
-
+          objeto.foto= url;
+          this.fireStore.doc(`users/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
         }), 3000);
       }
     });
@@ -131,10 +128,32 @@ export class ArchivosService {
 
 
   }
+  public uploadWebUpdate(event, tipo, objeto) {
+    console.log("eventi," ,objeto);
+    
+    var url: any;
+    this.aux = event.target.files[0].name;
+    var lala = this.storage.ref(tipo + '/' + this.aux).put(event.target.files[0]);
+    lala.percentageChanges().subscribe((porcentaje) => {
+      this.porcentaje = Math.round(porcentaje);
+      console.log("this.porcentaje" + this.porcentaje)
+      if (this.porcentaje == 100) {
+        this.finalizado = true;
+        setTimeout(() => this.storage.ref(tipo + '/' + this.aux).getDownloadURL().subscribe((URL) => {
+          console.log(URL);
+          url = URL;
+          objeto.foto=url;
+          this.fireStore.doc(`users/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+        }), 3000);
+      }
+    });
+
+
+  }
 
 
 //////////////////////////
-  async camara(tipo) {
+  async camara() {
   const options: CameraOptions = {
       quality: 80,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -148,7 +167,6 @@ export class ArchivosService {
       console.log('cameraInfo' + cameraInfo);
       let blobInfo = await this.makeFileIntoBlob(cameraInfo);
       this.selectedFiles = blobInfo;
-      // this.cargarImagen(tipo); esto hace que se cargue solo
       return this.selectedFiles; 
     } catch (e) {
       console.log(e.message);

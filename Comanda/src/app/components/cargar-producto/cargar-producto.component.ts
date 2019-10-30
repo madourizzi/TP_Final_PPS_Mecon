@@ -113,7 +113,7 @@ export class CargarProductoComponent implements OnInit {
   }
 
   async tomarFoto() {
-    this.selectedFiles = await this.archivos.camara('producto');
+    this.selectedFiles = await this.archivos.camara();
     this.opcionElegida = 1;
                 /* ionic cordova plugin add cordova-plugin-file
                 npm install @ionic-native/file */
