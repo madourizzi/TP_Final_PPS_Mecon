@@ -21,8 +21,11 @@ export class ListadoEmpleadosComponent implements OnInit {
         const data = a.payload.doc.data() as User;
         const id = a.payload.doc.id;
         data.uid = id;
-        console.info(data, " data");
-        this.usuarios.push(data);
+        if(data.perfil!="cliente")
+        {
+          console.info(data, " data");
+          this.usuarios.push(data);
+        }
       });
 
     });

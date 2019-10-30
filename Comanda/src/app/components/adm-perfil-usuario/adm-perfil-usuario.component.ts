@@ -77,31 +77,6 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     this.altaForm.controls['activo'].setValue(activo);
   }
 
-  takeFoto() {
-    this.foto= this.archivos.camara()
-      .then(imgData => {
-              this.toastServ.errorToast("No se pudo tomar la foto "+imgData);
-              console.log("log,"   , imgData);
-      })
-      .catch(error => {
-        this.toastServ.errorToast(`Error al tomar foto: ${error.message}`);
-      })
-  }
-/* 
-  saveFoto(data: any) {
-    var res = this.camServ.uploadPhoto(data)
-      .then((res) => {
-
-        this.toastServ.confirmationToast("Foto guardada")
-      })
-      .catch(err => {
-        this.toastServ.errorToast('Error: No se ha podido guardar la foto. ' + err.message);
-      })
-    this.events.subscribe('urlFotoGuardada', url => {
-      console.info("evento url", url);
-      this.urlFoto = url;
-    });
-  } */
 
   scanDNI() {
     this.barcodeServ.scan()
@@ -145,8 +120,6 @@ export class AdmPerfilUsuarioComponent implements OnInit {
   async tomarFoto() {
     this.foto = await this.archivos.camara();
     this.opcionElegida = 1;
-                /* ionic cordova plugin add cordova-plugin-file
-                npm install @ionic-native/file */
   }
 
   detectFiles(event) {
@@ -159,14 +132,12 @@ export class AdmPerfilUsuarioComponent implements OnInit {
 
 
   private subirFoto() {
-
-    switch (this.opcionElegida) {
+  switch (this.opcionElegida) {
       case 1:
         let archivo = this.foto;
         console.info(this.foto)
         this.archivos.uploadAndroidUpdate(archivo.fileName, archivo.imgBlob, 'users', this.usuario);
         this.foto = false;
-
         break;
       case 2:
         this.archivos.uploadWebUpdate(this.foto, 'users', this.usuario);
@@ -175,7 +146,6 @@ export class AdmPerfilUsuarioComponent implements OnInit {
         break;
       case 3:
      
- 
         break;
       default:
         alert("carga cancelada");
