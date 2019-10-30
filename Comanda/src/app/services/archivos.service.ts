@@ -46,8 +46,7 @@ export class ArchivosService {
 
   //Referencia del archivo
   async uploadAndroid(nombreArchivo: string, datos: any, tipo, objeto) {
-
-    const loading = await this.loadingController.create({
+   const loading = await this.loadingController.create({
       message: 'Cargando Imagen',
       duration: 4000
     });
@@ -70,6 +69,39 @@ export class ArchivosService {
           loading.onDidDismiss();
           objeto.url= url;
           this.fireStore.collection(tipo).add(JSON.parse(JSON.stringify(objeto))) 
+        }), 3000);
+      }
+    });
+  }
+
+  //Referencia del archivo
+  async uploadAndroidUpdate(nombreArchivo: string, datos: any, tipo, objeto) {
+   const loading = await this.loadingController.create({
+      message: 'Cargando Imagen',
+      duration: 4000
+    });
+
+    var url: any;
+    this.aux = nombreArchivo;
+    var lala = this.storage.ref(tipo + '/' + this.aux).put(datos);
+    loading.present();
+    lala.percentageChanges().subscribe((porcentaje) => {
+      this.porcentaje = Math.round(porcentaje);
+
+      loading.message = 'Cargando Imagen: \n' + this.porcentaje.toString();
+
+      if (this.porcentaje == 100) {
+        this.finalizado = true;
+        setTimeout(() => this.storage.ref(tipo + '/' + this.aux).getDownloadURL().subscribe((URL) => {
+          url = URL;
+          this.URLPublica = URL;
+          console.log(url + "url");
+          loading.onDidDismiss();
+          objeto.url= url;
+
+          this.fireStore.collection(tipo).doc(objeto.id).update(objeto);
+
+
         }), 3000);
       }
     });
@@ -175,7 +207,7 @@ export class ArchivosService {
   uploadToStorage(info): AngularFireUploadTask {
     this.newName = `${new Date().getTime()}.jpeg`;
     let image = `data:image/jpeg;base64,${info}`;
-    return this.storage.ref(`files/${this.newName}`).putString(image, 'data_url');
+    return this.storage.ref(`archivos/${this.newName}`).putString(image, 'data_url');
   }
 
   storeInfoDatabase(data) {

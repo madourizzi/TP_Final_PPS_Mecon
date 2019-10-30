@@ -5,14 +5,17 @@ export class User {
     password: string;
     nombre: string;
     apellido: string;
-    perfil: string;
     foto:string;
     dni:number;
-    cuil:number;
+    cuil:string;
+    tipo:string;
+    perfil: string;
+    activo:boolean;
     uid;
 
     constructor() {
-        this.perfil = "cliente";
+        this.tipo = "cliente";
+        this.activo=true;
         this.foto ="assets/images/nofoto.jpg";
   
         

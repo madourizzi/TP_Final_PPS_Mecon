@@ -89,6 +89,7 @@ export class AdminFormPage implements OnInit {
           this.altaForm.controls['apellido'].setValue(dataSlpit[1]);
           this.altaForm.controls['nombre'].setValue(dataSlpit[2]);
           this.altaForm.controls['dni'].setValue(dataSlpit[4]);
+          this.altaForm.controls['cuil'].setValue("20-"+dataSlpit[4]+"-2");
         }
       })
       .catch(err => {
@@ -110,6 +111,8 @@ export class AdminFormPage implements OnInit {
     usuario.password = this.altaForm.value.password;
     usuario.perfil = this.altaForm.value.perfil;
     usuario.foto = this.urlFoto;
+    usuario.tipo="EMPLEADO";
+    usuario.activo=true;
 
     const user = await this.authSvc.onRegister(usuario);
   
