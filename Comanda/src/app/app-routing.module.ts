@@ -22,7 +22,11 @@ const routes: Routes = [
   { path: 'candy-bar', loadChildren: './pages/candy-bar/candy-bar.module#CandyBarPageModule' },
   { path: 'cocina', loadChildren: './pages/cocina/cocina.module#CocinaPageModule' },
   { path: 'mozo', loadChildren: './pages/mozo/mozo.module#MozoPageModule' },
-  { path: 'admin-form', loadChildren: './pages/admin-form/admin-form.module#AdminFormPageModule' }
+  { path: 'admin-form', loadChildren: './pages/admin-form/admin-form.module#AdminFormPageModule' },
+  { path: 'listado-espera', loadChildren: './pages/listado-espera/listado-espera.module#ListadoEsperaPageModule' },
+  { path: 'spinner', loadChildren: './pages/spinner/spinner.module#SpinnerPageModule' },
+  { path: 'producto-alta', loadChildren: './pages/producto/producto-alta/producto-alta.module#ProductoAltaPageModule' },
+  { path: 'producto-lista', loadChildren: './pages/producto/producto-lista/producto-lista.module#ProductoListaPageModule' }
 ];
 @NgModule({
   imports: [

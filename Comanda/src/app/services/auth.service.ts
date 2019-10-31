@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { User } from '../models/user';
 import { SpinnerService } from './spinner.service';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private usersCollection: AngularFirestoreCollection<any>;
+  usuarios: Observable<any[]>;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -18,6 +23,15 @@ export class AuthService {
     private spinner: SpinnerService,
     private nativeAudio: NativeAudio) {
     this.nativeAudio.preloadSimple('logout', 'assets/sounds/login.mp3').catch(error => { });
+
+    this.usersCollection=db.collection<User>('users');
+    this.usuarios = this.usersCollection.snapshotChanges().pipe(map(
+      actions => actions.map(a=> {
+        const data = a.payload.doc.data()as User;
+        const id = a.payload.doc.id;
+        return {id, data};
+      })
+    ));
   }
 /**
  * 
@@ -27,6 +41,7 @@ export class AuthService {
   login(email: string, password: string) {
     this.spinner.show();
     console.log(email + ' ' + password);
+    sessionStorage.setItem("usuario", JSON.stringify(email));
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
  
@@ -74,7 +89,9 @@ export class AuthService {
     return this.db.collection(tipo).snapshotChanges();
   }
   
-  
+  updateUser(user: User){
+    return this.usersCollection.doc(user.uid).update(user);
+}
 
 
   async onRegister(user: User) {

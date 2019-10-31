@@ -25,6 +25,10 @@ export class LectorQrService {
       });
     }
 
+    readQR(){
+      return this.barcodeScanner.scan();
+  }
+
 
 
   }

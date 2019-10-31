@@ -8,6 +8,7 @@ import { Events } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { ArchivosService } from 'src/app/services/archivos.service';
 
 
 @Component({
@@ -21,7 +22,11 @@ export class AdmPerfilUsuarioComponent implements OnInit {
   foto: any = null;
   urlFoto: string;
   title: string;
-  @Input() usuario:User; 
+  ////////////
+  opcionElegida;
+  fileName;
+  //////////////////
+  @Input() usuario: User;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,9 +35,10 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     private toastServ: ToastService,
     private userServ: UsersService,
     public events: Events,
-    private authSvc:AuthService, 
-    private router: Router, 
-  ) { 
+    private authSvc: AuthService,
+    private router: Router,
+    private archivos: ArchivosService
+  ) {
     this.title = " administrador";
   }
 
@@ -45,55 +51,32 @@ export class AdmPerfilUsuarioComponent implements OnInit {
       cuil: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      perfil: ['', Validators.required]
+      perfil: ['', Validators.required],
+      activo: ['', Validators.required]
     });
 
-    
+
     this.altaForm.controls['apellido'].setValue(this.usuario.apellido);
     this.altaForm.controls['nombre'].setValue(this.usuario.nombre);
     this.altaForm.controls['email'].setValue(this.usuario.email);
-    this.altaForm.controls['dni'].setValue(this.usuario.dni );
+    this.altaForm.controls['dni'].setValue(this.usuario.dni);
     this.altaForm.controls['cuil'].setValue(this.usuario.cuil);
     this.altaForm.controls['password'].setValue(this.usuario.password);
     this.altaForm.controls['perfil'].setValue(this.usuario.perfil);
-    this.foto=this.usuario.foto;
-  
-    
+    this.altaForm.controls['activo'].setValue(this.usuario.activo);
+    this.foto = this.usuario.foto;
+
+
   }
 
   setPerfil(perfil) {
     this.altaForm.controls['perfil'].setValue(perfil);
   }
 
-  takeFoto() {
-    this.camServ.takePhoto()
-      .then(imgData => {
-        if (imgData !== 'No Image Selected') {
-          this.saveFoto(imgData);
-          this.foto = `data:image/jpeg;base64,${imgData}`;
-        } else {
-          this.toastServ.errorToast("No se pudo tomar la foto");
-        }
-      })
-      .catch(error => {
-        this.toastServ.errorToast(`Error al tomar foto: ${error.message}`);
-      })
+  setEstado(activo) {
+    this.altaForm.controls['activo'].setValue(activo);
   }
 
-  saveFoto(data: any) {
-    var res = this.camServ.uploadPhoto(data)
-      .then((res) => {
-
-        this.toastServ.confirmationToast("Foto guardada")
-      })
-      .catch(err => {
-        this.toastServ.errorToast('Error: No se ha podido guardar la foto. ' + err.message);
-      })
-    this.events.subscribe('urlFotoGuardada', url => {
-      console.info("evento url", url);
-      this.urlFoto = url;
-    });
-  }
 
   scanDNI() {
     this.barcodeServ.scan()
@@ -103,7 +86,7 @@ export class AdmPerfilUsuarioComponent implements OnInit {
           this.altaForm.controls['apellido'].setValue(dataSlpit[1]);
           this.altaForm.controls['nombre'].setValue(dataSlpit[2]);
           this.altaForm.controls['dni'].setValue(dataSlpit[4]);
-          this.altaForm.controls['cuil'].setValue("20-"+dataSlpit[4]+"-2");
+          this.altaForm.controls['cuil'].setValue("20-" + dataSlpit[4] + "-2");
         }
       })
       .catch(err => {
@@ -112,31 +95,65 @@ export class AdmPerfilUsuarioComponent implements OnInit {
       })
   }
 
-  async registrarConFoto() {
 
-    console.warn(this.altaForm.value);
+  editarUsuario() {
 
-    const usuario = new User();
-    usuario.nombre = this.altaForm.value.nombre;
-    usuario.apellido = this.altaForm.value.apellido;
-    usuario.dni = this.altaForm.value.dni;
-    usuario.cuil = this.altaForm.value.cuil;
-    usuario.email = this.altaForm.value.email;
-    usuario.password = this.altaForm.value.password;
-    usuario.perfil = this.altaForm.value.perfil;
-    usuario.foto = this.urlFoto;
-    usuario.tipo="EMPLEADO";
-    usuario.activo=true;
+    this.usuario.nombre = this.altaForm.value.nombre;
+    this.usuario.apellido = this.altaForm.value.apellido;
+    this.usuario.dni = this.altaForm.value.dni;
+    this.usuario.cuil = this.altaForm.value.cuil;
+    this.usuario.email = this.altaForm.value.email;
+    this.usuario.password = this.altaForm.value.password;
+    this.usuario.perfil = this.altaForm.value.perfil;
+    this.usuario.foto = this.foto;
 
-    const user = await this.authSvc.onRegister(usuario);
-  
-    if(user){
-      this.authSvc.enviarUsuario(usuario)
-      .then( e =>{
-        console.log('Exito, usuario creado');
-
-        this.router.navigateByUrl('/admin');
-      });
+    if (this.altaForm.value.activo) {
+      this.usuario.activo = true
+    } else {
+      this.usuario.activo = false
     }
+
+    this.subirFoto();
+
   }
+
+  async tomarFoto() {
+    this.foto = await this.archivos.camara();
+    this.opcionElegida = 1;
+  }
+
+  detectFiles(event) {
+    this.opcionElegida = 2;
+    this.foto = event;
+    this.fileName = event.target.files[0].name;
+    console.info("ah elegido una foto" , this.foto);
+
+  }
+
+
+  private subirFoto() {
+  switch (this.opcionElegida) {
+      case 1:
+        let archivo = this.foto;
+        console.info(this.foto)
+        this.archivos.uploadAndroidUpdate(archivo.fileName, archivo.imgBlob, 'users', this.usuario);
+        this.foto = false;
+        break;
+      case 2:
+        this.archivos.uploadWebUpdate(this.foto, 'users', this.usuario);
+        this.foto = false;
+
+        break;
+      case 3:
+     
+        break;
+      default:
+        alert("carga cancelada");
+        break
+    }
+
+
+  }
+
+  
 }

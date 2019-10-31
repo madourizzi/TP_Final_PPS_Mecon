@@ -23,29 +23,34 @@ export class AdminPage implements OnInit {
   constructor(private spinner: SpinnerService,
     private qr: BarcodeScanner,
     private archivos: ArchivosService) {
-    this.adminPerfilUser = false;
-
     this.title = " administrador";
   }
 
   ngOnInit() {
     setTimeout(() => this.spinner.hide(), 500);
+    this.adminPerfilUser = false;
+    this.cargarProducto = false;
     this.botonera = true;
-    this.editarUsuario= false;
+    this.editarUsuario = false;
   }
 
 
   cambiarPerfilUsuario() {
     this.adminPerfilUser = true;
+    this.cargarProducto = true;
     this.botonera = false;
+    this.editarUsuario = false;
     this.cargarProducto = false;
   }
 
 
   cargarProductos() {
+
     this.cargarProducto = true;
     this.adminPerfilUser = false;
     this.botonera = false;
+    this.editarUsuario = false;
+
   }
 
 
@@ -57,7 +62,7 @@ export class AdminPage implements OnInit {
 
   camara() {
     
-    this.archivos.camara('producto');
+    this.archivos.camara();
     /* ionic cordova plugin add cordova-plugin-file
     npm install @ionic-native/file */
 
@@ -65,9 +70,11 @@ export class AdminPage implements OnInit {
 
   volver($event)
   {
-    this.adminPerfilUser =false;
-    this.botonera = true;
     this.cargarProducto = false;
+    this.adminPerfilUser = false;
+    this.botonera = true;
+    this.editarUsuario = false;
+
   }
 
   editarUsu($event)

@@ -16,7 +16,8 @@ export class ListadoProductosComponent implements OnInit {ç
 
   productos: Array<Producto>;
 
-  constructor(private productosService: AuthService,     private toastService: ToastService) {
+  constructor(private productosService: AuthService,
+    private toastService: ToastService) {
     this.productos = new Array();
     this.productosPedidos = new Array();
     this.productosService.traerTodos("producto").subscribe(actions => {
