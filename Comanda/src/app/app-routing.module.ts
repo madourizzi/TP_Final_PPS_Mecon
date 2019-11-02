@@ -4,6 +4,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { NologinGuard } from './guards/nologin.guard';
 
 
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule'},
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'barman', loadChildren: './pages/barman/barman.module#BarmanPageModule' },
   { path: 'cervecero', loadChildren: './pages/cervecero/cervecero.module#CerveceroPageModule' },
   { path: 'candy-bar', loadChildren: './pages/candy-bar/candy-bar.module#CandyBarPageModule' },
+
 
 
 ];

@@ -12,18 +12,19 @@ import { ListadoEmpleadosComponent} from './listado-empleados/listado-empleados.
 import { ListadoPedidosComponent } from './listado-pedidos/listado-pedidos.component';
 import { EstadoPedidoComponent } from './estado-pedido/estado-pedido.component';
 import { AltaMesaComponent } from './alta-mesa/alta-mesa.component';
+import { ListadoMesasComponent } from './listado-mesas/listado-mesas.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent,
-    ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent
+    ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent
   ],
   exports: [
     HeaderComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent,
-    ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent
+    ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent
   ],
   imports: [
     CommonModule,

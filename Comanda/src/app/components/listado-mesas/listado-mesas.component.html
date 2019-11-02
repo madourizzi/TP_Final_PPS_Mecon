@@ -1,0 +1,16 @@
+<ion-content>
+    <ion-list style="height: 75vh" color="dark">
+        <ion-list-header color="dark">Listado de Mesas</ion-list-header>
+        <ion-item *ngFor="let mesa of mesas">
+            <ion-thumbnail slot="start">
+                <img src="{{mesa.url}}">
+            </ion-thumbnail>
+            <ion-label>
+                <h3>Mesa Nº {{mesa.numero}}</h3>
+                <p>Cantidad Comen: {{mesa.cantidadComensales}} </p>
+                <p style="font-weight: bold; color:brown">Estado {{mesa.estado}} </p>
+            </ion-label>
+
+        </ion-item>
+    </ion-list>
+</ion-content>

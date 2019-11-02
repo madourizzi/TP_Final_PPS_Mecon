@@ -29,6 +29,8 @@ import { ArchivosService } from './services/archivos.service';
 import { File } from '@ionic-native/file/ngx';
 import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} from '@angular/fire/storage';
 
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

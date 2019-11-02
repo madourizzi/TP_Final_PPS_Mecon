@@ -160,21 +160,9 @@ export class AltaMesaComponent implements OnInit {
 
   
   scanDNI() {
-    this.barcodeServ.scan()
-      .then(barcodeData => {
-        if (barcodeData != "") {
-          var dataSlpit = barcodeData.text.split("@");
-
-          this.form.controls['codigoQr'].setValue(dataSlpit[1]);
-       
+    let resp=this.barcodeServ.abrirScanner().then((e)=> this.form.controls['codigoQr'].setValue(e));
+    console.log(resp);
           
-
-        }
-      })
-      .catch(err => {
-        console.error(err.message);
-        this.toastService.errorToast(`Error al scanear: ${err.message}`);
-      })
   }
 
   
