@@ -4,6 +4,7 @@ import { flatMap } from 'rxjs/operators';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from 'src/app/services/archivos.service';
 import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,7 +22,9 @@ export class AdminPage implements OnInit {
   botonera;
   altaMesa;
 
-  constructor(private spinner: SpinnerService,
+  constructor(
+    private spinner: SpinnerService,    
+    private router: Router, 
     private qr: BarcodeScanner,
     private archivos: ArchivosService) {
     this.title = " administrador";
@@ -31,45 +34,28 @@ export class AdminPage implements OnInit {
     setTimeout(() => this.spinner.hide(), 500);
     this.adminPerfilUser = false;
     this.cargarProducto = false;
-    this.botonera = false;
-    this.editarUsuario = false;
-    this.altaMesa=true;
-  }
-
-
-  cambiarPerfilUsuario() {
-    this.adminPerfilUser = true;
-    this.cargarProducto = true;
-    this.botonera = false;
-    this.editarUsuario = false;
-    this.cargarProducto = false;
-    this.altaMesa=false;
-  }
-
-
-  cargarProductos() {
-
-    this.cargarProducto = true;
-    this.adminPerfilUser = false;
-    this.botonera = false;
+    this.botonera = true;
     this.editarUsuario = false;
     this.altaMesa=false;
-
   }
 
 
-  leerQr() {
-    console.log("qr" + this.qr.scan());
-    /* ionic cordova plugin add phonegap-plugin-barcodescanner
-   npm install @ionic-native/barcode-scanner */
+  mesas() {
+    this.router.navigate(['/mesa']);
   }
 
-  camara() {
-    
-    this.archivos.camara();
-    /* ionic cordova plugin add cordova-plugin-file
-    npm install @ionic-native/file */
 
+ productos() {
+    this.router.navigate(['/productos']);
+  }
+
+
+  empleados() {
+    this.router.navigate(['/empleados']);
+  }
+
+  stats() {    
+    this.router.navigate(['/stats']);
   }
 
   volver($event)
@@ -82,19 +68,6 @@ export class AdminPage implements OnInit {
 
   }
 
-  editarUsu($event)
-  {
-    console.log("$evbent", $event);
-    
-    this.adminPerfilUser =false;
-    this.editarUsuario = true;
-    this.botonera = false;
-    this.cargarProducto = false;
-    this.usuarioElegido= $event;
-    this.altaMesa=false;
-    
-
-  }
 
 
 }

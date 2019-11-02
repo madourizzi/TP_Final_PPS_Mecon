@@ -23,6 +23,13 @@ const routes: Routes = [
   { path: 'cervecero', loadChildren: './pages/cervecero/cervecero.module#CerveceroPageModule' },
   { path: 'candy-bar', loadChildren: './pages/candy-bar/candy-bar.module#CandyBarPageModule' },
 
+  /// routing del admin
+  { path: 'mesa', loadChildren: './pages/admin/mesa/mesa.module#MesaPageModule' },
+  { path: 'empleados', loadChildren: './pages/admin/empleados/empleados.module#EmpleadosPageModule' },
+  { path: 'productos', loadChildren: './pages/admin/productos/productos.module#ProductosPageModule' },
+  { path: 'stats', loadChildren: './pages/admin/stats/stats.module#StatsPageModule' },
+
+
 
 
 ];

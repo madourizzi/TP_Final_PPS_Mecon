@@ -4,7 +4,7 @@
         <ion-item color="light">
             <ion-icon name="add-circle-outline" slot="start"></ion-icon>
             <ion-label position="floating"></ion-label>
-            <ion-input formControlName="numero" maxlength="15" name="numero" type="text" placeholder="Numero"></ion-input>
+            <ion-input formControlName="numero" maxlength="15" name="numero" type="number" placeholder="Numero"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validation_messages.numero">
             <div *ngIf="form.get('numero').hasError(validation.type) && (form.get('numero').dirty || form.get('numero').touched)">
@@ -14,7 +14,7 @@
         <ion-item color="light">
             <ion-icon name="body" slot="start"></ion-icon>
             <ion-label position="floating"></ion-label>
-            <ion-input formControlName="cantidadComensales" maxlength="100" name="cantidadComensales" type="text" placeholder="cantidadComensales"></ion-input>
+            <ion-input formControlName="cantidadComensales" maxlength="100" name="cantidadComensales" type="number" placeholder="cantidadComensales"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validation_messages.cantidadComensales">
             <div *ngIf="form.get('cantidadComensales').hasError(validation.type) && (form.get('cantidadComensales').dirty || form.get('cantidadComensales').touched)">
@@ -24,7 +24,7 @@
         <ion-item color="light">
             <ion-icon name="beer" slot="start"></ion-icon>
             <ion-label position="floating"></ion-label>
-            <ion-input formControlName="tipoMesa" name="tipoMesa" type="number" placeholder="tipoMesa"></ion-input>
+            <ion-input formControlName="tipoMesa" name="tipoMesa" type="text" placeholder="tipoMesa"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validation_messages.tipoMesa">
             <div *ngIf="form.get('tipoMesa').hasError(validation.type) && (form.get('tipoMesa').dirty || form.get('tipoMesa').touched)">
@@ -34,7 +34,7 @@
         <ion-item color="light">
             <ion-icon name="logo-usd" slot="start"></ion-icon>
             <ion-label position="floating"></ion-label>
-            <ion-input formControlName="codigoQr" name="codigoQr" type="number" placeholder="codigoQr"></ion-input>
+            <ion-input formControlName="codigoQr" name="codigoQr" type="text" placeholder="codigoQr"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validation_messages.codigoQr">
             <div *ngIf="form.get('codigoQr').hasError(validation.type) && (form.get('codigoQr').dirty || form.get('codigoQr').touched)">
