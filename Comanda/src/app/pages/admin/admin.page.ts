@@ -19,6 +19,7 @@ export class AdminPage implements OnInit {
   title: string;
   cargarProducto;
   botonera;
+  altaMesa;
 
   constructor(private spinner: SpinnerService,
     private qr: BarcodeScanner,
@@ -30,8 +31,9 @@ export class AdminPage implements OnInit {
     setTimeout(() => this.spinner.hide(), 500);
     this.adminPerfilUser = false;
     this.cargarProducto = false;
-    this.botonera = true;
+    this.botonera = false;
     this.editarUsuario = false;
+    this.altaMesa=true;
   }
 
 
@@ -41,6 +43,7 @@ export class AdminPage implements OnInit {
     this.botonera = false;
     this.editarUsuario = false;
     this.cargarProducto = false;
+    this.altaMesa=false;
   }
 
 
@@ -50,6 +53,7 @@ export class AdminPage implements OnInit {
     this.adminPerfilUser = false;
     this.botonera = false;
     this.editarUsuario = false;
+    this.altaMesa=false;
 
   }
 
@@ -74,6 +78,7 @@ export class AdminPage implements OnInit {
     this.adminPerfilUser = false;
     this.botonera = true;
     this.editarUsuario = false;
+    this.altaMesa=false;
 
   }
 
@@ -86,6 +91,7 @@ export class AdminPage implements OnInit {
     this.botonera = false;
     this.cargarProducto = false;
     this.usuarioElegido= $event;
+    this.altaMesa=false;
     
 
   }

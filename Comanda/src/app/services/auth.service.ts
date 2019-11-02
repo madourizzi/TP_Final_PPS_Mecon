@@ -41,6 +41,7 @@ export class AuthService {
   login(email: string, password: string) {
     this.spinner.show();
     console.log(email + ' ' + password);
+    sessionStorage.setItem("usuario", JSON.stringify(email));
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
  

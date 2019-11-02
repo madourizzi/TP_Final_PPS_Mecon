@@ -9,18 +9,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListadoProductosComponent } from './listado-productos/listado-productos.component';
 import { ConfirmarPedidoComponent } from './confirmar-pedido/confirmar-pedido.component';
 import { ListadoEmpleadosComponent} from './listado-empleados/listado-empleados.component';
+import { ListadoPedidosComponent } from './listado-pedidos/listado-pedidos.component';
+import { EstadoPedidoComponent } from './estado-pedido/estado-pedido.component';
+import { AltaMesaComponent } from './alta-mesa/alta-mesa.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent,
-    ListadoEmpleadosComponent
+    ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent
   ],
   exports: [
     HeaderComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent,
-    ListadoEmpleadosComponent
+    ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent
   ],
   imports: [
     CommonModule,

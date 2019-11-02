@@ -107,7 +107,6 @@ export class AdminFormPage implements OnInit {
     usuario.password = this.altaForm.value.clave;
     usuario.perfil = this.altaForm.value.perfil;
     usuario.foto = this.urlFoto;
-    usuario.tipo="EMPLEADO";
     usuario.activo=true;
 
     this.userServ.saveUsuario(usuario)

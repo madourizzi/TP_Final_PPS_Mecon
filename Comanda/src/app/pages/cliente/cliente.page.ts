@@ -23,6 +23,7 @@ export class ClientePage implements OnInit {
     private qr: BarcodeScanner,
     private archivos: ArchivosService) {
     this.title = "Bienvenido Cliente: ";
+  
   }
 
   ngOnInit() {
