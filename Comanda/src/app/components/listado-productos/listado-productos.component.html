@@ -9,8 +9,8 @@
                 <h3>{{producto.nombre}}</h3>
                 <p>{{producto.descripcion}} </p>
             </ion-label>
-            <ion-button color="danger" (click)="elegir(producto)">Elegir</ion-button>
-            <ion-button color="secondary" (click)=" enviarProducto(producto)">Editar</ion-button>
+            <ion-button color="danger" (click)="elegir(producto)" *ngIf="admin=='cliente'">Elegir</ion-button>
+            <ion-button color="secondary" (click)=" enviarProducto(producto)" *ngIf="admin=='admin'">Editar</ion-button>
         </ion-item>
     </ion-list>
 </ion-content>

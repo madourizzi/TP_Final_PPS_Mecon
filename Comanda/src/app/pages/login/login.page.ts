@@ -74,9 +74,11 @@ export class LoginPage implements OnInit {
               {
                 /// segun perfil del usuario aca definimos el routing
                 case "admin":
+                    localStorage.setItem("perfil", 'admin');
                     this.router.navigate(['/admin']);
                     break;
-                case "cliente":                  
+                case "cliente":   
+                localStorage.setItem("perfil", 'cliente');               
                     this.router.navigate(['/cliente']);
                     break;
                 case "mozo":                  

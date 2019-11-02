@@ -49,14 +49,14 @@
         </ng-container>
         <hr>
 
-        <ion-button color="secondary" expand="block" type="submit" [disabled]="!form.valid">
+        <ion-button color="secondary" expand="block" type="submit" [disabled]="!form.valid" *ngIf="nuevo=='true'">
             Ingresar Nuevo Producto
         </ion-button>
-        <ion-button color="danger" expand="block-inline" (click)="modificar()" [disabled]="!form.valid">
-            Ingresar Modificar Producto
+        <ion-button color="danger" expand="block" (click)="modificar()" [disabled]="!form.valid" *ngIf="nuevo=='false'">
+            Modificar Producto
         </ion-button>
-        <ion-button color="primary" expand="block-inline" (click)="eliminar()" [disabled]="!form.valid">
-            Ingresar Eliminar Producto
+        <ion-button color="primary" expand="block" (click)="eliminar()" [disabled]="!form.valid" *ngIf="nuevo=='false'">
+            Eliminar Producto
         </ion-button>
 
 

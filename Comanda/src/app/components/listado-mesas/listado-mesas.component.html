@@ -7,8 +7,9 @@
             </ion-thumbnail>
             <ion-label>
                 <h3>Mesa Nº {{mesa.numero}}</h3>
-                <p>Cantidad Comen: {{mesa.cantidadComensales}} </p>
-                <p style="font-weight: bold; color:brown">Estado {{mesa.estado}} </p>
+                <p>Comensales: {{mesa.cantidadComensales}} </p>
+                <p style="font-weight: bold; color:brown" *ngIf="mesa.estado=='ocupada'">Estado {{mesa.estado}} </p>
+                <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="mesa.estado=='disponible'">Estado {{mesa.estado}} </p>
             </ion-label>
 
         </ion-item>

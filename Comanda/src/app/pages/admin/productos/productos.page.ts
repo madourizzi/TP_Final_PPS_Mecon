@@ -42,6 +42,7 @@ export class ProductosPage implements OnInit {
     this.listaMesa = false;
     this.botonera = false;
     this.altaMesa = true;
+    localStorage.setItem("productoEstado", "true");
     
   }
 

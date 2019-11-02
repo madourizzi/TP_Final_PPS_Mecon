@@ -35,6 +35,7 @@ export class CargarProductoComponent implements OnInit {
   opcionElegida: number;
   public url: string;
   @Input() productoActual: Producto;
+  nuevo;
 
 
   validation_messages = {
@@ -88,15 +89,15 @@ export class CargarProductoComponent implements OnInit {
 
     });
 
-
     this.productoActual = new Producto();
-
     this.url = ('/admin-form/');
+    
 
   }
 
   ngOnInit() {
     console.log("entro a cargar producto");
+    this.nuevo= localStorage.getItem("productoEstado");
     console.log("elegiso", this.productoActual);
     this.opcionElegida = 3;
 

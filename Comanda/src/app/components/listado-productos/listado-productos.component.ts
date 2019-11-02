@@ -2,6 +2,7 @@ import { Component, OnInit , EventEmitter, Output} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Producto } from 'src/app/models/producto';
 import { ToastService } from 'src/app/services/toast.service';
+import { AdminFormPage } from 'src/app/pages/admin-form/admin-form.page';
 
 @Component({
   selector: 'app-listado-productos',
@@ -12,7 +13,8 @@ export class ListadoProductosComponent implements OnInit {ç
 
   productosPedidos: Array<any>;
   acumuladorProductos=0;
-  @Output() enviar:  EventEmitter<any> = new EventEmitter()
+  @Output() enviar:  EventEmitter<any> = new EventEmitter();
+ admin;
 
   productos: Array<Producto>;
 
@@ -34,7 +36,11 @@ export class ListadoProductosComponent implements OnInit {ç
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+   
+    this.admin= localStorage.getItem("perfil");
+    console.log("perfil" + this.admin);
+   }
 
   elegir(producto)
   {
@@ -49,6 +55,7 @@ export class ListadoProductosComponent implements OnInit {ç
   enviarProducto(producto)
   {
      this.enviar.emit(producto);        
+     localStorage.setItem("productoEstado", "false");
   }
 
 }
