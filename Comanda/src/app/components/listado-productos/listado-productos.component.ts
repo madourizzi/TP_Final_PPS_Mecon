@@ -46,10 +46,9 @@ export class ListadoProductosComponent implements OnInit {ç
    
   }
 
-  enviarPedido()
+  enviarProducto(producto)
   {
-     this.enviar.emit(this.productosPedidos);
-        
+     this.enviar.emit(producto);        
   }
 
 }

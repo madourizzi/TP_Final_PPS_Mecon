@@ -1,22 +1,21 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>
-            <ion-icon name="arrow-dropleft-circle" routerLink="/admin"></ion-icon> Productos</ion-title>
-
+        <ion-title (click)=" volver()">
+            <ion-icon name="arrow-dropleft-circle" routerLink="/admin"></ion-icon> Producto</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <div class="unGranDiv" style="height: 93vh;" *ngIf="botonera">
+<ion-content *ngIf="botonera">
+    <div class="unGranDiv" style="height: 93vh;">
         <ion-row style="height:50%; ">
-            <ion-col class="col-12" style="height:98%; background-color: red; color: seashell;  border-radius: 15px; " (click)="cambiarPerfilUsuario()">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(170, 15, 209); color: seashell;  border-radius: 15px; " (click)="verListaMesa()">
                 <ion-icon name="people" style="color: white; zoom: 4;   vertical-align: auto; ">
                 </ion-icon>
             </ion-col>
 
         </ion-row>
         <ion-row style="height:50%; ">
-            <ion-col class="col-12 " style="height:98%; background-color: rgb(10, 98, 104); color: seashell; border-radius: 15px; " (click)="cargarProductos() ">
+            <ion-col class="col-12 " style="height:98%; background-color: rgb(77, 3, 73); color: seashell; border-radius: 15px; " (click)="verAltaMesa() ">
                 <ion-icon name="albums" style="color: white; zoom: 4;  vertical-align: auto; ">
                 </ion-icon>
             </ion-col>
@@ -24,4 +23,11 @@
         </ion-row>
 
     </div>
+</ion-content>
+
+<ion-content *ngIf="altaMesa">
+    <app-cargar-producto [productoActual]="productoElegido"></app-cargar-producto>
+</ion-content>
+<ion-content *ngIf="listaMesa">
+    <app-listado-productos (enviar)="editarUsu($event)"></app-listado-productos>
 </ion-content>

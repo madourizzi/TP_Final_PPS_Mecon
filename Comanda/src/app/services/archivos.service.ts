@@ -98,7 +98,7 @@ export class ArchivosService {
           console.log(url + "url");
           loading.onDidDismiss();
           objeto.foto= url;
-          this.fireStore.doc(`users/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+          this.fireStore.doc(tipo + `/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
         }), 3000);
       }
     });
@@ -129,8 +129,7 @@ export class ArchivosService {
 
   }
   public uploadWebUpdate(event, tipo, objeto) {
-    console.log("eventi," ,objeto);
-    
+    console.log("eventi," ,objeto);    
     var url: any;
     this.aux = event.target.files[0].name;
     var lala = this.storage.ref(tipo + '/' + this.aux).put(event.target.files[0]);
@@ -143,7 +142,31 @@ export class ArchivosService {
           console.log(URL);
           url = URL;
           objeto.foto=url;
-          this.fireStore.doc(`users/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+          this.fireStore.doc(tipo + `/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+        }), 3000);
+      }
+    });
+
+
+  }
+
+
+
+  public uploadWebUpdateID(event, tipo, objeto) {
+    console.log("eventi," ,objeto);    
+    var url: any;
+    this.aux = event.target.files[0].name;
+    var lala = this.storage.ref(tipo + '/' + this.aux).put(event.target.files[0]);
+    lala.percentageChanges().subscribe((porcentaje) => {
+      this.porcentaje = Math.round(porcentaje);
+      console.log("this.porcentaje" + this.porcentaje)
+      if (this.porcentaje == 100) {
+        this.finalizado = true;
+        setTimeout(() => this.storage.ref(tipo + '/' + this.aux).getDownloadURL().subscribe((URL) => {
+          console.log(URL);
+          url = URL;
+          objeto.url=url;
+          this.fireStore.doc(tipo + `/${objeto.id}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
         }), 3000);
       }
     });

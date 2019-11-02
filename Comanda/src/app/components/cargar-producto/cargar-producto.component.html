@@ -1,5 +1,11 @@
 <ion-content padding color="dark">
     <h2 style="color:aliceblue">Carga de Producto</h2>
+    <div class="ion-text-center">
+        <ion-avatar class="mb-3" size="large" style="align-self: center; margin: auto; height: 200px; width: 200px;">
+            <img class="icon" *ngIf="!foto" src="../../../assets/images/nofoto.jpg" alt="">
+            <img class="icon" *ngIf="foto" [src]="foto" alt="">
+        </ion-avatar>
+    </div>
     <form style="margin-top: 40px;" [formGroup]="form" (ngSubmit)="onSubmitProducto()">
         <ion-item color="light">
             <ion-icon name="beer" slot="start"></ion-icon>
@@ -46,7 +52,13 @@
         <ion-button color="secondary" expand="block" type="submit" [disabled]="!form.valid">
             Ingresar Nuevo Producto
         </ion-button>
-       
+        <ion-button color="danger" expand="block-inline" (click)="modificar()" [disabled]="!form.valid">
+            Ingresar Modificar Producto
+        </ion-button>
+        <ion-button color="primary" expand="block-inline" (click)="eliminar()" [disabled]="!form.valid">
+            Ingresar Eliminar Producto
+        </ion-button>
+
 
         <br>
 
@@ -61,7 +73,7 @@
             <ion-fab-button color="success">
                 <ion-icon size="large" name="camera" (click)="tomarFoto()"></ion-icon>
             </ion-fab-button>
-         
+
             <ion-fab-button color="secondary">
                 <input type="file" e="archivo" id="archivo" (change)="detectFiles($event)">
             </ion-fab-button>
