@@ -3,7 +3,7 @@ import { User } from './user';
 
 export class Mesa {
 
-  id: string;
+  uid: string;
   numero: number;         
   cantidadComensales: number;     
   tipoMesa: string;       
@@ -11,8 +11,11 @@ export class Mesa {
   estado: string;   //Estados: {"disponible", "ocupada", "reservada" } 
   usuario: User;
   url;
+  cliente;
 
-    constructor() {}
+    constructor() {
+      this.cliente="sin asignar";
+    }
 
     dameJSON() {
       return JSON.parse( JSON.stringify(this));

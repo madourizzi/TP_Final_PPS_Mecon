@@ -13,50 +13,44 @@ export class ProductosService {
 
   constructor(
     private db: AngularFirestore,
- 
-   ) {
-    this.productosCollection=db.collection<Producto>('Productos');
+
+  ) {
+    this.productosCollection = db.collection<Producto>('Producto');
     this.productos = this.productosCollection.snapshotChanges().pipe(map(
-      actions => actions.map(a=> {
-        const data = a.payload.doc.data()as Producto;
+      actions => actions.map(a => {
+        const data = a.payload.doc.data() as Producto;
         const id = a.payload.doc.id;
-        return {id, data};
+        return { id, data };
       })
     ));
   }
 
- 
+
   crearProducto(nuevoProducto: Producto) {
-    return this.db.collection('productos').add(JSON.parse(JSON.stringify(nuevoProducto)));
+    return this.db.collection('producto').add(JSON.parse(JSON.stringify(nuevoProducto)));
 
   }
 
   traerTodosProductos() {
-    return this.db.collection('productos').snapshotChanges();
+    return this.db.collection('producto').snapshotChanges();
   }
-  traerProductos() {
-    this.productosCollection = this.db.collection<Producto>("SP_productos", ref => ref.orderBy('nombre', 'asc') );
-    this.productos = this.productosCollection.valueChanges();
-    return this.productos;
-  }
-  
+
+
   traerUnProducto(id) {
-    return this.db.collection('productos').doc(id).valueChanges();
+    return this.db.collection('producto').doc(id).valueChanges();
   }
 
-  traerTodosLosProductosPorTipo(tipo) {
-    return this.db.collection(tipo).snapshotChanges();
-  }
-  
-  cambiarEstadoProducto(producto: Producto){
-    return this.productosCollection.doc(producto.id).update(producto);
-}
-cargarProducto(productoAGuardarJSON: any){
-  let id = this.db.createId();
-  productoAGuardarJSON.id = id; 
-  return this.db.collection<Producto>("productos").doc(id).set(productoAGuardarJSON);
 
-}
+  cambiarEstadoProducto(producto: Producto) {
+    return this.productosCollection.doc(producto.uid).update(producto);
+  }
+
+  cargarProducto(productoAGuardarJSON: any) {
+    let id = this.db.createId();
+    productoAGuardarJSON.id = id;
+    return this.db.collection<Producto>("productos").doc(id).set(productoAGuardarJSON);
+
+  }
 
 
 }

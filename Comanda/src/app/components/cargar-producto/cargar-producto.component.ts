@@ -165,7 +165,7 @@ export class CargarProductoComponent implements OnInit {
         break;
       case 3:
         this.selectedFiles = false;
-        this.afs.doc(`producto/${this.productoActual.id}`).set(JSON.parse(JSON.stringify(this.productoActual)), { merge: true })
+        this.afs.doc(`producto/${this.productoActual.uid}`).set(JSON.parse(JSON.stringify(this.productoActual)), { merge: true })
         break;
       default:
         alert("carga cancelada");
@@ -177,7 +177,7 @@ export class CargarProductoComponent implements OnInit {
 
   eliminar() {
     this.productoActual.estado = "baja";
-    this.afs.doc(`producto/${this.productoActual.id}`).delete();
+    this.afs.doc(`producto/${this.productoActual.uid}`).delete();
 
 
   }

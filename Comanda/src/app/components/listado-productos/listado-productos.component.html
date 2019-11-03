@@ -1,6 +1,7 @@
 <ion-content>
     <ion-list style="height: 75vh" color="dark">
-        <ion-list-header color="dark">Elegi tu Menù</ion-list-header>
+        <ion-list-header color="dark" *ngIf="admin=='cliente'">Elegi tu Menù</ion-list-header>
+        <ion-list-header color="dark" *ngIf="admin=='admin'">Modificar Productos</ion-list-header>
         <ion-item *ngFor="let producto of productos">
             <ion-thumbnail slot="start">
                 <img src="{{producto.url}}">

@@ -66,7 +66,7 @@ export class ReservasService {
   AutorizarReseva(reserva: Reserva) {
     reserva.estado = "Autorizada";
 
-    this.db.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
+    this.db.collection("SP_reservas").doc(reserva.uid).set(reserva).then(() => {
 
 
       console.log('Documento editado exitósamente');
@@ -86,7 +86,7 @@ export class ReservasService {
   CancelarReserva(reserva: Reserva) {
     reserva.estado = "Cancelada";
 
-    this.db.collection("SP_reservas").doc(reserva.id).set(reserva).then(() => {
+    this.db.collection("SP_reservas").doc(reserva.uid).set(reserva).then(() => {
 
 
       console.log('Documento editado exitósamente');

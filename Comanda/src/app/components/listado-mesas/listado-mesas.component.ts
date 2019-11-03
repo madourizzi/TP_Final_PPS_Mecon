@@ -1,7 +1,10 @@
-import { Component, OnInit , EventEmitter, Output} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Mesa } from 'src/app/models/mesa';
+import { UsersService } from 'src/app/services/users.service';
+import { ProductosService } from 'src/app/services/productos.service';
+import { MesasService } from 'src/app/services/mesas.service';
 
 @Component({
   selector: 'app-listado-mesas',
@@ -11,37 +14,26 @@ import { Mesa } from 'src/app/models/mesa';
 export class ListadoMesasComponent implements OnInit {
 
   productosPedidos: Array<any>;
-  acumuladorProductos=0;
-  @Output() enviar:  EventEmitter<any> = new EventEmitter()
+  acumuladorProductos = 0;
+  @Output() enviar: EventEmitter<any> = new EventEmitter()
 
   mesas: Array<Mesa>;
 
-  constructor(private productosService: AuthService,
+  constructor(private productosService: MesasService,
     private toastService: ToastService) {
-    this.mesas= new Array();
+    this.mesas = new Array();
     this.productosPedidos = new Array();
-    this.productosService.traerTodos("mesa").subscribe(actions => {
-      this.mesas= [];
-      actions.map(a => {
-        const data = a.payload.doc.data() as Mesa;
-        const id = a.payload.doc.id;
-        data.id = id;
-        console.info(data, " data");
-        this.mesas.push(data);
-      });
-
-    });
+    this.mesas =  this.productosService.TraerMesas();
 
   }
 
   ngOnInit() { }
 
-  elegir(producto)
-  {
+  elegir(producto) {
     //toaster y sumarlo a un array
-   this.toastService.confirmationToast("eligio mesa" + producto.numero);
+    this.toastService.confirmationToast("eligio mesa" + producto.numero);
 
-   
+
   }
 
 

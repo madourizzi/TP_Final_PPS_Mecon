@@ -15,6 +15,7 @@ import { GalleryType } from 'src/app/models/enums/gallery-type.enum';
 import { ArchivosService } from 'src/app/services/archivos.service';
 import { Mesa } from 'src/app/models/mesa';
 import { LectorQrService } from 'src/app/services/lector-qr.service';
+import { MesasService } from 'src/app/services/mesas.service';
 
 
 
@@ -56,6 +57,7 @@ export class AltaMesaComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private mesaServ: MesasService,
     private imagesService: ImagesService,
     private formBuilder: FormBuilder,
     private toastService: ToastService,
@@ -122,7 +124,7 @@ export class AltaMesaComponent implements OnInit {
     this.selectedFiles = event;
     this.fileName = event.target.files[0].name;
     this.toastService.confirmationToast("ah elegido una foto");
-    console.log("ah elegido una foto");
+    console.log("ah elegido una foto", this.selectedFiles);
 
   }
   cancelar() {
@@ -144,13 +146,14 @@ export class AltaMesaComponent implements OnInit {
 
         break;
       case 2:
+        console.info(this.selectedFiles)
         this.archivos.uploadWeb(this.selectedFiles, 'mesa', this.mesaActual);
         this.selectedFiles = false;
 
         break;
       case 3:
         this.selectedFiles = false;
-        this.afs.collection('mesa').add(JSON.parse(JSON.stringify(this.mesaActual)))
+        this.mesaServ.enviarMesa(this.mesaActual);
         break;
  
     }

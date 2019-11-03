@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { UsersService } from 'src/app/services/users.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private authSvc:AuthService, 
+    private usuarios:UsersService, 
     private router: Router, 
     private nativeAudio: NativeAudio) 
     { 
@@ -35,11 +37,12 @@ export class RegisterPage implements OnInit {
     console.log(user);
   
     if(user){
-      this.authSvc.enviarUsuario(this.user)
+      this.usuarios.enviarUsuario(this.user)
       .then( e =>{
+        this.usuarios.traerUnUsuarioPorMail(this.user.email);
         console.log('Exito, usuario creado');
         this.nativeAudio.play("txt-alert");
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/cliente');
       });
     }
   }

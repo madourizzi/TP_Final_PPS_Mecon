@@ -12,7 +12,7 @@ export class Producto
 
     constructor() {}*/
 
-    id:string;
+    uid:string;
     nombre: string;
     descripcion: string;
     tiempo: number;

@@ -44,6 +44,8 @@ export class AdmPerfilUsuarioComponent implements OnInit {
 
   ngOnInit() {
 
+    this.opcionElegida = 3;
+
     this.altaForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -113,6 +115,7 @@ export class AdmPerfilUsuarioComponent implements OnInit {
       this.usuario.activo = false
     }
 
+
     this.subirFoto();
 
   }
@@ -126,13 +129,13 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     this.opcionElegida = 2;
     this.foto = event;
     this.fileName = event.target.files[0].name;
-    console.info("ah elegido una foto" , this.foto);
+    console.info("ah elegido una foto", this.foto);
 
   }
 
 
   private subirFoto() {
-  switch (this.opcionElegida) {
+    switch (this.opcionElegida) {
       case 1:
         let archivo = this.foto;
         console.info(this.foto)
@@ -142,18 +145,15 @@ export class AdmPerfilUsuarioComponent implements OnInit {
       case 2:
         this.archivos.uploadWebUpdate(this.foto, 'users', this.usuario);
         this.foto = false;
-
         break;
       case 3:
-     
+        this.userServ.actualizarUsuario(this.usuario);
         break;
-      default:
-        alert("carga cancelada");
-        break
+
     }
 
 
   }
 
-  
+
 }

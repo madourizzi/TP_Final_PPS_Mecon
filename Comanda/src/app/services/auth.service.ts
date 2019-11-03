@@ -69,30 +69,12 @@ export class AuthService {
     return this.angularFireAuth.auth.currentUser.email;
   }
 
-  
-  enviarUsuario(nuevoUsuario: User) {
-    return this.db.collection('users').add(JSON.parse(JSON.stringify(nuevoUsuario)));
+///////// lo copi en el servicio de user tambien
 
-  }
-
-  traerTodosUsuarios() {
-    return this.db.collection('users').snapshotChanges();
-  }
-  
-  traerUnUsuarios(uid) {
-    return this.db.collection('users').doc(uid).valueChanges();
-  }
-  
-  
-
-  traerTodos(tipo) {
+traerTodoss(tipo) {
     return this.db.collection(tipo).snapshotChanges();
   }
   
-  updateUser(user: User){
-    return this.usersCollection.doc(user.uid).update(user);
-}
-
 
   async onRegister(user: User) {
     var contenido = document.getElementById('contenido');

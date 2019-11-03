@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content [scrollEvents]="true">
     <ion-list style="height: 75vh" color="dark">
         <ion-list-header color="dark">Listado de Mesas</ion-list-header>
         <ion-item *ngFor="let mesa of mesas">
@@ -9,9 +9,9 @@
                 <h3>Mesa Nº {{mesa.numero}}</h3>
                 <p>Comensales: {{mesa.cantidadComensales}} </p>
                 <p style="font-weight: bold; color:brown" *ngIf="mesa.estado=='ocupada'">Estado {{mesa.estado}} </p>
+                <p style="font-weight: bold; color:rgb(236, 205, 26)" *ngIf="mesa.estado=='reservada'">Estado {{mesa.estado}} </p>
                 <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="mesa.estado=='disponible'">Estado {{mesa.estado}} </p>
             </ion-label>
-
         </ion-item>
     </ion-list>
 </ion-content>

@@ -54,11 +54,10 @@ export class PedidosService {
 
   TraerPedidos()
   {
-
     this.pedidosCollection = this.db.collection<Pedido>("pedidos");
     this.pedidos= this.pedidosCollection.valueChanges();
     return this.pedidos;
-    
+   
   }
 
  async AceptarPedido(pedido: Pedido)
