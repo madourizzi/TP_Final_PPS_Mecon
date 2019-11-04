@@ -32,6 +32,7 @@ const routes: Routes = [
   { path: 'pedir-mesa-qr', loadChildren: './pages/cliente/pedir-mesa-qr/pedir-mesa-qr.module#PedirMesaQrPageModule' },
   { path: 'ocupar-mesa', loadChildren: './pages/cliente/ocupar-mesa/ocupar-mesa.module#OcuparMesaPageModule' },
   { path: 'detalle-mesa', loadChildren: './pages/cliente/detalle-mesa/detalle-mesa.module#DetalleMesaPageModule' },
+  { path: 'cliente-registro', loadChildren: './pages/cliente/cliente-registro/cliente-registro.module#ClienteRegistroPageModule' },
 
 
 

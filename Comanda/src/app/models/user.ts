@@ -11,11 +11,13 @@ export class User {
     estado: string;
     codigoRegistro: number;
     foto: string;  
+    registrado: boolean;
     activo:boolean;
     
     constructor() {
         this.perfil = "cliente";
         this.activo=true;
+        this.registrado=false;
         this.foto ="assets/images/nofoto.jpg";      
     }
 }

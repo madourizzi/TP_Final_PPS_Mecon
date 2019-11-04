@@ -16,7 +16,7 @@ export class UsersService {
 
   private listaEsperaFirebase: AngularFirestoreCollection<string>;
   private listaEsperaObservable: Observable<string[]>;
-  private usuarioActual;
+ public usuarioActual;
 
 
   dbRef: AngularFirestoreCollection<any>;
@@ -47,8 +47,12 @@ export class UsersService {
   }
 
 
+  limpiarUsuarioActual() {
+    return this.usuarioActual=null;
+  }
+
   traerUsuarioActual() {
-    return this.usuarioActual
+    return this.usuarioActual;
   }
 
 

@@ -99,6 +99,7 @@ export class LoginPage implements OnInit {
                     break;
               }
             }
+            
           });
         });
       })
@@ -112,6 +113,7 @@ export class LoginPage implements OnInit {
           this.toastService.errorToast('Ocurrió un error, contáctese con el administrador.');
         }
       });
+      
   }
 
   cargarDatos(rol: Roles) {

@@ -4,6 +4,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from 'src/app/services/archivos.service';
 import { MesasService } from 'src/app/services/mesas.service';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
+import { User } from 'src/app/models/user';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-cliente',
@@ -19,15 +22,19 @@ export class ClientePage implements OnInit {
   confirmar: boolean;
   pedirMesa: boolean;
   esperandoConfirmacion:boolean;
-
+  usuarioActual: User;
 
   constructor(
     private spinner: SpinnerService,  private router: Router,
     private qr: BarcodeScanner,
     private archivos: ArchivosService,
-    private mesasServ : MesasService)
+    private usuarios: UsersService,
+    private mesasServ : MesasService,
+    private alertController:AlertController)
      {
     this.title = "Bienvenido Cliente: ";
+
+    
 
     
   
@@ -38,8 +45,46 @@ export class ClientePage implements OnInit {
     this.botonera = true;
     this.menu = false;
     this.confirmar = false;
+    setTimeout(() => {
+      this.usuarioActual = this.usuarios.traerUsuarioActual();
+      console.log("el usuario actual es: ", this.usuarioActual);
 
+        if(this.usuarioActual.registrado==false){
+          this.registroClienteAlertConfirm();
+        }
+      
+    }, 1000);
+      
+    
   }
+
+
+  async registroClienteAlertConfirm() {
+  const alert = await this.alertController.create({
+    header: 'Registrese como cliente!',
+    message: 'Para poder obtener los privilegios de <strong>cliente VIP</strong>!!!',
+    buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');//enviar a la pagina de registro definitivo de usuario
+        }
+      }, {
+        text: 'Aceptar',
+        handler: () => {
+          this.router.navigate(['/cliente-registro']);  
+          console.log('Confirm Okay');
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+  let result = await alert.onDidDismiss();
+  console.log(result);
+}
 
 
   ingresarPedido() {
