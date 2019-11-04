@@ -1,35 +1,44 @@
 <app-header [titulo]="title" [backButton]="true" (volver)="volver($event)"></app-header>
+
 <ion-content no-bounce>
     <div class="unGranDiv" style="height: 93vh;" *ngIf="botonera">
-        <ion-row style="height:50%; ">
-            <ion-col class="col-6" style="height:98%; background-color: red; color: seashell;  border-radius: 15px; " (click)="cambiarPerfilUsuario()">
-                <ion-icon name="people" style="color: white; zoom: 4;   vertical-align: auto; " >
+        <ion-row style="height:25%; ">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(221, 77, 77); color: seashell;  border-radius: 15px; " (click)=" mesas()">
+                <ion-icon name="rose" style="color: white; zoom: 4;   vertical-align: auto; ">
                 </ion-icon>
             </ion-col>
-            <ion-col class="col-6 " style="height:98%; background-color: rgb(10, 98, 104); color: seashell; border-radius: 15px; " (click)="cargarProductos() ">
-                <ion-icon name="albums" style="color: white; zoom: 4;  vertical-align: auto; " >
+
+        </ion-row>
+        <ion-row style="height:25%; ">
+            <ion-col class="col-12" style="height:98%; background-color: red; color: seashell;  border-radius: 15px; " (click)=" productos()">
+                <ion-icon name="pizza" style="color: white; zoom: 4;   vertical-align: auto; ">
                 </ion-icon>
             </ion-col>
+
         </ion-row>
-        <ion-row style="height:50%; ">
-            <ion-col class="col-6" style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; " (click)="leerQr()">
-                <img src="../../../assets/qr_img.png" alt="" (click)="leerQr()">
+        <ion-row style="height:25%; ">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(194, 112, 18); color: seashell;  border-radius: 15px; " (click)=" empleados()">
+                <ion-icon name="people" style="color: white; zoom: 4;   vertical-align: auto; ">
+                </ion-icon>
             </ion-col>
-            <ion-col class=" col-6 " style="height:98%; background-color:rgb(10, 153, 41); color: seashell; border-radius: 15px; " (click)="camara()">
-                <ion-icon name="camera" style="color: white; zoom: 4;  vertical-align: auto; " (click)="camara()">
-                </ion-icon> <label for="">Camara</label>
-            </ion-col>
+
         </ion-row>
+        <ion-row style="height:25%; ">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(82, 33, 5); color: seashell;  border-radius: 15px; " (click)=" stats()">
+                <ion-icon name="pie" style="color: white; zoom: 4;   vertical-align: auto; ">
+                </ion-icon>
+            </ion-col>
+
+        </ion-row>
+
 
     </div>
 
-    <ion-content *ngIf="adminPerfilUser">
-        <!-- <app-adm-perfil-usuario></app-adm-perfil-usuario> -->
-        <app-listado-empleados (usuarioElegido)="editarUsu($event)"></app-listado-empleados>
-    </ion-content>
-    <ion-content *ngIf="editarUsuario">
-        <app-adm-perfil-usuario [usuario]="usuarioElegido"></app-adm-perfil-usuario>
-    </ion-content>
-    <ion-content *ngIf="cargarProducto">
+
+    <!--    <ion-content *ngIf="cargarProducto">
         <app-cargar-producto></app-cargar-producto>
     </ion-content>
+    <ion-content *ngIf="altaMesa">
+        <app-alta-mesa></app-alta-mesa>
+            <app-listado-mesas></app-listado-mesas>
+    </ion-content> -->

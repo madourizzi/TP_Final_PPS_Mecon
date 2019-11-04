@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { User } from 'firebase';
@@ -7,11 +7,12 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Producto } from '../models/producto';
 import { File } from '@ionic-native/file/ngx';
 import { LoadingController } from '@ionic/angular';
+import { MesasService } from './mesas.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ArchivosService {
+export class ArchivosService implements OnInit {
   task: any;
   aux: any;
   docRefAux: any;
@@ -26,28 +27,40 @@ export class ArchivosService {
 
   newName: string;
   dbRef: AngularFirestoreCollection<any>;
-  
+
   image: any = '';
   selectedFiles: any;
   fileName: string;
+  loading;
 
   constructor(
     private storage: AngularFireStorage,
     private fireStore: AngularFirestore,
+    private mesaServ: MesasService,
     private auth: AuthService,
     private camera: Camera,
     private file: File,
     public loadingController: LoadingController,
   ) { }
 
+  async ngOnInit() {
+    
+
+  }
 
 
+  //////// UPLOAD DESDE CAMARA
+   /**
+    * 
+    * @param nombreArchivo NOMBRE DEL ARCHIVO
+    * @param datos archivo de datos, creo q es el blob
+    * @param tipo coleccion donde se va a guardar
+    * @param objeto objeto asociado el url
+    */
 
-
-  //Referencia del archivo
   async uploadAndroid(nombreArchivo: string, datos: any, tipo, objeto) {
 
-    const loading = await this.loadingController.create({
+    this.loading = await this.loadingController.create({
       message: 'Cargando Imagen',
       duration: 4000
     });
@@ -55,11 +68,12 @@ export class ArchivosService {
     var url: any;
     this.aux = nombreArchivo;
     var lala = this.storage.ref(tipo + '/' + this.aux).put(datos);
-    loading.present();
-    lala.percentageChanges().subscribe((porcentaje) => {
-      this.porcentaje = Math.round(porcentaje);
+    this.loading.present();
 
-      loading.message = 'Cargando Imagen: \n' + this.porcentaje.toString();
+    lala.percentageChanges().subscribe((porcentaje) => {
+
+      this.porcentaje = Math.round(porcentaje);
+      this.loading.message = 'Cargando Imagen: \n' + this.porcentaje.toString();
 
       if (this.porcentaje == 100) {
         this.finalizado = true;
@@ -67,14 +81,61 @@ export class ArchivosService {
           url = URL;
           this.URLPublica = URL;
           console.log(url + "url");
-          loading.onDidDismiss();
-          objeto.url= url;
-          this.fireStore.collection(tipo).add(JSON.parse(JSON.stringify(objeto))) 
+          this.loading.onDidDismiss();
+          objeto.url = url;
+          let id = this.fireStore.createId();
+          objeto.uid = id;
+          this.fireStore.collection(tipo).doc(objeto.uid).set(JSON.parse(JSON.stringify(objeto)));
         }), 3000);
       }
     });
   }
 
+  //////// UPdate DESDE CAMARA
+   /**
+    * 
+    * @param nombreArchivo NOMBRE DEL ARCHIVO
+    * @param datos archivo de datos, creo q es el blob
+    * @param tipo coleccion donde se va a guardar
+    * @param objeto objeto asociado el url coon UID
+    */
+  async uploadAndroidUpdate(nombreArchivo: string, datos: any, tipo, objeto) {
+    
+    this.loading = await this.loadingController.create({
+      message: 'Cargando Imagen',
+      duration: 4000
+    });
+    var url: any;
+    this.aux = nombreArchivo;
+    var lala = this.storage.ref(tipo + '/' + this.aux).put(datos);
+    this.loading.present();
+    lala.percentageChanges().subscribe((porcentaje) => {
+     
+      this.porcentaje = Math.round(porcentaje);
+      this.loading.message = 'Cargando Imagen: \n' + this.porcentaje.toString();
+
+      if (this.porcentaje == 100) {
+        this.finalizado = true;
+        setTimeout(() => this.storage.ref(tipo + '/' + this.aux).getDownloadURL().subscribe((URL) => {
+          url = URL;
+          this.URLPublica = URL;
+          console.log(url + "url");
+          this.loading.onDidDismiss();
+          objeto.foto = url;
+          this.fireStore.collection(tipo).doc(objeto.uid).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+        }), 3000);
+      }
+    });
+  }
+
+
+  //////// UPLOAD DESDE INPUT
+  /**
+   * 
+   * @param event Evento del Archivo que reicbio el input
+   * @param tipo nombre de la coleccion
+   * @param objeto objeto al cual sera asociado la imagen, que ya existe y tiene el campo UID
+   */
 
   //Tarea para subir archivo desde la web
   // el nombre del archivo esta relacionado con el nombre que le va a quedas
@@ -85,14 +146,16 @@ export class ArchivosService {
     var lala = this.storage.ref(tipo + '/' + this.aux).put(event.target.files[0]);
     lala.percentageChanges().subscribe((porcentaje) => {
       this.porcentaje = Math.round(porcentaje);
-      console.log("this.porcentaje" + this.porcentaje)
+      console.log(this.porcentaje);
       if (this.porcentaje == 100) {
         this.finalizado = true;
         setTimeout(() => this.storage.ref(tipo + '/' + this.aux).getDownloadURL().subscribe((URL) => {
           console.log(URL);
           url = URL;
-          objeto.url= url;
-          this.fireStore.collection(tipo).add(JSON.parse(JSON.stringify(objeto)))
+          objeto.url = url;
+          let id = this.fireStore.createId();
+          objeto.uid = id;
+          this.fireStore.collection(tipo).doc(objeto.uid).set(JSON.parse(JSON.stringify(objeto)))
         }), 3000);
       }
     });
@@ -101,9 +164,67 @@ export class ArchivosService {
   }
 
 
-//////////////////////////
-  async camara(tipo) {
-  const options: CameraOptions = {
+  //////// UPDATE DESDE INPUT
+  /**
+   * 
+   * @param event Evento del Archivo que reicbio el input
+   * @param tipo nombre de la coleccion
+   * @param objeto objeto al cual sera asociado la imagen, que ya existe y tiene el campo UID
+   */
+  public uploadWebUpdate(event, tipo, objeto) {
+    console.log("eventi,", objeto);
+    var url: any;
+    this.aux = event.target.files[0].name;
+    var lala = this.storage.ref(tipo + '/' + this.aux).put(event.target.files[0]);
+    lala.percentageChanges().subscribe((porcentaje) => {
+      //////
+      this.porcentaje = Math.round(porcentaje);
+      /////
+      if (this.porcentaje == 100) {
+        this.finalizado = true;
+        setTimeout(() => this.storage.ref(tipo + '/' + this.aux).getDownloadURL().subscribe((URL) => {
+          console.log(URL);
+          url = URL;
+          objeto.foto = url;
+          this.fireStore.doc(tipo + `/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+        }), 3000);
+      }
+    });
+  }
+
+  /**
+   * 
+   * @param event Evento del Archivo que reicbio el input
+   * @param tipo nombre de la coleccion
+   * @param objeto objeto al cual sera asociado la imagen, que ya existe y tiene el campo ID
+   */
+  public uploadWebUpdateID(event, tipo, objeto) {
+    console.log("eventi,", objeto);
+    var url: any;
+    this.aux = event.target.files[0].name;
+    var lala = this.storage.ref(tipo + '/' + this.aux).put(event.target.files[0]);
+    lala.percentageChanges().subscribe((porcentaje) => {
+      ////// loading
+      this.porcentaje = Math.round(porcentaje);
+      /////
+      if (this.porcentaje == 100) {
+        this.finalizado = true;
+        setTimeout(() => this.storage.ref(tipo + '/' + this.aux).getDownloadURL().subscribe((URL) => {
+          console.log(URL);
+          url = URL;
+          objeto.url = url;
+          this.fireStore.doc(tipo + `/${objeto.id}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+        }), 3000);
+      }
+    });
+
+
+  }
+
+
+  ////////////////////////// camara
+  async camara() {
+    const options: CameraOptions = {
       quality: 80,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
@@ -116,26 +237,17 @@ export class ArchivosService {
       console.log('cameraInfo' + cameraInfo);
       let blobInfo = await this.makeFileIntoBlob(cameraInfo);
       this.selectedFiles = blobInfo;
-      // this.cargarImagen(tipo); esto hace que se cargue solo
-      return this.selectedFiles; 
+      return this.selectedFiles;
     } catch (e) {
       console.log(e.message);
-      alert("File Upload Error " + e.message);
+      alert("No se subio el archivo " + e.message);
     }
   }
 
-
-
-/*     /////////////////
-    async cargarImagen(tipo) {
-      let archivo = this.selectedFiles;
-      console.info(this.selectedFiles);
-      this.uploadAndroid(archivo.fileName, archivo.imgBlob, tipo, this.auth.getCurrentUserMail());
-    }
+/**
+ * convierte la imagen en blob para subirlo q este listo para subir al storage
+ * @param _imagePath 
  */
-
-
-  // FILE STUFF
   makeFileIntoBlob(_imagePath) {
     // INSTALL PLUGIN - cordova plugin add cordova-plugin-file
     return new Promise((resolve, reject) => {
@@ -161,7 +273,6 @@ export class ArchivosService {
             type: "image/jpeg",
           });
           console.log("imgBlob.type, imgBlob.size");
-
           console.log(imgBlob.type, imgBlob.size);
           resolve({
             fileName,
@@ -172,12 +283,13 @@ export class ArchivosService {
     });
   }
 
+/////////////////// base 64
   uploadToStorage(info): AngularFireUploadTask {
     this.newName = `${new Date().getTime()}.jpeg`;
     let image = `data:image/jpeg;base64,${info}`;
     return this.storage.ref(`archivos/${this.newName}`).putString(image, 'data_url');
   }
-
+////////// ?????
   storeInfoDatabase(data) {
     return this.dbRef.doc(this.newName).set(data);
   }

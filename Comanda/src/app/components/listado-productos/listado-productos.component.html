@@ -1,20 +1,23 @@
 <ion-content>
-<ion-list style="height: 75vh" color="dark">
-    <ion-list-header color="dark">Elegi tu Menù</ion-list-header>
-    <ion-item *ngFor="let producto of productos">
-        <ion-thumbnail slot="start">
-            <img src="{{producto.url}}">
-        </ion-thumbnail>
-        <ion-label>
-            <h3>{{producto.nombre}}</h3>
-            <p>{{producto.descripcion}} </p>
-        </ion-label>
-        <ion-button color="danger" (click)="elegir(producto)">Elegir</ion-button>
-    </ion-item>
-</ion-list>
+    <ion-list style="height: 75vh; overflow-y: auto;" color="dark">
+        <ion-list-header color="dark" *ngIf="admin=='cliente'">Elegi tu Menù</ion-list-header>
+        <ion-list-header color="dark" *ngIf="admin=='admin'">Modificar Productos</ion-list-header>
+        <ion-item *ngFor="let producto of productos">
+            <ion-thumbnail slot="start">
+                <img src="{{producto.url}}">
+            </ion-thumbnail>
+            <ion-label>
+                <h3>{{producto.nombre}}</h3>
+                <p>{{producto.descripcion}} </p>
+                <p>{{producto.precio}} </p>
+            </ion-label>
+            <ion-button color="danger" (click)="elegir(producto)" *ngIf="admin=='cliente'">Elegir</ion-button>
+            <ion-button color="secondary" (click)=" enviarProducto(producto)" *ngIf="admin=='admin'">Editar</ion-button>
+        </ion-item>
+    </ion-list>
+    <ion-footer style="height: 10vh" *ngIf="admin=='cliente'">
+        <ion-toolbar>
+            <ion-button color="danger" style="width: 98%" (click)="enviarPedido()">Terminar Pedido ( {{acumuladorProductos}} )</ion-button>
+        </ion-toolbar>
+    </ion-footer>
 </ion-content>
-<ion-footer style="height: 20vh">
-    <ion-toolbar>
-        <ion-button color="danger" style="width: 98%" (click)="enviarPedido()">Terminar Pedido ( {{acumuladorProductos}} )</ion-button>
-    </ion-toolbar>
-</ion-footer>

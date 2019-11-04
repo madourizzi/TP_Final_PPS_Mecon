@@ -8,6 +8,7 @@ import { Events } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { ArchivosService } from 'src/app/services/archivos.service';
 
 
 @Component({
@@ -21,6 +22,10 @@ export class AdmPerfilUsuarioComponent implements OnInit {
   foto: any = null;
   urlFoto: string;
   title: string;
+  ////////////
+  opcionElegida;
+  fileName;
+  //////////////////
   @Input() usuario: User;
 
   constructor(
@@ -32,11 +37,14 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     public events: Events,
     private authSvc: AuthService,
     private router: Router,
+    private archivos: ArchivosService
   ) {
     this.title = " administrador";
   }
 
   ngOnInit() {
+
+    this.opcionElegida = 3;
 
     this.altaForm = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -71,35 +79,6 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     this.altaForm.controls['activo'].setValue(activo);
   }
 
-  takeFoto() {
-    this.camServ.takePhoto()
-      .then(imgData => {
-        if (imgData !== 'No Image Selected') {
-          this.saveFoto(imgData);
-          this.foto = `data:image/jpeg;base64,${imgData}`;
-        } else {
-          this.toastServ.errorToast("No se pudo tomar la foto");
-        }
-      })
-      .catch(error => {
-        this.toastServ.errorToast(`Error al tomar foto: ${error.message}`);
-      })
-  }
-
-  saveFoto(data: any) {
-    var res = this.camServ.uploadPhoto(data)
-      .then((res) => {
-
-        this.toastServ.confirmationToast("Foto guardada")
-      })
-      .catch(err => {
-        this.toastServ.errorToast('Error: No se ha podido guardar la foto. ' + err.message);
-      })
-    this.events.subscribe('urlFotoGuardada', url => {
-      console.info("evento url", url);
-      this.urlFoto = url;
-    });
-  }
 
   scanDNI() {
     this.barcodeServ.scan()
@@ -136,7 +115,45 @@ export class AdmPerfilUsuarioComponent implements OnInit {
       this.usuario.activo = false
     }
 
-    this.authSvc.updateUser(this.usuario);
+
+    this.subirFoto();
 
   }
+
+  async tomarFoto() {
+    this.foto = await this.archivos.camara();
+    this.opcionElegida = 1;
+  }
+
+  detectFiles(event) {
+    this.opcionElegida = 2;
+    this.foto = event;
+    this.fileName = event.target.files[0].name;
+    console.info("ah elegido una foto", this.foto);
+
+  }
+
+
+  private subirFoto() {
+    switch (this.opcionElegida) {
+      case 1:
+        let archivo = this.foto;
+        console.info(this.foto)
+        this.archivos.uploadAndroidUpdate(archivo.fileName, archivo.imgBlob, 'users', this.usuario);
+        this.foto = false;
+        break;
+      case 2:
+        this.archivos.uploadWebUpdate(this.foto, 'users', this.usuario);
+        this.foto = false;
+        break;
+      case 3:
+        this.userServ.actualizarUsuario(this.usuario);
+        break;
+
+    }
+
+
+  }
+
+
 }

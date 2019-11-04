@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title (click)=" volver()">
+            <ion-row class="row">
+                <ion-col class="col-8">
+                    Producto
+                </ion-col>
+                <ion-col class="col-3"></ion-col>
+                <ion-col class="col-1">
+                    <ion-icon name="arrow-dropleft-circle" class=" mr-1" routerLink="/admin"></ion-icon>
+                </ion-col>
+            </ion-row>
+
+
+
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="botonera">
+    <div class="unGranDiv" style="height: 93vh;">
+        <ion-row style="height:50%; ">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(170, 15, 209); color: seashell;  border-radius: 15px; " (click)="verListaMesa()">
+                <ion-icon name="people" style="color: white; zoom: 4;   vertical-align: auto; ">
+                </ion-icon>
+            </ion-col>
+
+        </ion-row>
+        <ion-row style="height:50%; ">
+            <ion-col class="col-12 " style="height:98%; background-color: rgb(77, 3, 73); color: seashell; border-radius: 15px; " (click)="verAltaMesa() ">
+                <ion-icon name="albums" style="color: white; zoom: 4;  vertical-align: auto; ">
+                </ion-icon>
+            </ion-col>
+
+        </ion-row>
+
+    </div>
+</ion-content>
+
+<ion-content *ngIf="altaMesa">
+    <app-cargar-producto [productoActual]="productoElegido"></app-cargar-producto>
+</ion-content>
+<ion-content *ngIf="listaMesa">
+    <app-listado-productos (enviar)="editarUsu($event)"></app-listado-productos>
+</ion-content>

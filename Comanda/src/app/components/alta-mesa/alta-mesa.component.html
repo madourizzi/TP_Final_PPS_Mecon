@@ -1,0 +1,79 @@
+<ion-content padding color="dark">
+    <h2 style="color:aliceblue">Alta Mesa</h2>
+    <form style="margin-top: 40px;" [formGroup]="form" (ngSubmit)="onSubmitProducto()">
+        <ion-item color="light">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            <ion-label position="floating"></ion-label>
+            <ion-input formControlName="numero" maxlength="15" name="numero" type="number" placeholder="Numero"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.numero">
+            <div *ngIf="form.get('numero').hasError(validation.type) && (form.get('numero').dirty || form.get('numero').touched)">
+                {{ validation.message }}
+            </div>
+        </ng-container>
+        <ion-item color="light">
+            <ion-icon name="body" slot="start"></ion-icon>
+            <ion-label position="floating"></ion-label>
+            <ion-input formControlName="cantidadComensales" maxlength="100" name="cantidadComensales" type="number" placeholder="cantidadComensales"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.cantidadComensales">
+            <div *ngIf="form.get('cantidadComensales').hasError(validation.type) && (form.get('cantidadComensales').dirty || form.get('cantidadComensales').touched)">
+                {{ validation.message }}
+            </div>
+        </ng-container>
+        <ion-item color="light">
+            <ion-icon name="beer" slot="start"></ion-icon>
+            <ion-label position="floating"></ion-label>
+            <ion-input formControlName="tipoMesa" name="tipoMesa" type="text" placeholder="tipoMesa"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.tipoMesa">
+            <div *ngIf="form.get('tipoMesa').hasError(validation.type) && (form.get('tipoMesa').dirty || form.get('tipoMesa').touched)">
+                {{ validation.message }}
+            </div>
+        </ng-container>
+        <ion-item color="light">
+            <ion-icon name="logo-usd" slot="start"></ion-icon>
+            <ion-label position="floating"></ion-label>
+            <ion-input formControlName="codigoQr" name="codigoQr" type="text" placeholder="codigoQr"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.codigoQr">
+            <div *ngIf="form.get('codigoQr').hasError(validation.type) && (form.get('codigoQr').dirty || form.get('codigoQr').touched)">
+                {{ validation.message }}
+            </div>
+        </ng-container>
+        <hr>
+
+        <ion-button color="secondary" expand="block" type="submit" [disabled]="!form.valid">
+            Ingresar Nueva Mesa
+        </ion-button>
+
+
+        <br>
+
+    </form>
+
+
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button color="danger">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list size="large" side="start">
+            <ion-fab-button color="success">
+                <ion-icon size="large" name="camera" (click)="tomarFoto()"></ion-icon>
+            </ion-fab-button>
+
+            <ion-fab-button color="secondary">
+                <input type="file" e="archivo" id="archivo" (change)="detectFiles($event)">
+            </ion-fab-button>
+        </ion-fab-list>
+        <ion-fab-list size="large" side="end">
+            <ion-fab-button color="secondary">
+                <ion-icon size="large" name="qr-scanner" (click)="scanDNI()"></ion-icon>
+                <!--  <ion-icon size="large" name="qr-scanner" (click)="scanDNI()"></ion-icon> -->
+            </ion-fab-button>
+        </ion-fab-list>
+
+    </ion-fab>
+
+
+</ion-content>

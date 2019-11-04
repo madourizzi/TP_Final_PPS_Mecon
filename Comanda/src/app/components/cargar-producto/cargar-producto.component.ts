@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
@@ -27,12 +27,15 @@ export class CargarProductoComponent implements OnInit {
 
   form: FormGroup;
   rolesEnum: Roles;
-  productoActual: Producto;
+  foto;
+
 
   selectedFiles;
   fileName;
   opcionElegida: number;
   public url: string;
+  @Input() productoActual: Producto;
+  nuevo;
 
 
   validation_messages = {
@@ -64,7 +67,6 @@ export class CargarProductoComponent implements OnInit {
     private smartAudioService: SmartAudioService,
     private vibration: Vibration,
     private afs: AngularFirestore,
-
     private archivos: ArchivosService) {
 
     this.form = this.formBuilder.group({
@@ -88,35 +90,52 @@ export class CargarProductoComponent implements OnInit {
     });
 
 
-    this.productoActual = new Producto();
-
     this.url = ('/admin-form/');
+
 
   }
 
   ngOnInit() {
     console.log("entro a cargar producto");
-    
-    this.opcionElegida=3;
+    this.nuevo = localStorage.getItem("productoEstado");
+    console.log("elegiso", this.productoActual);
+    this.opcionElegida = 3;
+
+
+    try {
+      this.form.controls['nombreProducto'].setValue(this.productoActual.nombre);
+      this.form.controls['descripcion'].setValue(this.productoActual.descripcion);
+      this.form.controls['stock'].setValue(this.productoActual.stock);
+      this.form.controls['precio'].setValue(this.productoActual.precio);
+      /*     this.form.controls['activo'].setValue(this.productoActual.activo); */
+      this.foto = this.productoActual.url;
+    } catch (e) {
+      console.log("try produciot", e);
+      this.productoActual = new Producto();
+
+    }finally{
+
+    }
+
+
+
   }
 
 
   onSubmitProducto() {
-    this.productoActual.nombre=this.form.get('nombreProducto').value;
-    this.productoActual.descripcion=this.form.get('descripcion').value;
-    this.productoActual.stock=this.form.get('stock').value;
-    this.productoActual.precio=this.form.get('precio').value;
-    this.productoActual.url="./qr_img.png";
-  
+    this.productoActual.nombre = this.form.get('nombreProducto').value;
+    this.productoActual.descripcion = this.form.get('descripcion').value;
+    this.productoActual.stock = this.form.get('stock').value;
+    this.productoActual.precio = this.form.get('precio').value;
     console.log(this.form.get('nombreProducto').value);
     this.subirFoto();
   }
 
   async tomarFoto() {
-    this.selectedFiles = await this.archivos.camara('producto');
+    this.selectedFiles = await this.archivos.camara();
     this.opcionElegida = 1;
-                /* ionic cordova plugin add cordova-plugin-file
-                npm install @ionic-native/file */
+    /* ionic cordova plugin add cordova-plugin-file
+    npm install @ionic-native/file */
   }
 
   detectFiles(event) {
@@ -124,12 +143,51 @@ export class CargarProductoComponent implements OnInit {
     this.selectedFiles = event;
     this.fileName = event.target.files[0].name;
     this.toastService.confirmationToast("ah elegido una foto");
-    console.log("ah elegido una foto");
+    console.log("ah elegido una foto", this.selectedFiles);
 
   }
+
   cancelar() {
     this.opcionElegida = 0;
     this.selectedFiles = false;
+
+  }
+
+
+  modificar() {
+    console.info("this.productoActual", this.productoActual);
+    this.productoActual.nombre = this.form.get('nombreProducto').value;
+    this.productoActual.descripcion = this.form.get('descripcion').value;
+    this.productoActual.stock = this.form.get('stock').value;
+    this.productoActual.precio = this.form.get('precio').value;
+
+
+    switch (this.opcionElegida) {
+      case 1:
+        let archivo = this.selectedFiles;
+        this.archivos.uploadAndroidUpdate(archivo.fileName, archivo.imgBlob, 'producto', this.productoActual);
+        this.selectedFiles = false;
+        break;
+      case 2:
+        this.archivos.uploadWebUpdateID(this.selectedFiles, 'producto', this.productoActual);
+        this.selectedFiles = false;
+        break;
+      case 3:
+        this.selectedFiles = false;
+        this.afs.doc(`producto/${this.productoActual.uid}`).set(JSON.parse(JSON.stringify(this.productoActual)), { merge: true })
+        break;
+      default:
+        alert("carga cancelada");
+        break
+    }
+
+
+  }
+
+  eliminar() {
+    this.productoActual.estado = "baja";
+    this.afs.doc(`producto/${this.productoActual.uid}`).delete();
+
 
   }
 
@@ -162,7 +220,7 @@ export class CargarProductoComponent implements OnInit {
 
   }
 
-  
+
 
 
 

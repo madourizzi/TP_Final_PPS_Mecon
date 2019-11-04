@@ -8,6 +8,7 @@ import { Vibration } from '@ionic-native/vibration/ngx';
 import { Roles } from 'src/app/models/enums/perfil.enum';
 import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { User } from 'src/app/models/user';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authService: AuthService, 
+    private userServ: UsersService, 
     private formBuilder: FormBuilder, 
     private toastService: ToastService, 
     private router: Router, 
@@ -57,26 +59,27 @@ export class LoginPage implements OnInit {
     const credential= await this.authService.login(this.form.get('mail').value, this.form.get('password').value)
       .then(res => {
 
-        this.authService.traerTodosUsuarios().subscribe(user => 
+        this.userServ.traerTodosUsuarios().subscribe(user => 
           {
           user.forEach(userData => {
             let data = userData.payload.doc.data() as User;
-            let id = userData.payload.doc.id;
-            data.uid = id;
-            console.log(data, "data");
-            console.log(id + "id");
-  
+
             if (data.email == this.authService.getCurrentUserMail()) {
-              localStorage.setItem("uid",  id);
+              this.userServ.traerUnUsuarioPorMail(data.email);
               this.smartAudioService.play('login');
               this.vibration.vibrate(500);
               switch(data.perfil)
               {
-                /// segun perfil del usuario aca definimos el routing
+               
                 case "admin":
+                    localStorage.setItem("perfil", 'admin');
                     this.router.navigate(['/admin']);
                     break;
-                case "cliente":                  
+                case "cliente":   
+
+                localStorage.setItem("perfil", 'cliente');  
+                       
+                //definir routing por si ya tiene un mesa asignada o no      
                     this.router.navigate(['/cliente']);
                     break;
                 case "mozo":                  
@@ -96,6 +99,7 @@ export class LoginPage implements OnInit {
                     break;
               }
             }
+            
           });
         });
       })
@@ -109,6 +113,7 @@ export class LoginPage implements OnInit {
           this.toastService.errorToast('Ocurrió un error, contáctese con el administrador.');
         }
       });
+      
   }
 
   cargarDatos(rol: Roles) {

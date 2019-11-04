@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title (click)=" volver()">
+            <ion-icon name="arrow-dropleft-circle" routerLink="/admin"></ion-icon> Mesa</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="botonera">
+    <div class="unGranDiv" style="height: 93vh;">
+        <ion-row style="height:50%; ">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(15, 209, 177); color: seashell;  border-radius: 15px; " (click)="verListaMesa()">
+                <ion-icon name="people" style="color: white; zoom: 4;   vertical-align: auto; ">
+                </ion-icon>
+            </ion-col>
+
+        </ion-row>
+        <ion-row style="height:50%; ">
+            <ion-col class="col-12 " style="height:98%; background-color: rgb(12, 66, 182); color: seashell; border-radius: 15px; " (click)="verAltaMesa() ">
+                <ion-icon name="albums" style="color: white; zoom: 4;  vertical-align: auto; ">
+                </ion-icon>
+            </ion-col>
+
+        </ion-row>
+
+    </div>
+</ion-content>
+
+<ion-content *ngIf="altaMesa">
+    <app-alta-mesa></app-alta-mesa>
+</ion-content>
+<ion-content *ngIf="listaMesa">
+    <app-listado-mesas></app-listado-mesas>
+</ion-content>

@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../../models/user';
 import { ToastService } from 'src/app/services/toast.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-listado-empleados',
@@ -13,16 +14,17 @@ export class ListadoEmpleadosComponent implements OnInit {
   usuarios: Array<User>;
 @Output() usuarioElegido: EventEmitter<any>;
 
-  constructor(private usuariosService: AuthService, private toastService: ToastService) {
+  constructor(private authServ: AuthService, private toastService: ToastService, private usuariosServ: UsersService) {
     this.usuarios = new Array();
-    this.usuariosService.traerTodos("users").subscribe(actions => {
+    this.usuariosServ.traerTodosUsuarios().subscribe(actions => {
       this.usuarios = [];
       actions.map(a => {
         const data = a.payload.doc.data() as User;
-        const id = a.payload.doc.id;
-        data.uid = id;
-        console.info(data, " data");
-        this.usuarios.push(data);
+        if(data.perfil!="cliente")
+        {
+          console.info(data, " data");
+          this.usuarios.push(data);
+        }
       });
 
     });
