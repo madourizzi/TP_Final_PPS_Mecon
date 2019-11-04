@@ -77,7 +77,7 @@ export class LoginPage implements OnInit {
                     break;
                 case "cliente":   
                 localStorage.setItem("perfil", 'cliente');               
-                    this.router.navigate(['/cliente']);
+                    this.router.navigate(['/pedir-mesa-qr']);
                     break;
                 case "mozo":                  
                     this.router.navigate(['/mozo']);

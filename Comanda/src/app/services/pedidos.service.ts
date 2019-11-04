@@ -44,7 +44,7 @@ export class PedidosService {
   }
 
   cambiarEstadoPedido(pedido: Pedido) {
-    return this.pedidosCollection.doc(pedido.id).update(pedido);
+    return this.pedidosCollection.doc(pedido.uid).update(pedido);
   }
 
   actualizarUnPedido(idPedido: string) {
@@ -64,7 +64,7 @@ export class PedidosService {
   {
     pedido.estado="pendiente";
     
-    this.db.collection("pedidos").doc(pedido.id).set(pedido).then(() => {
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
             
     
       console.log('Documento editado exitósamente');
@@ -79,7 +79,7 @@ export class PedidosService {
   {
     pedido.estado="cancelado";
     
-    this.db.collection("pedidos").doc(pedido.id).set(pedido).then(() => {
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
             
     
       console.log('Documento editado exitósamente');
@@ -95,7 +95,7 @@ export class PedidosService {
   {
     pedido.estado="pagado";
     
-    this.db.collection("pedidos").doc(pedido.id).set(pedido).then(() => {
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
             
     
       console.log('Documento editado exitósamente');
@@ -110,7 +110,7 @@ export class PedidosService {
   {
     pedido.estado="entregado";
     
-    this.db.collection("pedidos").doc(pedido.id).set(pedido).then(() => {
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
             
     
       console.log('Documento editado exitósamente');

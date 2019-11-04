@@ -4,7 +4,6 @@ import { User } from './user';
 
 export class Pedido {
 
-    id: string;
     productos: Array<Producto>;
     producto: Producto;
     uid;
@@ -14,6 +13,12 @@ export class Pedido {
     cliente: User;
     estado: string;                     
     costo: number;
+
+
+
+
+
+    ///////////
     descuento_10: boolean;
     descuento_bebida: boolean;
     descuento_postre: boolean;
@@ -42,7 +47,7 @@ export class Pedido {
         direccion?: string,
         costo_envio?: number,
         tiempo_envio?: number){
-            if(id == null || id == undefined) this.id = ""; else this.id = id;
+
             if(productos == null || productos == undefined) this.productos = new Array<any>(); else this.productos = productos;
             if(mesaId == null || mesaId == undefined) this.mesaId = ""; else this.mesaId = mesaId;
             if(cliente == null || cliente == undefined) this.cliente = new User() ; else this.cliente = cliente;

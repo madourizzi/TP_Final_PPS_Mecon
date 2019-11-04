@@ -83,7 +83,9 @@ export class ArchivosService implements OnInit {
           console.log(url + "url");
           this.loading.onDidDismiss();
           objeto.url = url;
-          this.fireStore.collection(tipo).add(JSON.parse(JSON.stringify(objeto)))
+          let id = this.fireStore.createId();
+          objeto.uid = id;
+          this.fireStore.collection(tipo).doc(objeto.uid).set(JSON.parse(JSON.stringify(objeto)));
         }), 3000);
       }
     });
@@ -120,7 +122,7 @@ export class ArchivosService implements OnInit {
           console.log(url + "url");
           this.loading.onDidDismiss();
           objeto.foto = url;
-          this.fireStore.doc(tipo + `/${objeto.uid}`).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
+          this.fireStore.collection(tipo).doc(objeto.uid).set(JSON.parse(JSON.stringify(objeto)), { merge: true })
         }), 3000);
       }
     });

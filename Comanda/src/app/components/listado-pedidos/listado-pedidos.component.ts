@@ -35,7 +35,7 @@ export class ListadoPedidosComponent{
   RetirarEntrega(pedido: Pedido) {
 
 
-    this.pedidoService.actualizarUnPedido(pedido.id).update({
+    this.pedidoService.actualizarUnPedido(pedido.uid).update({
 
       'estado': 'en_camino'
 
@@ -52,7 +52,7 @@ export class ListadoPedidosComponent{
 
   Entregar(pedido: Pedido) {
 
-    this.pedidoService.actualizarUnPedido(pedido.id).update({
+    this.pedidoService.actualizarUnPedido(pedido.uid).update({
 
       'estado': 'entregado'
 
@@ -118,7 +118,7 @@ export class ListadoPedidosComponent{
     total = Math.floor(total * 100) / 100;
 
 
-    this.pedidoService.actualizarUnPedido(pedido.id).update({
+    this.pedidoService.actualizarUnPedido(pedido.uid).update({
 
       'estado': 'pagado'
 
@@ -128,7 +128,7 @@ export class ListadoPedidosComponent{
 
     }).catch(err => {
 
-      console.log('Falló al intentar modificar el documento', err);
+      console.log('Falló al intesntar modificar el documento', err);
 
     });
 

@@ -12,9 +12,11 @@ export class Mesa {
   usuario: User;
   url;
   cliente;
+  pedidos: Array<Pedido>
 
     constructor() {
       this.cliente="sin asignar";
+      this.pedidos= new Array();
     }
 
     dameJSON() {

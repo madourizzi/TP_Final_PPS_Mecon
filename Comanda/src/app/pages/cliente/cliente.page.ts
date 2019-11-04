@@ -3,6 +3,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from 'src/app/services/archivos.service';
 import { MesasService } from 'src/app/services/mesas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente',
@@ -21,7 +22,7 @@ export class ClientePage implements OnInit {
 
 
   constructor(
-    private spinner: SpinnerService,
+    private spinner: SpinnerService,  private router: Router,
     private qr: BarcodeScanner,
     private archivos: ArchivosService,
     private mesasServ : MesasService)
@@ -32,44 +33,11 @@ export class ClientePage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => this.spinner.hide(), 500);
-    this.botonera = false;
+    this.botonera = true;
     this.menu = false;
     this.confirmar = false;
-    this.esperandoConfirmacion=false;
-    //chequear si el usuario tiene mesa
-    this.pedirMesa = true;
-  }
-
-
-
-
-  pedirMesaQr() {
-    setTimeout(() => {
-      this.mesasServ.asignarMesaDisponible(10).then(()=>{
-        this.botonera = false;
-        this.menu = false;
-        this.confirmar = false;
-        this.pedirMesa = false;
-        this.esperandoConfirmacion=true;
-      });
-    }, 1000);
 
   }
-
-  confrimarMesa(){
-    setTimeout(() => {
-      this.mesasServ.cambiarEstadoMesaOcupada().then(()=>{
-        this.botonera = true;
-        this.menu = false;
-        this.confirmar = false;
-        this.pedirMesa = false;
-        this.esperandoConfirmacion=false;
-      });
-    }, 1000);
-
-  }
-
-
 
 
   ingresarPedido() {
@@ -77,15 +45,6 @@ export class ClientePage implements OnInit {
     this.botonera = false;
   }
 
-
-
-  leerQr() {
-
-    this.mesasServ.cambiarEstadoMesaOcupada() ;
-
-    /* ionic cordova plugin add phonegap-plugin-barcodescanner
-   npm install @ionic-native/barcode-scanner */
-  }
 
   volver($event) {
     this.menu = false;
@@ -98,6 +57,11 @@ export class ClientePage implements OnInit {
     this.confirmar = true;
     this.menu = false;
     this.botonera = false;
+  }
+
+  consultarPedidos()
+  {
+    this.router.navigate(['/detalle-mesa']);
   }
 
 

@@ -23,7 +23,7 @@ export class MesasService {
   public mesasId: Array<any>;
   //public mesasDisponibles: Array<Mesa>;
   public usuarioEnMesa: User;
-  mesaActual = null;
+  mesaActual:Mesa = null;
 
   constructor(
     public http: HttpClient,
@@ -37,7 +37,7 @@ export class MesasService {
 
   TraerMesas() {
 
-    this.listaMesasFirebase = this.objFirebase.collection<Mesa>("mesa", ref => ref.orderBy('numero', 'desc'));
+    this.listaMesasFirebase = this.objFirebase.collection<Mesa>("mesa", ref => ref.orderBy('numero', 'asc'));
     this.listaMesasObservable = this.listaMesasFirebase.valueChanges();
     this.listaMesasObservable.subscribe(arr => {
       this.mesas = new Array<any>();
@@ -66,7 +66,7 @@ export class MesasService {
 
   async asignarMesaDisponible(comensales) {
     const mesasDisponible = this.MesasDisponibles();
-    return this.qrService.readQR().then(async QRdata => {
+  return this.qrService.readQR().then(async QRdata => {
       let flagQR = false;
       if ("madourizzi@solicitudDeMesa" == QRdata.text) {
         flagQR = true;
@@ -90,6 +90,7 @@ export class MesasService {
                 //middle || top
               });
               toast.present();
+              return true;
             }
           }
 
@@ -101,6 +102,7 @@ export class MesasService {
             position: 'middle' //middle || top
           });
           toast.present();
+          return false;
         }
       }
 
@@ -112,8 +114,10 @@ export class MesasService {
           position: 'middle' //middle || top
         });
         toast.present();
+        return false;
       }
     }).catch(err => {
+      return false;
       console.log('Error', err);
     });
   }
@@ -194,13 +198,14 @@ export class MesasService {
 
   async cambiarEstadoMesaOcupada() {
     var usuario = this.usuarioServ.traerUsuarioActual();
-    this.qrService.readQR().then(async QRdata => {
+    return this.qrService.readQR().then(async QRdata => {
 
       if (this.mesaActual.codigoQr == QRdata.text) {
 
         if (this.mesaActual.estado == 'reservada' && this.mesaActual.cliente.email == usuario.email) {
 
-          this.actualizarMesa(this.mesaActual, "ocupada")
+          this.actualizarMesa(this.mesaActual, "ocupada");
+          this.mesaActual.estado="ocupada";
 
           const toast = await this.toastCtrl.create({
             message: "La mesa nro: " + this.mesaActual.numero + " es ocupada por " + usuario.nombre + " " + usuario.apellido,
@@ -208,6 +213,7 @@ export class MesasService {
             position: 'middle' //middle || top
           });
           toast.present();
+          return true;
 
         } else if (this.mesaActual.estado == 'reservada') {
           const toast = await this.toastCtrl.create({
@@ -216,6 +222,7 @@ export class MesasService {
             position: 'middle' //middle || top
           });
           toast.present();
+          return false;
         }
       } else {
         const toast = await this.toastCtrl.create({
@@ -224,10 +231,12 @@ export class MesasService {
           position: 'middle' //middle || top
         });
         toast.present();
+        return false;
 
       }
 
     }).catch(err => {
+      return false;
       console.log('Error', err);
     })
   }

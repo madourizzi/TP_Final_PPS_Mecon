@@ -89,24 +89,33 @@ export class CargarProductoComponent implements OnInit {
 
     });
 
-    this.productoActual = new Producto();
+
     this.url = ('/admin-form/');
-    
+
 
   }
 
   ngOnInit() {
     console.log("entro a cargar producto");
-    this.nuevo= localStorage.getItem("productoEstado");
+    this.nuevo = localStorage.getItem("productoEstado");
     console.log("elegiso", this.productoActual);
     this.opcionElegida = 3;
 
-    this.form.controls['nombreProducto'].setValue(this.productoActual.nombre);
-    this.form.controls['descripcion'].setValue(this.productoActual.descripcion);
-    this.form.controls['stock'].setValue(this.productoActual.stock);
-    this.form.controls['precio'].setValue(this.productoActual.precio);
-    /*     this.form.controls['activo'].setValue(this.productoActual.activo); */
-    this.foto = this.productoActual.url;
+
+    try {
+      this.form.controls['nombreProducto'].setValue(this.productoActual.nombre);
+      this.form.controls['descripcion'].setValue(this.productoActual.descripcion);
+      this.form.controls['stock'].setValue(this.productoActual.stock);
+      this.form.controls['precio'].setValue(this.productoActual.precio);
+      /*     this.form.controls['activo'].setValue(this.productoActual.activo); */
+      this.foto = this.productoActual.url;
+    } catch (e) {
+      console.log("try produciot", e);
+      this.productoActual = new Producto();
+
+    }finally{
+
+    }
 
 
 
@@ -134,7 +143,7 @@ export class CargarProductoComponent implements OnInit {
     this.selectedFiles = event;
     this.fileName = event.target.files[0].name;
     this.toastService.confirmationToast("ah elegido una foto");
-    console.log("ah elegido una foto" , this.selectedFiles);
+    console.log("ah elegido una foto", this.selectedFiles);
 
   }
 
@@ -151,7 +160,7 @@ export class CargarProductoComponent implements OnInit {
     this.productoActual.descripcion = this.form.get('descripcion').value;
     this.productoActual.stock = this.form.get('stock').value;
     this.productoActual.precio = this.form.get('precio').value;
-   
+
 
     switch (this.opcionElegida) {
       case 1:

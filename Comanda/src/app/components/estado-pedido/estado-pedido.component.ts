@@ -22,7 +22,7 @@ export class EstadoPedidoComponent {
 
   async ConfirmarEntrega() {
 
-    this.pedidoService.actualizarUnPedido(this.pedido.id).update({
+    this.pedidoService.actualizarUnPedido(this.pedido.uid).update({
 
       'estado': 'recibido'
 
@@ -65,7 +65,7 @@ export class EstadoPedidoComponent {
 
 
 
-      this.pedidoService.actualizarUnPedido(this.pedido.id).update({
+      this.pedidoService.actualizarUnPedido(this.pedido.uid).update({
 
         'propina': Math.round((this.pedido.costo * gradoSafisfaccion) * 100) / 100
 
@@ -86,7 +86,7 @@ export class EstadoPedidoComponent {
   SolicitarCuenta() {
 
 
-    this.pedidoService.actualizarUnPedido(this.pedido.id).update({
+    this.pedidoService.actualizarUnPedido(this.pedido.uid).update({
 
       'estado': 'solicita_cuenta'
 

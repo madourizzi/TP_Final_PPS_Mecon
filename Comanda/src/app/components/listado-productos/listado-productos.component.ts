@@ -4,6 +4,7 @@ import { Producto } from 'src/app/models/producto';
 import { ToastService } from 'src/app/services/toast.service';
 import { AdminFormPage } from 'src/app/pages/admin-form/admin-form.page';
 import { ProductosService } from 'src/app/services/productos.service';
+import { MesasService } from 'src/app/services/mesas.service';
 
 @Component({
   selector: 'app-listado-productos',
@@ -19,7 +20,7 @@ export class ListadoProductosComponent implements OnInit {ç
 
   productos: Array<Producto>;
 
-  constructor(private productosService: ProductosService,
+  constructor(private productosService: ProductosService, private mesaServ: MesasService,
     private toastService: ToastService) {
     this.productos = new Array();
     this.productosPedidos = new Array();
@@ -57,6 +58,11 @@ export class ListadoProductosComponent implements OnInit {ç
   {
      this.enviar.emit(producto);        
      localStorage.setItem("productoEstado", "false");
+  }
+
+  enviarPedido()
+  {
+    this.enviar.emit(this.productosPedidos);
   }
 
 }

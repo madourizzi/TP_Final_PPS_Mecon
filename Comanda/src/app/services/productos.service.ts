@@ -27,7 +27,10 @@ export class ProductosService {
 
 
   crearProducto(nuevoProducto: Producto) {
-    return this.db.collection('producto').add(JSON.parse(JSON.stringify(nuevoProducto)));
+    let id = this.db.createId();
+    nuevoProducto.uid = id;
+    return this.db.collection('producto').doc(id).set(JSON.parse(JSON.stringify(nuevoProducto)), { merge: true });
+  
 
   }
 
