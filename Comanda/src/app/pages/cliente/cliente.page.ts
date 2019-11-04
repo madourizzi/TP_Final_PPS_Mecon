@@ -28,6 +28,8 @@ export class ClientePage implements OnInit {
     private mesasServ : MesasService)
      {
     this.title = "Bienvenido Cliente: ";
+
+    
   
   }
 
@@ -69,6 +71,12 @@ export class ClientePage implements OnInit {
     this.router.navigate(['/pedir-mesa-qr']);
   }
 
+
+  consultarPedidosAnonimo()
+  {
+    //lanza qr y da detalle directo de cualquier mesa
+    this.router.navigate(['/detalle-mesa']);
+  }
 
 
 
