@@ -23,7 +23,7 @@ export class MesasService {
   public mesasId: Array<any>;
   //public mesasDisponibles: Array<Mesa>;
   public usuarioEnMesa: User;
-  mesaActual:Mesa = null;
+  mesaActual: Mesa = null;
 
   constructor(
     public http: HttpClient,
@@ -66,7 +66,7 @@ export class MesasService {
 
   async asignarMesaDisponible(comensales) {
     const mesasDisponible = this.MesasDisponibles();
-  return this.qrService.readQR().then(async QRdata => {
+    return this.qrService.readQR().then(async QRdata => {
       let flagQR = false;
       if ("madourizzi@solicitudDeMesa" == QRdata.text) {
         flagQR = true;
@@ -76,8 +76,8 @@ export class MesasService {
 
           if (flag2 == false) {
             console.log("mf", mesa);
-            
-            if (mesa.estado == "disponible" && mesa.cantidadComensales >= comensales ) {
+
+            if (mesa.estado == "disponible" && mesa.cantidadComensales >= comensales) {
               flag2 = true;
               console.log("disponible", mesa);
               this.mesaActual = mesa;
@@ -129,6 +129,21 @@ export class MesasService {
     return this.objFirebase.collection("mesa").doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
   }
 
+
+  traerMesaPorUsuarioMail(email) {
+
+    let resp: Mesa;
+    this.TraerMesas();
+     this.mesas.forEach((e: Mesa) => {
+      if (e.cliente.email == email) {
+          return e;
+
+      }
+
+
+    })
+
+  }
 
 
 
@@ -205,7 +220,7 @@ export class MesasService {
         if (this.mesaActual.estado == 'reservada' && this.mesaActual.cliente.email == usuario.email) {
 
           this.actualizarMesa(this.mesaActual, "ocupada");
-          this.mesaActual.estado="ocupada";
+          this.mesaActual.estado = "ocupada";
 
           const toast = await this.toastCtrl.create({
             message: "La mesa nro: " + this.mesaActual.numero + " es ocupada por " + usuario.nombre + " " + usuario.apellido,

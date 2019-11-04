@@ -70,14 +70,17 @@ export class LoginPage implements OnInit {
               this.vibration.vibrate(500);
               switch(data.perfil)
               {
-                /// segun perfil del usuario aca definimos el routing
+               
                 case "admin":
                     localStorage.setItem("perfil", 'admin');
                     this.router.navigate(['/admin']);
                     break;
                 case "cliente":   
-                localStorage.setItem("perfil", 'cliente');               
-                    this.router.navigate(['/pedir-mesa-qr']);
+
+                localStorage.setItem("perfil", 'cliente');  
+                       
+                //definir routing por si ya tiene un mesa asignada o no      
+                    this.router.navigate(['/cliente']);
                     break;
                 case "mozo":                  
                     this.router.navigate(['/mozo']);

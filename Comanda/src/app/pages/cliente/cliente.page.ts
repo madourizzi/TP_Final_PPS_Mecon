@@ -64,6 +64,11 @@ export class ClientePage implements OnInit {
     this.router.navigate(['/detalle-mesa']);
   }
 
+  pedirMesaQR()
+  {
+    this.router.navigate(['/pedir-mesa-qr']);
+  }
+
 
 
 
