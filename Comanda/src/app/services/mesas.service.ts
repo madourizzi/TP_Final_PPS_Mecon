@@ -38,17 +38,10 @@ export class MesasService {
   TraerMesas() {
 
     this.listaMesasFirebase = this.objFirebase.collection<Mesa>("mesa", ref => ref.orderBy('numero', 'asc'));
-    this.listaMesasObservable = this.listaMesasFirebase.valueChanges();
-    this.listaMesasObservable.subscribe(arr => {
-      this.mesas = new Array<any>();
-      arr.forEach((x: Mesa) => {
-        this.mesas.push(x);
-      });
-    });
+   return this.listaMesasFirebase.snapshotChanges();
+}
 
-    return this.mesas;
 
-  }
 
   TraerMesasMozo() {
     this.listaMesasMozoFirebase = this.objFirebase.collection<any>("mesa", ref => ref.orderBy('numero', 'asc'));
@@ -134,9 +127,9 @@ export class MesasService {
 
     let resp: Mesa;
     this.TraerMesas();
-     this.mesas.forEach((e: Mesa) => {
+    this.mesas.forEach((e: Mesa) => {
       if (e.cliente.email == email) {
-          return e;
+        return e;
 
       }
 

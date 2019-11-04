@@ -23,7 +23,16 @@ export class ListadoMesasComponent implements OnInit {
     private toastService: ToastService) {
     this.mesas = new Array();
     this.productosPedidos = new Array();
-    this.mesas =  this.productosService.TraerMesas();
+    this.productosService.TraerMesas().subscribe(actions => {
+      this.mesas = [];
+      actions.map(a => {
+        const data = a.payload.doc.data() as Mesa;
+        console.info(data, " data");
+        this.mesas.push(data);
+      });
+      
+    });
+ 
 
   }
 
