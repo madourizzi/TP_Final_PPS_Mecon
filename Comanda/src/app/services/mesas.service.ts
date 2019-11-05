@@ -56,6 +56,7 @@ export class MesasService {
 
 
 
+
   TraerMesasMozo() {
     this.listaMesasMozoFirebase = this.objFirebase.collection<any>("mesa", ref => ref.orderBy('numero', 'asc'));
     this.listaMesasMozoObservable = this.listaMesasMozoFirebase.valueChanges();
@@ -67,6 +68,15 @@ export class MesasService {
     nuevoUsuario.uid = id;
     this.mesaActual = nuevoUsuario;
     return this.objFirebase.collection("mesa").doc(id).set(JSON.parse(JSON.stringify(nuevoUsuario)), { merge: true });
+  }
+
+  limpiarMesa(mesaABlanquear: Mesa) {
+
+    mesaABlanquear.cliente="sin asignar";
+    mesaABlanquear.pedidos= new Array();
+    mesaABlanquear.estado= "disponible";
+
+    return this.objFirebase.collection("mesa").doc(mesaABlanquear.uid).set(JSON.parse(JSON.stringify(mesaABlanquear)), { merge: true });
   }
 
 

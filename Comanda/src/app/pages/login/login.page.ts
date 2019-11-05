@@ -123,8 +123,8 @@ export class LoginPage implements OnInit {
         this.form.get('password').setValue('123456');
         break;
       case Roles.barman:
-        this.form.get('mail').setValue('lucila@gmail.com');
-        this.form.get('password').setValue('123456');
+        this.form.get('mail').setValue('lucilarizzi@hotmail.com');
+        this.form.get('password').setValue('lulo1234');
         break;
         case Roles.candyBar:
         this.form.get('mail').setValue('mecha@gmail.com');
@@ -135,11 +135,11 @@ export class LoginPage implements OnInit {
         this.form.get('password').setValue('123456');
         break;
         case Roles.cocina:
-        this.form.get('mail').setValue('santiago@gmail.com');
+        this.form.get('mail').setValue('silvia@gmail.com');
         this.form.get('password').setValue('123456');
         break;
         case Roles.mozo:
-        this.form.get('mail').setValue('santiago@gmail.com');
+        this.form.get('mail').setValue('rolando@gmail.com');
         this.form.get('password').setValue('123456');
         break;
 
