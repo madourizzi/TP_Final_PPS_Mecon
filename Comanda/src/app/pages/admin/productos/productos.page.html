@@ -1,19 +1,17 @@
 <ion-header>
     <ion-toolbar>
         <ion-title (click)=" volver()">
-            <ion-row class="row">
-                <ion-col class="col-8">
-                    Producto
-                </ion-col>
-                <ion-col class="col-3"></ion-col>
-                <ion-col class="col-1">
-                    <ion-icon name="arrow-dropleft-circle" class=" mr-1" routerLink="/admin"></ion-icon>
-                </ion-col>
-            </ion-row>
+
+            Producto
+
+
 
 
 
         </ion-title>
+        <ion-button slot="end" color="light" routerLink="/admin">
+            <ion-icon class="icon" name="arrow-dropleft-circle"></ion-icon>
+        </ion-button>
     </ion-toolbar>
 </ion-header>
 
