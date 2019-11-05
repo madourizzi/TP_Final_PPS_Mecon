@@ -33,6 +33,7 @@ export class AltaMesaComponent implements OnInit {
   fileName;
   opcionElegida: number;
   public url: string;
+  foto;
 
 
   validation_messages = {

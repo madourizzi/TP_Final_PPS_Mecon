@@ -32,7 +32,20 @@ export class MesasService {
     public toastCtrl: ToastController,
     public usuarioServ: UsersService,
   ) {
-    this.TraerMesas();
+
+    this.mesas= new Array();
+    this.TraerMesas().subscribe(
+      actions => actions.forEach(a => {
+        const data = a.payload.doc.data() as Mesa;
+        console.log("data!",data);        
+       this.mesas.push(data);
+      })
+    );
+      
+
+    console.log("this.mesas", this.mesas);
+    
+
   }
 
   TraerMesas() {
@@ -58,7 +71,11 @@ export class MesasService {
 
 
   async asignarMesaDisponible(comensales) {
+
     const mesasDisponible = this.MesasDisponibles();
+console.log("mesas disponibles ", mesasDisponible);
+
+
     return this.qrService.readQR().then(async QRdata => {
       let flagQR = false;
       if ("madourizzi@solicitudDeMesa" == QRdata.text) {

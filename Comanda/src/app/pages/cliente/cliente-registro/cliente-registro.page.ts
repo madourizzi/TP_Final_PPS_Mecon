@@ -111,7 +111,6 @@ export class ClienteRegistroPage implements OnInit {
     this.usuarioActual.email = this.altaForm.value.email;
     this.usuarioActual.password = this.altaForm.value.password;
     this.usuarioActual.perfil = "cliente";
-    this.usuarioActual.foto = this.foto;
     this.usuarioActual.registrado=true;
     this.subirFoto();
   }
