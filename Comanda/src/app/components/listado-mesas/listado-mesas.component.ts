@@ -30,9 +30,9 @@ export class ListadoMesasComponent implements OnInit {
         console.info(data, " data");
         this.mesas.push(data);
       });
-      
+
     });
- 
+
 
   }
 
@@ -45,5 +45,22 @@ export class ListadoMesasComponent implements OnInit {
 
   }
 
+
+
+  limpiarTodasLasMesas() {
+    this.productosService.TraerMesas().subscribe(actions => {
+      actions.map(a => {
+        const data = a.payload.doc.data() as Mesa;
+        this.productosService.limpiarMesa(data);
+      });
+    });
+  }
+
+
+
+  limpiarUnaMesa(mesa)
+  {
+    this.productosService.limpiarMesa(mesa);
+  }
 
 }

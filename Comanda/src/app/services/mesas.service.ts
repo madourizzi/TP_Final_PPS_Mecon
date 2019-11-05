@@ -32,7 +32,20 @@ export class MesasService {
     public toastCtrl: ToastController,
     public usuarioServ: UsersService,
   ) {
-    this.TraerMesas();
+
+    this.mesas= new Array();
+    this.TraerMesas().subscribe(
+      actions => actions.forEach(a => {
+        const data = a.payload.doc.data() as Mesa;
+        console.log("data!",data);        
+       this.mesas.push(data);
+      })
+    );
+      
+
+    console.log("this.mesas", this.mesas);
+    
+
   }
 
   TraerMesas() {
@@ -40,6 +53,7 @@ export class MesasService {
     this.listaMesasFirebase = this.objFirebase.collection<Mesa>("mesa", ref => ref.orderBy('numero', 'asc'));
    return this.listaMesasFirebase.snapshotChanges();
 }
+
 
 
 
@@ -56,9 +70,22 @@ export class MesasService {
     return this.objFirebase.collection("mesa").doc(id).set(JSON.parse(JSON.stringify(nuevoUsuario)), { merge: true });
   }
 
+  limpiarMesa(mesaABlanquear: Mesa) {
+
+    mesaABlanquear.cliente="sin asignar";
+    mesaABlanquear.pedidos= new Array();
+    mesaABlanquear.estado= "disponible";
+
+    return this.objFirebase.collection("mesa").doc(mesaABlanquear.uid).set(JSON.parse(JSON.stringify(mesaABlanquear)), { merge: true });
+  }
+
 
   async asignarMesaDisponible(comensales) {
+
     const mesasDisponible = this.MesasDisponibles();
+console.log("mesas disponibles ", mesasDisponible);
+
+
     return this.qrService.readQR().then(async QRdata => {
       let flagQR = false;
       if ("madourizzi@solicitudDeMesa" == QRdata.text) {

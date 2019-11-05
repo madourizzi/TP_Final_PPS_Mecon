@@ -32,15 +32,14 @@ export class LoginPage implements OnInit {
   };
 
   constructor(
-    private authService: AuthService, 
-    private userServ: UsersService, 
-    private formBuilder: FormBuilder, 
-    private toastService: ToastService, 
-    private router: Router, 
-    private smartAudioService: SmartAudioService, 
+    private authService: AuthService,
+    private userServ: UsersService,
+    private formBuilder: FormBuilder,
+    private toastService: ToastService,
+    private router: Router,
+    private smartAudioService: SmartAudioService,
     private vibration: Vibration,
-    private afs: AngularFirestore) 
-    {
+) {
 
     this.form = this.formBuilder.group({
       mail: new FormControl('', Validators.compose([
@@ -50,17 +49,22 @@ export class LoginPage implements OnInit {
       password: new FormControl('', Validators.required)
     });
 
+
+
+
+   
+
   }
 
   ngOnInit() {
+    
   }
 
- async onSubmitLogin() {
-    const credential= await this.authService.login(this.form.get('mail').value, this.form.get('password').value)
+  async onSubmitLogin() {
+    const credential = await this.authService.login(this.form.get('mail').value, this.form.get('password').value)
       .then(res => {
 
-        this.userServ.traerTodosUsuarios().subscribe(user => 
-          {
+        this.userServ.traerTodosUsuarios().subscribe(user => {
           user.forEach(userData => {
             let data = userData.payload.doc.data() as User;
 
@@ -68,38 +72,41 @@ export class LoginPage implements OnInit {
               this.userServ.traerUnUsuarioPorMail(data.email);
               this.smartAudioService.play('login');
               this.vibration.vibrate(500);
-              switch(data.perfil)
-              {
-               
-                case "admin":
-                    localStorage.setItem("perfil", 'admin');
-                    this.router.navigate(['/admin']);
-                    break;
-                case "cliente":   
 
-                localStorage.setItem("perfil", 'cliente');  
-                       
-                //definir routing por si ya tiene un mesa asignada o no      
-                    this.router.navigate(['/cliente']);
-                    break;
-                case "mozo":                  
-                    this.router.navigate(['/mozo']);
-                    break;
-                case "cocina":                  
-                    this.router.navigate(['/cocina']);
-                    break;
-                case "barman":                  
-                    this.router.navigate(['/barman']);
-                    break;
-                case "cervecero":                  
-                    this.router.navigate(['/cervecero']);
-                    break;
-                case "candyBar":                
-                    this.router.navigate(['/candy-bar']);
-                    break;
-              }
-            }
             
+              switch (data.perfil) {
+
+                case "admin":
+                  localStorage.setItem("perfil", 'admin');
+                  this.router.navigate(['/admin']);
+                  break;
+                case "cliente":
+
+                  localStorage.setItem("perfil", 'cliente');
+
+                  //definir routing por si ya tiene un mesa asignada o no      
+                  this.router.navigate(['/cliente']);
+                  break;
+                case "mozo":
+                  this.router.navigate(['/mozo']);
+                  break;
+                case "cocina":
+                  this.router.navigate(['/cocina']);
+                  break;
+                case "barman":
+                  this.router.navigate(['/barman']);
+                  break;
+                case "cervecero":
+                  this.router.navigate(['/cervecero']);
+                  break;
+                case "candyBar":
+                  this.router.navigate(['/candy-bar']);
+                  break;
+              }
+
+              
+            }
+
           });
         });
       })
@@ -113,7 +120,7 @@ export class LoginPage implements OnInit {
           this.toastService.errorToast('Ocurrió un error, contáctese con el administrador.');
         }
       });
-      
+
   }
 
   cargarDatos(rol: Roles) {
@@ -123,23 +130,23 @@ export class LoginPage implements OnInit {
         this.form.get('password').setValue('123456');
         break;
       case Roles.barman:
-        this.form.get('mail').setValue('lucila@gmail.com');
-        this.form.get('password').setValue('123456');
+        this.form.get('mail').setValue('lucilarizzi@hotmail.com');
+        this.form.get('password').setValue('lulo1234');
         break;
-        case Roles.candyBar:
+      case Roles.candyBar:
         this.form.get('mail').setValue('mecha@gmail.com');
         this.form.get('password').setValue('123456');
         break;
-        case Roles.cliente:
+      case Roles.cliente:
         this.form.get('mail').setValue('nano@gmail.com');
         this.form.get('password').setValue('123456');
         break;
-        case Roles.cocina:
-        this.form.get('mail').setValue('santiago@gmail.com');
+      case Roles.cocina:
+        this.form.get('mail').setValue('silvia@gmail.com');
         this.form.get('password').setValue('123456');
         break;
-        case Roles.mozo:
-        this.form.get('mail').setValue('santiago@gmail.com');
+      case Roles.mozo:
+        this.form.get('mail').setValue('rolando@gmail.com');
         this.form.get('password').setValue('123456');
         break;
 

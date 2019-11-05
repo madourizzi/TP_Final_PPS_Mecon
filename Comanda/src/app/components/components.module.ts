@@ -13,16 +13,17 @@ import { ListadoPedidosComponent } from './listado-pedidos/listado-pedidos.compo
 import { EstadoPedidoComponent } from './estado-pedido/estado-pedido.component';
 import { AltaMesaComponent } from './alta-mesa/alta-mesa.component';
 import { ListadoMesasComponent } from './listado-mesas/listado-mesas.component';
+import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 
 
 @NgModule({
   declarations: [
-    HeaderComponent,
+    HeaderComponent, ListadoClientesComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent, AltaMesaComponent
   ],
   exports: [
-    HeaderComponent,
+    HeaderComponent, ListadoClientesComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent , AltaMesaComponent
   ],

@@ -28,7 +28,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from './services/archivos.service';
 import { File } from '@ionic-native/file/ngx';
 import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} from '@angular/fire/storage';
-
+import { FcmService} from '../app/services/fcm.service';
+import { Firebase } from '@ionic-native/firebase/ngx';
 
 
 @NgModule({
@@ -57,6 +58,8 @@ import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} 
     Camera, 
     ImagePicker,
     Shake,
+    FcmService,
+    Firebase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

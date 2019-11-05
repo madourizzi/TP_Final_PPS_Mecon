@@ -17,6 +17,7 @@ export class EmpleadosPage implements OnInit {
   title: string;
   cargarProducto;
   botonera;
+  autorizarCliente;
 
 
   constructor(private spinner: SpinnerService,
@@ -30,6 +31,7 @@ export class EmpleadosPage implements OnInit {
     this.adminPerfilUser = false;
     this.botonera = true;
     this.editarUsuario = false;
+    this.autorizarCliente=false;
 
   }
 
@@ -39,7 +41,8 @@ export class EmpleadosPage implements OnInit {
     this.adminPerfilUser =false;
     this.editarUsuario = true;
     this.botonera = false;
-    this.usuarioElegido= $event;    
+    this.usuarioElegido= $event;   
+    this.autorizarCliente=false; 
 
   }
 
@@ -49,7 +52,8 @@ export class EmpleadosPage implements OnInit {
     this.adminPerfilUser =true;
     this.editarUsuario =false;
     this.botonera = false;
-    this.usuarioElegido=null;   
+    this.usuarioElegido=null; 
+    this.autorizarCliente=false;  
   }
 
   nuevoUsuario()
@@ -57,7 +61,16 @@ export class EmpleadosPage implements OnInit {
     this.adminPerfilUser =false;
     this.editarUsuario =true;
     this.botonera = false;
-    this.usuarioElegido=null;   
+    this.usuarioElegido=null;  
+    this.autorizarCliente=false; 
+  }
+
+  cliente()
+  {   
+    this.adminPerfilUser =false;
+    this.editarUsuario =false;
+    this.botonera = false;
+    this.autorizarCliente=true;
   }
 
  volver()

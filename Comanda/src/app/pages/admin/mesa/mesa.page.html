@@ -1,7 +1,11 @@
 <ion-header>
     <ion-toolbar>
         <ion-title (click)=" volver()">
-            <ion-icon name="arrow-dropleft-circle" routerLink="/admin"></ion-icon> Mesa</ion-title>
+            Mesa</ion-title>
+
+        <ion-button slot="end" color="light" routerLink="/admin">
+            <ion-icon class="icon" name="arrow-dropleft-circle"></ion-icon>
+        </ion-button>
     </ion-toolbar>
 </ion-header>
 
@@ -9,15 +13,13 @@
     <div class="unGranDiv" style="height: 93vh;">
         <ion-row style="height:50%; ">
             <ion-col class="col-12" style="height:98%; background-color: rgb(15, 209, 177); color: seashell;  border-radius: 15px; " (click)="verListaMesa()">
-                <ion-icon name="people" style="color: white; zoom: 4;   vertical-align: auto; ">
-                </ion-icon>
+                <img class="icon" src="../../../../assets/listado-alta-10.png" alt="" style="max-width: 70%">
             </ion-col>
 
         </ion-row>
         <ion-row style="height:50%; ">
             <ion-col class="col-12 " style="height:98%; background-color: rgb(12, 66, 182); color: seashell; border-radius: 15px; " (click)="verAltaMesa() ">
-                <ion-icon name="albums" style="color: white; zoom: 4;  vertical-align: auto; ">
-                </ion-icon>
+                <img class="icon" src="../../../../assets/listado-alta-11.png" alt="" style="max-width: 70%">
             </ion-col>
 
         </ion-row>

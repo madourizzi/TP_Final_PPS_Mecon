@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { User } from 'src/app/models/user';
 import { AlertController } from '@ionic/angular';
+import { FcmService } from 'src/app/services/fcm.service';
+import { tap } from 'rxjs/operators';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-cliente',
@@ -30,11 +33,31 @@ export class ClientePage implements OnInit {
     private archivos: ArchivosService,
     private usuarios: UsersService,
     private mesasServ : MesasService,
-    private alertController:AlertController)
+    private alertController:AlertController,
+    private fcm: FcmService,
+    private toastCtrl: ToastController)
      {
     this.title = "Bienvenido Cliente: ";
 
-    
+    setTimeout(() => {
+      // Get a FCM token
+      this.fcm.getToken().then(token=>{
+        alert(token)
+      })
+      //////////
+    }, 1400);
+
+   
+     fcm.listenToNotifications().pipe(
+       tap(async msg => {
+         // show a toast
+         const toast = await toastCtrl.create({
+           message: msg.body,
+           duration: 5000
+         });
+         toast.present();
+       })
+     ).subscribe(); 
 
     
   
@@ -55,6 +78,7 @@ export class ClientePage implements OnInit {
       
     }, 1000);
       
+
     
   }
 

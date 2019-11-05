@@ -1,6 +1,9 @@
 <ion-content [scrollEvents]="true">
     <ion-list style="height: 75vh" color="dark">
         <ion-list-header color="dark">Listado de Mesas</ion-list-header>
+
+        <ion-button expand="full" (click)="limpiarTodasLasMesas()">limpiar</ion-button>
+
         <ion-item *ngFor="let mesa of mesas">
             <ion-thumbnail slot="start">
                 <img src="{{mesa.url}}">
@@ -13,6 +16,7 @@
                 <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="mesa.estado=='disponible'">Estado {{mesa.estado}} </p>
                 <p style="font-weight: bold; color:rgb(9, 88, 6)" *ngIf="mesa.estado=='esperandoComida'">Estado {{mesa.estado}} </p>
             </ion-label>
+            <ion-button expand="full" (click)="limpiarUnaMesa(mesa)">limpiar</ion-button>
         </ion-item>
     </ion-list>
 </ion-content>
