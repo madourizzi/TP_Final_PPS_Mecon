@@ -1,17 +1,17 @@
 <ion-content>
     <ion-list style="height: 75vh" color="dark">
         <ion-list-header color="dark">Listado de Cliente</ion-list-header>
-        <ion-item *ngFor="let producto of usuarios">
+        <ion-item *ngFor="let usuario of usuarios">
             <ion-avatar size="small" slot="start">
-                <img src="{{producto.foto}}">
+                <img src="{{usuario.foto}}">
             </ion-avatar>
             <ion-label>
-                <p>{{producto.nombre}} {{producto.apellido}} | DNI: {{producto.dni}}</p>
-                <h3>{{producto.perfil}}</h3>
+                <p>{{usuario.nombre}} {{usuario.apellido}} | DNI: {{usuario.dni}}</p>
+                <h3>{{usuario.perfil}}</h3>
 
             </ion-label>
-            <ion-button color="success" (click)="autorizar(producto)">Aceptar</ion-button>
-            <ion-button color="danger" (click)="noAutorizar(producto)">Cancelar</ion-button>
+            <ion-button color="success" (click)="autorizar(usuario)">Aceptar</ion-button>
+            <ion-button color="danger" (click)="noAutorizar(usuario)">Eliminar</ion-button>
         </ion-item>
     </ion-list>
 </ion-content>

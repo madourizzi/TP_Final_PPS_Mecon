@@ -29,8 +29,8 @@ import { ArchivosService } from './services/archivos.service';
 import { File } from '@ionic-native/file/ngx';
 import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} from '@angular/fire/storage';
 import { FcmService} from '../app/services/fcm.service';
-import { Firebase } from '@ionic-native/firebase/ngx';
-
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -59,7 +59,8 @@ import { Firebase } from '@ionic-native/firebase/ngx';
     ImagePicker,
     Shake,
     FcmService,
-    Firebase,
+    FirebaseX,
+    EmailComposer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

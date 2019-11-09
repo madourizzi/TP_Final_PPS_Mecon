@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Firebase } from '@ionic-native/firebase/ngx';
-import { Platform } from '@ionic/angular';
+import { FirebaseX } from "@ionic-native/firebase-x/ngx";
+
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UsersService } from './users.service';
 
@@ -10,53 +10,46 @@ import { UsersService } from './users.service';
 export class FcmService {
 
   constructor(
-    public firebaseNative: Firebase,
+    public fcm: FirebaseX,
     public afs: AngularFirestore,
-    private platform: Platform,
     private userServ: UsersService
   ) { }
 
 
-  async getToken() {
+ getToken() {
 
     let token;
-  
-    if (this.platform.is('android')) {
-      token = await this.firebaseNative.getToken()
-    } 
-  
-    if (this.platform.is('ios')) {
-      token = await this.firebaseNative.getToken();
-      await this.firebaseNative.grantPermission();
-    } 
-    
+
+    token = this.fcm.getToken()
+      .then(token => console.log(`The token is ${token}`))
+      .catch(error => console.error('Error getting token', error));
+    this.saveTokenToFirestore(token);
+
     return this.saveTokenToFirestore(token)
   }
 
-  private saveTokenToFirestore(token) {
+  saveTokenToFirestore(token) {
     let usuario;
+    usuario = this.userServ.traerUsuarioActual();
     setTimeout(() => {
-      usuario = this.userServ.traerUsuarioActual();
       console.log('usuario actual en fcm', usuario);
-    }, 1400);
-    
-    
+    }, 1000);
+
     if (!token) return;
-  
-    const devicesRef = this.afs.collection('dispositivos')
-  
-    const docData = { 
+
+    const devicesRef = this.afs.collection('devices')
+
+    const docData = {
       token,
-      id: usuario.id,
-      perfil: usuario.perfil,
-      mail: usuario.mail
+      uid: usuario.uid,
+      perfil: usuario.perfil
     }
-    
-  
     return devicesRef.doc(token).set(docData)
-}
+  }
 
   listenToNotifications() {
-    return this.firebaseNative.onNotificationOpen();
+    return this.fcm.onMessageReceived().subscribe(
+      data => console.log(`FCM message: ${data}`)
+    );
   }
 }

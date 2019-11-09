@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096979809038:android:b90ea7c97559234da44d5f",
+        "android_client_info": {
+          "package_name": "io.com.comanda.madourizzi2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096979809038-58989tlvkqcneor1voonca6hkiod59oj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN89Qk39VdF4JZ-OJe5G6lntlPq5Ni09I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096979809038-58989tlvkqcneor1voonca6hkiod59oj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

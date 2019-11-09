@@ -5,6 +5,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from 'src/app/services/archivos.service';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { UsersService } from 'src/app/services/users.service';
 
 
 @Component({
@@ -20,13 +24,19 @@ export class AdminPage implements OnInit {
   title: string;
   cargarProducto;
   botonera;
+  usuarioActual: User;
+
   altaMesa;
 
   constructor(
     private spinner: SpinnerService,    
     private router: Router, 
     private qr: BarcodeScanner,
-    private archivos: ArchivosService) {
+    public fcm: FirebaseX,
+    public platform: Platform,
+    public afs: AngularFirestore,
+    private archivos: ArchivosService,
+    private usuarios: UsersService) {
     this.title = " administrador";
   }
 
@@ -37,6 +47,44 @@ export class AdminPage implements OnInit {
     this.botonera = true;
     this.editarUsuario = false;
     this.altaMesa=false;
+    setTimeout(() => {
+      this.usuarioActual = this.usuarios.traerUsuarioActual();
+      console.log("el usuario actual en ADMIN es: ", this.usuarioActual);
+
+      this.getTokenControl();
+
+    }, 1000);
+  }
+
+  async getTokenControl() {
+
+    let token;
+    if (this.platform.is('android')) {
+
+      token = await this.fcm.getToken()
+        .then(async token => {
+          console.log(`The token is ${token}`);
+          await this.saveTokenToFirestore(token);
+        })
+
+        .catch(error => console.error('Error getting token', error));
+    }
+  }
+
+  saveTokenToFirestore(token) {
+    let usuario;
+    usuario = this.usuarioActual;
+
+    if (!token) return;
+
+    const devicesRef = this.afs.collection('devices');
+
+    const docData = {
+      token,
+      uid: usuario.uid,
+      perfil: usuario.perfil
+    }
+    return devicesRef.doc(token).set(docData)
   }
 
 

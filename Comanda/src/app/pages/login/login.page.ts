@@ -6,9 +6,10 @@ import { Router } from '@angular/router';
 import { SmartAudioService } from 'src/app/services/smart-audio.service';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { Roles } from 'src/app/models/enums/perfil.enum';
-import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
+
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/users.service';
+
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginPage implements OnInit {
   form: FormGroup;
   rolesEnum = Roles;
 
-
+  
   validation_messages = {
     'mail': [
       { type: 'required', message: 'Debe ingresar un email.' },
@@ -38,7 +39,8 @@ export class LoginPage implements OnInit {
     private toastService: ToastService,
     private router: Router,
     private smartAudioService: SmartAudioService,
-    private vibration: Vibration,
+    private vibration: Vibration
+
 ) {
 
     this.form = this.formBuilder.group({
@@ -48,12 +50,7 @@ export class LoginPage implements OnInit {
       ])),
       password: new FormControl('', Validators.required)
     });
-
-
-
-
    
-
   }
 
   ngOnInit() {
@@ -73,7 +70,6 @@ export class LoginPage implements OnInit {
               this.smartAudioService.play('login');
               this.vibration.vibrate(500);
 
-            
               switch (data.perfil) {
 
                 case "admin":
