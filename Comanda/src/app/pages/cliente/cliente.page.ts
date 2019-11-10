@@ -48,18 +48,17 @@ export class ClientePage implements OnInit {
     this.botonera = true;
     this.menu = false;
     this.confirmar = false;
+
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual es: ", this.usuarioActual);
-
-
-      if (this.usuarioActual.registrado == false) {
+      console.log(" this.usuarioActual.registrado", this.usuarioActual + "-*-----------");
+      if (!this.usuarioActual.registrado) {
         this.registroClienteAlertConfirm();
       }
       this.getTokenControl();
-
-    }, 1000);
-
+    }, 2500);
+    
 
 
   }

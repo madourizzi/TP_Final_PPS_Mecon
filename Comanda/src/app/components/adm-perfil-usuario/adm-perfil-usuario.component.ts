@@ -57,7 +57,6 @@ export class AdmPerfilUsuarioComponent implements OnInit {
       activo: ['', Validators.required]
     });
 
-
     this.altaForm.controls['apellido'].setValue(this.usuario.apellido);
     this.altaForm.controls['nombre'].setValue(this.usuario.nombre);
     this.altaForm.controls['email'].setValue(this.usuario.email);
@@ -65,9 +64,9 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     this.altaForm.controls['cuil'].setValue(this.usuario.cuil);
     this.altaForm.controls['password'].setValue(this.usuario.password);
     this.altaForm.controls['perfil'].setValue(this.usuario.perfil);
-    this.altaForm.controls['activo'].setValue(this.usuario.activo);
+/*     this.altaForm.controls['activo'].setValue(this.usuario.activo);
+    this.altaForm.controls['perfil'].setValue(this.usuario.perfil); */
     this.foto = this.usuario.foto;
-
 
   }
 
@@ -108,14 +107,14 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     this.usuario.password = this.altaForm.value.password;
     this.usuario.perfil = this.altaForm.value.perfil;
     this.usuario.foto = this.foto;
+    this.usuario.registrado = true;
+    if(this.altaForm.value.activo=='true')
+    {
+      this.usuario.activo= true;
 
-    if (this.altaForm.value.activo) {
-      this.usuario.activo = true
-    } else {
-      this.usuario.activo = false
+    }else{
+      this.usuario.activo=false;
     }
-
-
     this.subirFoto();
 
   }
@@ -138,15 +137,17 @@ export class AdmPerfilUsuarioComponent implements OnInit {
     switch (this.opcionElegida) {
       case 1:
         let archivo = this.foto;
-        console.info(this.foto)
+        console.info(1)
         this.archivos.uploadAndroidUpdate(archivo.fileName, archivo.imgBlob, 'users', this.usuario);
         this.foto = false;
         break;
-      case 2:
-        this.archivos.uploadWebUpdate(this.foto, 'users', this.usuario);
-        this.foto = false;
-        break;
-      case 3:
+        case 2:
+          console.info(2)
+          this.archivos.uploadWebUpdate(this.foto, 'users', this.usuario);
+          this.foto = false;
+          break;
+          case 3:            
+            console.info("this." , this.usuario)
         this.userServ.actualizarUsuario(this.usuario);
         break;
 

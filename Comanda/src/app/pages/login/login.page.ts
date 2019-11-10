@@ -79,7 +79,6 @@ export class LoginPage implements OnInit {
                 case "cliente":
 
                   localStorage.setItem("perfil", 'cliente');
-
                   //definir routing por si ya tiene un mesa asignada o no      
                   this.router.navigate(['/cliente']);
                   break;

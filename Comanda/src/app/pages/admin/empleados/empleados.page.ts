@@ -78,6 +78,7 @@ export class EmpleadosPage implements OnInit {
   this.adminPerfilUser = false;
   this.botonera = true;
   this.editarUsuario = false;
+  this.autorizarCliente=false; 
  }
 
 }

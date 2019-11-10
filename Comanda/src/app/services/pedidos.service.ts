@@ -11,7 +11,7 @@ export class PedidosService {
 
   private pedidosCollection: AngularFirestoreCollection<any>;
   pedidos: Observable<any[]>;
-  p
+  
 
   constructor(
     private db: AngularFirestore) {

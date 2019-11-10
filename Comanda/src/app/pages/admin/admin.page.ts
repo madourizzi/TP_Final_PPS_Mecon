@@ -113,7 +113,6 @@ export class AdminPage implements OnInit {
     this.botonera = true;
     this.editarUsuario = false;
     this.altaMesa=false;
-
   }
 
 

@@ -16,7 +16,7 @@ export class User {
     
     constructor() {
         this.perfil = "cliente";
-        this.activo=true;
+        this.activo=null;
         this.registrado=false;
         this.foto ="assets/images/nofoto.jpg";      
     }

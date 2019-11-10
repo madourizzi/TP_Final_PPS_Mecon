@@ -1,4 +1,7 @@
 <ion-content>
+    <ion-button color="success" (click)="mostrarTodos()">Todos</ion-button>
+    <ion-button color="danger" (click)="mostrarPendientes()">Pendientes Autorizar</ion-button>
+
     <ion-list style="height: 75vh" color="dark">
         <ion-list-header color="dark">Listado de Cliente</ion-list-header>
         <ion-item *ngFor="let usuario of usuarios">
@@ -6,10 +9,15 @@
                 <img src="{{usuario.foto}}">
             </ion-avatar>
             <ion-label>
-                <p>{{usuario.nombre}} {{usuario.apellido}} | DNI: {{usuario.dni}}</p>
-                <h3>{{usuario.perfil}}</h3>
+                <p *ngIf="usuario.nombre != undefined">{{usuario.nombre}} {{usuario.apellido}} | DNI: {{usuario.dni}}</p>
+                <p *ngIf="usuario.nombre == undefined"> {{usuario.email}} </p>
+                <p style="font-weight: bold; color:rgb(42, 54, 165)" *ngIf="usuario.activo==null">Estado: Pendiente </p>
+                <p style="font-weight: bold; color:rgb(26, 236, 26)" *ngIf="usuario.activo">Estado: Autorizado </p>
+                <p style="font-weight: bold; color:rgb(226, 43, 19)" *ngIf="!usuario.registrado">Registrado {{usuario.registrado}} </p>
+                <p style="font-weight: bold; color:rgb(9, 88, 6)" *ngIf="usuario.registrado">Registrado {{usuario.registrado}} </p>
 
             </ion-label>
+            <ion-button color="warning" (click)="autorizarEmpleado(usuario)">Empleado</ion-button>
             <ion-button color="success" (click)="autorizar(usuario)">Aceptar</ion-button>
             <ion-button color="danger" (click)="noAutorizar(usuario)">Eliminar</ion-button>
         </ion-item>
