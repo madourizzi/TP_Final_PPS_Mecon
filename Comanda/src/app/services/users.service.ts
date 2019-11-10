@@ -119,12 +119,12 @@ export class UsersService {
     }
 
     EliminarUsuario(id) {
-      return this.db.collection("SP_usuarios").doc(id).delete();
+      return this.db.collection<User>("users").doc(id).delete();
     }
 
     cargarUsuarioAnonimo(usuarioAGuardarJSON: any, id: string) {
       usuarioAGuardarJSON.id = id;
-      return this.db.collection<User>("SP_usuarios").doc(id).set(usuarioAGuardarJSON);
+      return this.db.collection<User>("users").doc(id).set(usuarioAGuardarJSON);
     }
 
     /* RelacionUsuarioMesa(){

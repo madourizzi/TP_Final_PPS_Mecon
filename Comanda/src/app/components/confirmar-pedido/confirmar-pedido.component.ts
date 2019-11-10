@@ -34,14 +34,18 @@ export class ConfirmarPedidoComponent implements OnInit {
   }
 
   confirmar()  {
-
     this.pedidoAConfirmar.map((e:Producto)=>{
       this.total+= e.precio;
     });
-
     this.pedidoCOnfirmado=true;
     this.mesaServicio.mesaActual.pedidos = this.pedidoAConfirmar;
     this.mesaServicio.actualizarMesa(this.mesaServicio.mesaActual, "esperandoComida" );
+
+    
+
+
+
+
 
   }
 

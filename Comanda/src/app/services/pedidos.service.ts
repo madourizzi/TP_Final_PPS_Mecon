@@ -11,6 +11,7 @@ export class PedidosService {
 
   private pedidosCollection: AngularFirestoreCollection<any>;
   pedidos: Observable<any[]>;
+  p
 
   constructor(
     private db: AngularFirestore) {
@@ -27,7 +28,9 @@ export class PedidosService {
 
 
   crearPedido(nuevoPedido: Pedido) {
-    return this.db.collection('pedidos').add(JSON.parse(JSON.stringify(nuevoPedido)));
+    let id = this.db.createId();
+    nuevoPedido.uid = id;
+    return this.db.collection('pedidos').doc(id).set(JSON.parse(JSON.stringify(nuevoPedido)), { merge: true });
 
   }
 
@@ -79,8 +82,7 @@ export class PedidosService {
   {
     pedido.estado="cancelado";
     
-    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
-            
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {    
     
       console.log('Documento editado exitósamente');
 
@@ -93,34 +95,21 @@ export class PedidosService {
 
   async Cobrar(pedido: Pedido)
   {
-    pedido.estado="pagado";
-    
-    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
-            
-    
+    pedido.estado="pagado";    
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {  
       console.log('Documento editado exitósamente');
-
     }, (error) => {
       console.log(error);
     });
-
   }
 
  async ServirPedido(pedido: Pedido)
   {
-    pedido.estado="entregado";
-    
-    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
-            
-    
+    pedido.estado="entregado";    
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => { 
       console.log('Documento editado exitósamente');
-
     }, (error) => {
       console.log(error);
     });
-
   }
-
-
-
 }
