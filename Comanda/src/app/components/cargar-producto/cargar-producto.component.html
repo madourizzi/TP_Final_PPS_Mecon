@@ -47,6 +47,16 @@
                 {{ validation.message }}
             </div>
         </ng-container>
+        <ion-item>
+            <ion-icon name="logo-usd" slot="start"></ion-icon>
+            <ion-select (ionChange)="setTipo($event.target.value)" placeholder="Seleccione tipo de Productos: ">
+                <ion-select-option value="candyBar">Postre</ion-select-option>
+                <ion-select-option value="cocina">Comida</ion-select-option>
+                <ion-select-option value="cerveza">Cerveza</ion-select-option>
+                <ion-select-option value="barra">Trago/Vino</ion-select-option>
+            </ion-select>
+        </ion-item>
+
         <hr>
 
         <ion-button color="secondary" expand="block" type="submit" [disabled]="!form.valid" *ngIf="nuevo=='true'">

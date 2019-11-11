@@ -6,14 +6,9 @@
                 <img src="../../../assets/images/qrPedi-01.png" alt="" style="max-height: 80% ">
             </ion-col>
         </ion-row>
-        <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual !=null">
+        <ion-row style="height:50%;">
             <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
                 <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidos() " style="max-height: 80% ">
-            </ion-col>
-        </ion-row>
-        <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual ==null">
-            <ion-col style="height:98%; background-color: rgb(243, 229, 35); color: seashell; border-radius: 15px; ">
-                <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidosAnonimo() " style="max-height: 80% ">
             </ion-col>
         </ion-row>
         <ion-row style="height:50%; " *ngIf="mesasServ.mesaActual !=null">

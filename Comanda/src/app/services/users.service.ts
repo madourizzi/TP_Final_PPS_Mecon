@@ -37,7 +37,7 @@ export class UsersService {
         if (data.email == mail) {
           this.usuarioActual = data;
           //localStorage.setItem('perfil', this.usuarioActual.perfil)
-          console.info("this.usuario", this.usuarioActual);
+          console.info("traerUnUsuarioPorMail(mail)", this.usuarioActual);
         }
 
       });

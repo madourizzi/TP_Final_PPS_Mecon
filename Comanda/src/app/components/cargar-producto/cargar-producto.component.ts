@@ -55,6 +55,9 @@ export class CargarProductoComponent implements OnInit {
       { type: 'required', message: 'Debe ingresar precio' },
       { type: 'number', message: 'Solo Números.' }
     ],
+    'tipo': [
+      { type: 'required', message: 'Debe ingresar un tipo' },
+    ],
 
   };
 
@@ -85,6 +88,10 @@ export class CargarProductoComponent implements OnInit {
       precio: new FormControl('', Validators.compose([
         Validators.required,
         Validators.required,
+      ])),
+     tipo: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.required,
       ]))
 
     });
@@ -107,7 +114,7 @@ export class CargarProductoComponent implements OnInit {
       this.form.controls['descripcion'].setValue(this.productoActual.descripcion);
       this.form.controls['stock'].setValue(this.productoActual.stock);
       this.form.controls['precio'].setValue(this.productoActual.precio);
-      /*     this.form.controls['activo'].setValue(this.productoActual.activo); */
+      this.form.controls['tipo'].setValue(this.productoActual.tipo);
       this.foto = this.productoActual.url;
     } catch (e) {
       console.log("try produciot", e);
@@ -122,11 +129,19 @@ export class CargarProductoComponent implements OnInit {
   }
 
 
+  setTipo(perfil) {
+    this.productoActual.tipo=perfil;    
+    this.form.controls['tipo'].setValue(perfil);
+  }
+
+
+
   onSubmitProducto() {
     this.productoActual.nombre = this.form.get('nombreProducto').value;
     this.productoActual.descripcion = this.form.get('descripcion').value;
     this.productoActual.stock = this.form.get('stock').value;
     this.productoActual.precio = this.form.get('precio').value;
+    this.productoActual.tipo= this.form.get('tipo').value;
     console.log(this.form.get('nombreProducto').value);
     this.subirFoto();
   }
@@ -150,7 +165,6 @@ export class CargarProductoComponent implements OnInit {
   cancelar() {
     this.opcionElegida = 0;
     this.selectedFiles = false;
-
   }
 
 
@@ -180,6 +194,8 @@ export class CargarProductoComponent implements OnInit {
         alert("carga cancelada");
         break
     }
+
+
 
 
   }
@@ -216,6 +232,8 @@ export class CargarProductoComponent implements OnInit {
         alert("carga cancelada");
         break
     }
+
+
 
 
   }

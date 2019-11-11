@@ -15,9 +15,6 @@ export class Pedido {
     costo: number;
 
 
-
-
-
     ///////////
     descuento_10: boolean;
     descuento_bebida: boolean;
@@ -30,9 +27,12 @@ export class Pedido {
     costo_envio: number;
     tiempo_envio: number;
 
-    constructor(
-        id?:string,
-        productos?:Array<any>,
+    constructor(){
+        this.productos = new Array<any>();
+
+    }
+    
+/*         productos?:Array<any>,
         mesaId?: string,
         cliente?: User,
         estado?: string,
@@ -47,6 +47,7 @@ export class Pedido {
         direccion?: string,
         costo_envio?: number,
         tiempo_envio?: number){
+
 
             if(productos == null || productos == undefined) this.productos = new Array<any>(); else this.productos = productos;
             if(mesaId == null || mesaId == undefined) this.mesaId = ""; else this.mesaId = mesaId;
@@ -63,7 +64,7 @@ export class Pedido {
             if(direccion == null || direccion == undefined) this.direccion = ""; else this.direccion = direccion;
             if(costo_envio == null || costo_envio == undefined) this.costo_envio = 0; else this.costo_envio = costo_envio;
             if(tiempo_envio == null || tiempo_envio == undefined) this.tiempo_envio = 0; else this.tiempo_envio = tiempo_envio;
-    }
+    } */
 
     dameJSON() {
         return JSON.parse(JSON.stringify(this));

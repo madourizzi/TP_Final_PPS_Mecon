@@ -4,6 +4,7 @@ import { flatMap } from 'rxjs/operators';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from 'src/app/services/archivos.service';
 import { User } from 'src/app/models/user';
+import { Producto } from 'src/app/models/producto';
 
 @Component({
   selector: 'app-productos',
@@ -51,6 +52,7 @@ export class ProductosPage implements OnInit {
     this.listaMesa = false;
     this.botonera = true;
     this.altaMesa = false;
+    this.productoElegido = null;
   }
 
   editarUsu($event)
@@ -58,9 +60,7 @@ export class ProductosPage implements OnInit {
     this.listaMesa = false;
     this.botonera = false;
     this.altaMesa = true;
-    this.productoElegido= $event;    
-  
-    
+    this.productoElegido= $event;        
 
   }
 

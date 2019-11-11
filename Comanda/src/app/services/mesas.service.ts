@@ -33,26 +33,21 @@ export class MesasService {
     public usuarioServ: UsersService,
   ) {
 
-    this.mesas= new Array();
+    this.mesas = new Array();
     this.TraerMesas().subscribe(
       actions => actions.forEach(a => {
         const data = a.payload.doc.data() as Mesa;
-        console.log("data!",data);        
-       this.mesas.push(data);
+           
+        this.mesas.push(data);
       })
     );
-      
-
-    console.log("this.mesas", this.mesas);
-    
 
   }
 
   TraerMesas() {
-
     this.listaMesasFirebase = this.objFirebase.collection<Mesa>("mesa", ref => ref.orderBy('numero', 'asc'));
-   return this.listaMesasFirebase.snapshotChanges();
-}
+    return this.listaMesasFirebase.snapshotChanges();
+  }
 
 
 
@@ -71,28 +66,29 @@ export class MesasService {
   }
 
   limpiarMesa(mesaABlanquear: Mesa) {
-
-    mesaABlanquear.cliente="sin asignar";
-    mesaABlanquear.pedidos= new Array();
-    mesaABlanquear.estado= "disponible";
-
+    mesaABlanquear.cliente = "sin asignar";
+    mesaABlanquear.pedidos = new Array();
+    mesaABlanquear.estado = "disponible";
     return this.objFirebase.collection("mesa").doc(mesaABlanquear.uid).set(JSON.parse(JSON.stringify(mesaABlanquear)), { merge: true });
   }
 
-
+  /**
+   * 
+   * @param comensales 
+   */
   async asignarMesaDisponible(comensales) {
 
     const mesasDisponible = this.MesasDisponibles();
-console.log("mesas disponibles ", mesasDisponible);
+    console.log("mesas disponibles ", mesasDisponible);
 
 
-    return this.qrService.readQR().then(async QRdata => {
+/*     return this.qrService.readQR().then(async QRdata => {
       let flagQR = false;
       if ("madourizzi@solicitudDeMesa" == QRdata.text) {
         flagQR = true;
-        console.log("entro bien el qr pero algo se rompio");
+        console.log("entro bien el qr pero algo se rompio"); */
         let flag2 = false;
-        mesasDisponible.forEach(async (mesa: Mesa) => {
+     return  mesasDisponible.forEach(async (mesa: Mesa) => { //sacar este return cuando se saca el comentando para el qr
 
           if (flag2 == false) {
             console.log("mf", mesa);
@@ -126,7 +122,7 @@ console.log("mesas disponibles ", mesasDisponible);
         }
       }
 
-
+/* 
       if (!flagQR) {
         const toast = await this.toastCtrl.create({
           message: "Codigo QR incorrecto",
@@ -140,34 +136,36 @@ console.log("mesas disponibles ", mesasDisponible);
       return false;
       console.log('Error', err);
     });
-  }
+  } */
 
 
   actualizarMesa(mesa: Mesa, estado) {
     mesa.estado = estado;
-    mesa.cliente = this.usuarioServ.traerUsuarioActual();
+    mesa.cliente = this.usuarioServ.traerUsuarioActual().email;
     return this.objFirebase.collection("mesa").doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
   }
 
 
-  traerMesaPorUsuarioMail(email) {
 
-    let resp: Mesa;
-    this.TraerMesas();
-    this.mesas.forEach((e: Mesa) => {
-      if (e.cliente.email == email) {
-        return e;
+  traerMesaPorUsuarioMail(mail) {
+    return this.objFirebase.collection("mesa").snapshotChanges().subscribe(e => {
+       e.map(a => {
+         const data = a.payload.doc.data() as Mesa; 
+         console.log("contruecot", data);   
+         if (data.cliente == mail) {
+          console.log("contruecot2", data);   
+           this.mesaActual = data;
+           //localStorage.setItem('perfil', this.usuarioActual.perfil)
+           console.info(" traerMesaPorUsuarioMail(mail)", this.mesaActual);
+         }
+ 
+       });
+ 
+     })
+   }
 
-      }
 
-
-    })
-
-  }
-
-
-
-
+  
   EstadoPedido() {
     this.TraerMesas();
 
@@ -233,11 +231,11 @@ console.log("mesas disponibles ", mesasDisponible);
 
   async cambiarEstadoMesaOcupada() {
     var usuario = this.usuarioServ.traerUsuarioActual();
-    return this.qrService.readQR().then(async QRdata => {
+    /* return this.qrService.readQR().then(async QRdata => {
 
-      if (this.mesaActual.codigoQr == QRdata.text) {
+      if (this.mesaActual.codigoQr == QRdata.text) { */
 
-        if (this.mesaActual.estado == 'reservada' && this.mesaActual.cliente.email == usuario.email) {
+        if (this.mesaActual.estado == 'reservada' && this.mesaActual.cliente == usuario.email) {
 
           this.actualizarMesa(this.mesaActual, "ocupada");
           this.mesaActual.estado = "ocupada";
@@ -259,7 +257,7 @@ console.log("mesas disponibles ", mesasDisponible);
           toast.present();
           return false;
         }
-      } else {
+      } /* else {
         const toast = await this.toastCtrl.create({
           message: "usuario y qr incorrectos",
           duration: 3000,
@@ -275,7 +273,7 @@ console.log("mesas disponibles ", mesasDisponible);
       console.log('Error', err);
     })
   }
-
+ */
   LiberarMesa(mesa: Mesa) {
     mesa.estado = "disponible";
     mesa.usuario = null;

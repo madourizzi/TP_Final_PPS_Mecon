@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pedido } from '../models/pedido';
+import { Producto } from '../models/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class PedidosService {
 
   private pedidosCollection: AngularFirestoreCollection<any>;
   pedidos: Observable<any[]>;
-  
+
 
   constructor(
     private db: AngularFirestore) {
@@ -34,6 +35,39 @@ export class PedidosService {
 
   }
 
+  crearPedidoXArea(nuevoPedido:Pedido, mesa) {
+
+    let productosDelArea: Pedido;
+    let nroPedidos: Array<string>;
+
+    nroPedidos = new Array();
+
+    let areas = ["candyBar", "cocina", "cerveza", "barra"];
+    areas.forEach((area) => {
+      productosDelArea = new Pedido();
+      nuevoPedido.productos.forEach((producto: Producto) => {
+        if (producto.tipo == area) {
+          productosDelArea.productos.push(producto);
+        }
+      });
+
+      if(productosDelArea.productos.length>0)
+      {
+        productosDelArea.area= area;
+        productosDelArea.mesa = mesa.nummero;
+        productosDelArea.estado = "pendiente";
+        let id = this.db.createId();
+        nuevoPedido.uid = id;
+        this.db.collection('pedidos').doc(id).set(JSON.parse(JSON.stringify(productosDelArea)), { merge: true });      
+        nroPedidos.push(id);        
+      }
+      });
+    return nroPedidos;
+  }
+
+
+
+
   traerTodosPedidos() {
     return this.db.collection('pedidos').snapshotChanges();
   }
@@ -55,21 +89,19 @@ export class PedidosService {
     return pedidoActualizar;
   }
 
-  TraerPedidos()
-  {
+  TraerPedidos() {
     this.pedidosCollection = this.db.collection<Pedido>("pedidos");
-    this.pedidos= this.pedidosCollection.valueChanges();
+    this.pedidos = this.pedidosCollection.valueChanges();
     return this.pedidos;
-   
+
   }
 
- async AceptarPedido(pedido: Pedido)
-  {
-    pedido.estado="pendiente";
-    
+  async AceptarPedido(pedido: Pedido) {
+    pedido.estado = "pendiente";
+
     this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
-            
-    
+
+
       console.log('Documento editado exitósamente');
 
     }, (error) => {
@@ -78,12 +110,11 @@ export class PedidosService {
 
   }
 
-  async CancelarPedido(pedido: Pedido)
-  {
-    pedido.estado="cancelado";
-    
-    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {    
-    
+  async CancelarPedido(pedido: Pedido) {
+    pedido.estado = "cancelado";
+
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
+
       console.log('Documento editado exitósamente');
 
     }, (error) => {
@@ -93,20 +124,18 @@ export class PedidosService {
   }
 
 
-  async Cobrar(pedido: Pedido)
-  {
-    pedido.estado="pagado";    
-    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {  
+  async Cobrar(pedido: Pedido) {
+    pedido.estado = "pagado";
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
       console.log('Documento editado exitósamente');
     }, (error) => {
       console.log(error);
     });
   }
 
- async ServirPedido(pedido: Pedido)
-  {
-    pedido.estado="entregado";    
-    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => { 
+  async ServirPedido(pedido: Pedido) {
+    pedido.estado = "entregado";
+    this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
       console.log('Documento editado exitósamente');
     }, (error) => {
       console.log(error);
