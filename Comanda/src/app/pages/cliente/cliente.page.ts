@@ -175,8 +175,17 @@ export class ClientePage implements OnInit {
 
 
   consultarPedidosAnonimo() {
-    //lanza qr y da detalle directo de cualquier mesa
-    this.router.navigate(['/detalle-mesa']);
+    this.mesasServ.EstadoPedido().then(()=>{
+      if(this.mesasServ.mesaActual)
+      {
+        this.router.navigate(['/detalle-mesa']);
+      }
+      else{
+      console.log("no hay mesa actual, tiene q ingresar qr");
+      
+      }
+
+    })
   }
 
 

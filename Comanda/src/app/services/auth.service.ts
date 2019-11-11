@@ -69,6 +69,21 @@ export class AuthService {
     return this.angularFireAuth.auth.currentUser.email;
   }
 
+/**
+ * 
+ * @param tipo 
+ */
+async usuarioAnonimo() {
+  console.log(" solo debe ingresar nombre");
+  return this.angularFireAuth.auth.signInAnonymously();
+
+}
+
+
+
+
+
+
   ///////// lo copi en el servicio de user tambien
 
   traerTodoss(tipo) {

@@ -36,8 +36,7 @@ export class MesasService {
     this.mesas = new Array();
     this.TraerMesas().subscribe(
       actions => actions.forEach(a => {
-        const data = a.payload.doc.data() as Mesa;
-           
+        const data = a.payload.doc.data() as Mesa;          
         this.mesas.push(data);
       })
     );
@@ -167,18 +166,14 @@ export class MesasService {
 
   
   EstadoPedido() {
-    this.TraerMesas();
 
-    this.qrService.readQR().then(async QRdata => {
-
+   return this.qrService.readQR().then(async QRdata => {
       console.log(QRdata.text);
-
       let flag = false;
       this.mesas.forEach(async (mesa: Mesa) => {
 
-
-
         if (mesa.codigoQr == QRdata.text) {
+          this.mesaActual= mesa;
           flag = true;
           const toast = await this.toastCtrl.create({
             message: "La mesa nro: " + mesa.numero + " se encuentra " + mesa.estado + ".",
