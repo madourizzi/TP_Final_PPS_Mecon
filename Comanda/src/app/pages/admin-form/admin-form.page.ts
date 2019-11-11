@@ -18,6 +18,7 @@ export class AdminFormPage implements OnInit {
   foto: any = null;
   urlFoto: string;
   title: string;
+  usuario:User;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +32,20 @@ export class AdminFormPage implements OnInit {
   }
 
   ngOnInit() {
+
+    if (this.usuario == null) {
+      this.usuario = new User();
+      this.usuario.email = "nuevo@usuario.com";
+      this.usuario.activo= false;
+      this.userServ.enviarUsuario(this.usuario);
+      this.userServ.traerUnUsuarioPorMail("nuevo@usuario.com");
+      setTimeout(() => this.usuario = this.userServ.traerUsuarioActual(), 2000);
+    }
+
+
+
+
+
 
     this.altaForm = this.formBuilder.group({
       nombre: ['', Validators.required],

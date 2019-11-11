@@ -12,7 +12,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class ListadoEmpleadosComponent implements OnInit {
 
   usuarios: Array<User>;
-@Output() usuarioElegido: EventEmitter<any>;
+  @Output() usuarioElegido: EventEmitter<any>;
 
   constructor(private authServ: AuthService, private toastService: ToastService, private usuariosServ: UsersService) {
     this.usuarios = new Array();
@@ -20,23 +20,24 @@ export class ListadoEmpleadosComponent implements OnInit {
       this.usuarios = [];
       actions.map(a => {
         const data = a.payload.doc.data() as User;
-        if(data.perfil!="cliente")
+        console.info(" data", data.nombre + data.activo + " + " + data.perfil);
+        if (data.perfil != "cliente" && data.activo == true) 
         {
-          console.info(data, " data");
+          console.info(" data", data.nombre + data.activo + " + " + data.perfil);
           this.usuarios.push(data);
         }
       });
 
     });
 
-    this.usuarioElegido= new EventEmitter();
+    this.usuarioElegido = new EventEmitter();
 
   }
 
   ngOnInit() { }
 
   elegir(empleado) {
-      this.usuarioElegido.emit( empleado);
+    this.usuarioElegido.emit(empleado);
   }
 
 

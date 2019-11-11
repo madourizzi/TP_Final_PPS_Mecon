@@ -24,30 +24,30 @@ export class AuthService {
     private nativeAudio: NativeAudio) {
     this.nativeAudio.preloadSimple('logout', 'assets/sounds/login.mp3').catch(error => { });
 
-    this.usersCollection=db.collection<User>('users');
+    this.usersCollection = db.collection<User>('users');
     this.usuarios = this.usersCollection.snapshotChanges().pipe(map(
-      actions => actions.map(a=> {
-        const data = a.payload.doc.data()as User;
+      actions => actions.map(a => {
+        const data = a.payload.doc.data() as User;
         const id = a.payload.doc.id;
-        return {id, data};
+        return { id, data };
       })
     ));
   }
-/**
- * 
- * @param email 
- * @param password 
- */
+  /**
+   * 
+   * @param email 
+   * @param password 
+   */
   login(email: string, password: string) {
     this.spinner.show();
     console.log(email + ' ' + password);
     sessionStorage.setItem("usuario", JSON.stringify(email));
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password);
   }
- 
-/**
- * 
- */
+
+  /**
+   * 
+   */
   logout() {
     this.angularFireAuth.auth.signOut()
       .then(res => {
@@ -55,9 +55,9 @@ export class AuthService {
         this.router.navigate(['/login']);
       });
   }
-/**
- * 
- */
+  /**
+   * 
+   */
   getCurrentUserId(): string {
     return this.angularFireAuth.auth.currentUser ? this.angularFireAuth.auth.currentUser.uid : null;
   }
@@ -69,12 +69,27 @@ export class AuthService {
     return this.angularFireAuth.auth.currentUser.email;
   }
 
-///////// lo copi en el servicio de user tambien
+/**
+ * 
+ * @param tipo 
+ */
+async usuarioAnonimo() {
+  console.log(" solo debe ingresar nombre");
+  return this.angularFireAuth.auth.signInAnonymously();
 
-traerTodoss(tipo) {
+}
+
+
+
+
+
+
+  ///////// lo copi en el servicio de user tambien
+
+  traerTodoss(tipo) {
     return this.db.collection(tipo).snapshotChanges();
   }
-  
+
 
   async onRegister(user: User) {
     var contenido = document.getElementById('contenido');
@@ -121,6 +136,16 @@ traerTodoss(tipo) {
       }
 
 
+    }
+  }
+  async crearAutenticacion(user: User) {
+
+    this.nativeAudio.play("txt-alert");
+    console.log("creando");
+    await this.angularFireAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+    .catch()
+    {
+      console.log("catch");
     }
   }
 

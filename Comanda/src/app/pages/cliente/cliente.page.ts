@@ -10,6 +10,7 @@ import { AlertController, Platform } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+import { Pedido } from 'src/app/models/pedido';
 
 @Component({
   selector: 'app-cliente',
@@ -21,7 +22,7 @@ export class ClientePage implements OnInit {
   title: string;
   botonera;
   menu: boolean;
-  pedido: Array<any>;
+  pedido: Pedido;
   confirmar: boolean;
   pedirMesa: boolean;
   esperandoConfirmacion: boolean;
@@ -48,18 +49,17 @@ export class ClientePage implements OnInit {
     this.botonera = true;
     this.menu = false;
     this.confirmar = false;
+
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual es: ", this.usuarioActual);
-
-
-      if (this.usuarioActual.registrado == false) {
+        if (!this.usuarioActual.registrado) {
         this.registroClienteAlertConfirm();
       }
       this.getTokenControl();
-
-    }, 1000);
-
+      this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
+    }, 1500);
+    
 
 
   }
@@ -165,7 +165,7 @@ export class ClientePage implements OnInit {
     this.botonera = false;
   }
 
-  consultarPedidos() {
+  consultarPedidos() {   
     this.router.navigate(['/detalle-mesa']);
   }
 
@@ -175,8 +175,17 @@ export class ClientePage implements OnInit {
 
 
   consultarPedidosAnonimo() {
-    //lanza qr y da detalle directo de cualquier mesa
-    this.router.navigate(['/detalle-mesa']);
+    this.mesasServ.EstadoPedido().then(()=>{
+      if(this.mesasServ.mesaActual)
+      {
+        this.router.navigate(['/detalle-mesa']);
+      }
+      else{
+      console.log("no hay mesa actual, tiene q ingresar qr");
+      
+      }
+
+    })
   }
 
 

@@ -21,7 +21,7 @@ export class LoginPage implements OnInit {
   form: FormGroup;
   rolesEnum = Roles;
 
-  
+
   validation_messages = {
     'mail': [
       { type: 'required', message: 'Debe ingresar un email.' },
@@ -41,7 +41,7 @@ export class LoginPage implements OnInit {
     private smartAudioService: SmartAudioService,
     private vibration: Vibration
 
-) {
+  ) {
 
     this.form = this.formBuilder.group({
       mail: new FormControl('', Validators.compose([
@@ -50,11 +50,11 @@ export class LoginPage implements OnInit {
       ])),
       password: new FormControl('', Validators.required)
     });
-   
+
   }
 
   ngOnInit() {
-    
+
   }
 
   async onSubmitLogin() {
@@ -79,7 +79,6 @@ export class LoginPage implements OnInit {
                 case "cliente":
 
                   localStorage.setItem("perfil", 'cliente');
-
                   //definir routing por si ya tiene un mesa asignada o no      
                   this.router.navigate(['/cliente']);
                   break;
@@ -100,7 +99,7 @@ export class LoginPage implements OnInit {
                   break;
               }
 
-              
+
             }
 
           });
@@ -118,6 +117,27 @@ export class LoginPage implements OnInit {
       });
 
   }
+
+  entrarAnonimo() {
+    const user = this.authService.usuarioAnonimo();
+    if (user) {
+      let usuario = new User();
+      usuario.email = "anonimo@anonimo.com";
+      usuario.nombre = "anonimo";
+      usuario.apellido = "anonimo";
+      usuario.registrado = true;
+      usuario.activo=true;
+      this.userServ.enviarUsuario(usuario)
+        .then(e => {
+          this.userServ.traerUnUsuarioPorMail(usuario.email);
+          console.log('Exito, usuario creado');
+          this.router.navigateByUrl('/cliente');
+        });
+    }
+  }
+
+
+
 
   cargarDatos(rol: Roles) {
     switch (rol) {

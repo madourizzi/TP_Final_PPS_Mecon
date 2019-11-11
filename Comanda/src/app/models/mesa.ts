@@ -12,7 +12,7 @@ export class Mesa {
   usuario: User;
   url;
   cliente;
-  pedidos: Array<Pedido>
+  pedidos: Array<String>
 
     constructor() {
       this.cliente="sin asignar";

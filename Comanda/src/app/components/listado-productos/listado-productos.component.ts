@@ -5,6 +5,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { AdminFormPage } from 'src/app/pages/admin-form/admin-form.page';
 import { ProductosService } from 'src/app/services/productos.service';
 import { MesasService } from 'src/app/services/mesas.service';
+import { Pedido } from 'src/app/models/pedido';
 
 @Component({
   selector: 'app-listado-productos',
@@ -13,7 +14,7 @@ import { MesasService } from 'src/app/services/mesas.service';
 })
 export class ListadoProductosComponent implements OnInit {ç
 
-  productosPedidos: Array<any>;
+  productosPedidos: Pedido;
   acumuladorProductos=0;
   @Output() enviar:  EventEmitter<any> = new EventEmitter();
  admin;
@@ -23,7 +24,7 @@ export class ListadoProductosComponent implements OnInit {ç
   constructor(private productosService: ProductosService, private mesaServ: MesasService,
     private toastService: ToastService) {
     this.productos = new Array();
-    this.productosPedidos = new Array();
+    this.productosPedidos = new Pedido();
     this.productosService.traerTodosProductos().subscribe(actions => {
       this.productos = [];
       actions.map(a => {
@@ -49,7 +50,7 @@ export class ListadoProductosComponent implements OnInit {ç
     //toaster y sumarlo a un array
    this.toastService.confirmationToast("eligio " + producto.nombre);
    this.acumuladorProductos++;
-   this.productosPedidos.push(producto);
+   this.productosPedidos.productos.push(producto);
    console.log(this.productosPedidos);
    
   }

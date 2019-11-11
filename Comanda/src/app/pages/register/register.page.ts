@@ -32,7 +32,7 @@ export class RegisterPage implements OnInit {
   async onRegister(){
 
     console.log("this.user" +  this.user);
-    
+        
     const user = await this.authSvc.onRegister(this.user);
     console.log(user);
   
@@ -42,9 +42,14 @@ export class RegisterPage implements OnInit {
         this.usuarios.traerUnUsuarioPorMail(this.user.email);
         console.log('Exito, usuario creado');
         this.nativeAudio.play("txt-alert");
-        this.router.navigateByUrl('/cliente');
+        this.router.navigateByUrl('/login');
       });
     }
+  }
+
+  nuevoEmpleado()
+  {
+    
   }
 
 

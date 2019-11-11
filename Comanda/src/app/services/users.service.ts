@@ -30,15 +30,14 @@ export class UsersService {
 
 
   traerUnUsuarioPorMail(mail) {
-    this.dbRef.snapshotChanges().subscribe(e => {
-
+   return this.dbRef.snapshotChanges().subscribe(e => {
       e.map(a => {
         const data = a.payload.doc.data() as User;
 
         if (data.email == mail) {
           this.usuarioActual = data;
-          // localStorage.setItem('perfil', this.usuarioActual.perfil)
-          console.info("this.usuario", this.usuarioActual);
+          //localStorage.setItem('perfil', this.usuarioActual.perfil)
+          console.info("traerUnUsuarioPorMail(mail)", this.usuarioActual);
         }
 
       });

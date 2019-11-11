@@ -6,16 +6,22 @@
                 <img src="{{producto.foto}}">
             </ion-avatar>
             <ion-label>
-                <p>{{producto.nombre}} {{producto.apellido}} | DNI: {{producto.dni}}</p>
-                <h3>{{producto.perfil}}</h3>
+                <p *ngIf="producto.nombre != undefined">{{producto.nombre}} {{producto.apellido}} | DNI: {{producto.dni}}</p>
+                <p *ngIf="producto.nombre ==undefined"> {{producto.email}}</p>
+                <p style="font-weight: bold; color:rgb(42, 54, 165)" *ngIf="producto.activo==null ">Estado: Pendiente </p>
+                <p style="font-weight: bold; color:rgb(165, 42, 159)" *ngIf="producto.activo==false ">Estado: Baja </p>
+                <p style="font-weight: bold; color:rgb(26, 236, 26) " *ngIf="producto.activo ">Estado: Autorizado </p>
+                <p class="animated flash delay-1s" style="font-weight: bold; color:rgb(9, 86, 228) " *ngIf="producto.perfil=='nuevo' ">Perfil: NUEVO</p>
+                <p style="font-weight: bold; color:rgb(9, 88, 6) " *ngIf="producto.perfil!='nuevo'">Perfil: {{producto.perfil}} </p>
+                <p class="animated flash" style="font-weight: bold; color:rgb(226, 43, 19) " *ngIf="!producto.registrado ">Falta Cargar Informacion Personal </p>
 
             </ion-label>
-            <ion-button color="danger" (click)="elegir(producto)">Elegir</ion-button>
+            <ion-button color="danger " (click)="elegir(producto) ">Elegir</ion-button>
         </ion-item>
     </ion-list>
 </ion-content>
-<ion-footer style="height: 20vh">
+<ion-footer style="height: 20vh ">
     <ion-toolbar>
-        <!-- <ion-button color="danger" style="width: 98%" (click)="enviarPedido()">Terminar Pedido ( {{acumuladorProductos}} )</ion-button> -->
+        <!-- <ion-button color="danger " style="width: 98% " (click)="enviarPedido() ">Terminar Pedido ( {{acumuladorProductos}} )</ion-button> -->
     </ion-toolbar>
 </ion-footer>
