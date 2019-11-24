@@ -15,11 +15,14 @@ export class DetalleMesaPage implements OnInit {
   nroMesa;
   cliente;
   pedidos: Array<Pedido>;
+  sacarDetalle;
 
   constructor(
     private pedidoSer: PedidosService, 
     private mesaSer: MesasService, 
-    private usuarioSer: UsersService) { }
+    private usuarioSer: UsersService) {
+      this.sacarDetalle=true;
+     }
 
   ngOnInit() {
     
@@ -34,9 +37,19 @@ export class DetalleMesaPage implements OnInit {
         this.pedidos.push(e);
       });
 
-
     });
 
+    if(this.nroMesa.estado =="cerrada")
+    {
+      this.sacarDetalle=false;
+    }
+
+  }
+
+  cerrarMesa() {
+    console.log("'cuentaPedida'");
+    this.sacarDetalle=false;
+    this.mesaSer.actualizarMesaEmpleado(this.mesaSer.mesaActual, 'cuentaPedida');
   }
 
 }

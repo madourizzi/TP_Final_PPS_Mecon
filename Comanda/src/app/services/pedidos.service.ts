@@ -42,7 +42,7 @@ export class PedidosService {
 
     nroPedidos = new Array();
 
-    let areas = ["candyBar", "cocina", "cerveza", "barra"];
+    let areas = ["postre", "cocina", "cerveza", "barra"];
     areas.forEach((area) => {
       productosDelArea = new Pedido();
       nuevoPedido.productos.forEach((producto: Producto) => {
@@ -54,7 +54,7 @@ export class PedidosService {
       if(productosDelArea.productos.length>0)
       {
         productosDelArea.area= area;
-        productosDelArea.mesa = mesa.nummero;
+        productosDelArea.mesa = mesa.uid;
         productosDelArea.estado = "pendiente";
         let id = this.db.createId();
         productosDelArea.uid = id;
