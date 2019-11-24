@@ -1,7 +1,7 @@
 <ion-content *ngIf="!pedidoCOnfirmado">
     <ion-list style="height: 75vh" color="dark">
         <ion-list-header color="dark">Su pedido es</ion-list-header>
-        <ion-chip *ngFor="let producto of pedidoAConfirmar.productos" style="width: 98%">
+        <ion-chip *ngFor="let producto of pedidoAConfirmar.productos">
             <ion-avatar>
                 <img src="{{producto.url}}">
             </ion-avatar>

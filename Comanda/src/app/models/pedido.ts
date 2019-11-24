@@ -29,6 +29,7 @@ export class Pedido {
 
     constructor(){
         this.productos = new Array<any>();
+        this.tiempo_espera= -1;
 
     }
     

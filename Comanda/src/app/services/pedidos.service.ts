@@ -57,7 +57,7 @@ export class PedidosService {
         productosDelArea.mesa = mesa.nummero;
         productosDelArea.estado = "pendiente";
         let id = this.db.createId();
-        nuevoPedido.uid = id;
+        productosDelArea.uid = id;
         this.db.collection('pedidos').doc(id).set(JSON.parse(JSON.stringify(productosDelArea)), { merge: true });      
         nroPedidos.push(id);        
       }
@@ -86,8 +86,9 @@ export class PedidosService {
     return this.pedidosCollection.doc(pedido.uid).update(pedido);
   }
 
-  actualizarUnPedido(idPedido: string) {
-    let pedidoActualizar = this.db.collection<Pedido>("pedidos").doc(idPedido);
+  actualizarUnPedido(idPedido: Pedido, estado) {
+    idPedido.estado = estado;
+    let pedidoActualizar = this.db.collection<Pedido>("pedidos").doc(idPedido.uid).update(idPedido);
     return pedidoActualizar;
   }
 

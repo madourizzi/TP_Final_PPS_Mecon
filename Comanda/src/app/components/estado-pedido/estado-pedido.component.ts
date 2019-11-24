@@ -19,7 +19,7 @@ export class EstadoPedidoComponent {
     private qrService: LectorQrService,
   ) { }
 
-
+/* 
   async ConfirmarEntrega() {
 
     this.pedidoService.actualizarUnPedido(this.pedido.uid).update({
@@ -98,7 +98,7 @@ export class EstadoPedidoComponent {
       console.log('Error editando documento', error);
     });
 
-  }
+  } */
 
 }
 

@@ -76,12 +76,14 @@ export class ListadoMesasComponent implements OnInit {
   limpiarTodasLasMesas() {
 
     let pedi = this.eliminarPedidos();
-    this.eliminarClientes();
+  //  this.eliminarClientes();
 
     let mesass = this.mesasService.TraerMesas().subscribe(actions => {
       actions.map(a => {
         const data = a.payload.doc.data() as Mesa;
         this.mesasService.limpiarMesa(data);
+        console.log('mesas');
+        
       });
     });
 
@@ -103,6 +105,7 @@ export class ListadoMesasComponent implements OnInit {
     return this.pedidoServicio.traerTodosPedidos().subscribe(actions => {
       actions.map(a => {
         const data = a.payload.doc.data() as Pedido;
+        console.log('pedido');
         this.pedidoServicio.eliminarPedido(data.uid);
       });
     });

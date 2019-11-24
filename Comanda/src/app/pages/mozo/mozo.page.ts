@@ -43,11 +43,6 @@ export class MozoPage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => this.spinner.hide(), 500);
-    this.adminPerfilUser = false;
-    this.cargarProducto = false;
-    this.botonera = true;
-    this.editarUsuario = false;
-    this.altaMesa=false;
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual en MOZO es: ", this.usuarioActual);
@@ -86,34 +81,6 @@ export class MozoPage implements OnInit {
       perfil: usuario.perfil
     }
     return devicesRef.doc(token).set(docData)
-  }
-
-
-  mesas() {
-    this.router.navigate(['/mesa']);
-  }
-
-
- productos() {
-    this.router.navigate(['/productos']);
-  }
-
-
-  empleados() {
-    this.router.navigate(['/empleados']);
-  }
-
-  stats() {    
-    this.router.navigate(['/stats']);
-  }
-
-  volver($event)
-  {
-    this.cargarProducto = false;
-    this.adminPerfilUser = false;
-    this.botonera = true;
-    this.editarUsuario = false;
-    this.altaMesa=false;
   }
 
 

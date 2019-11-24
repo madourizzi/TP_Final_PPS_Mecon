@@ -158,6 +158,11 @@ export class MesasService {
    
   }
 
+  traerUnaMesaUID(id) {
+    return this.objFirebase.collection('mesa').doc(id).snapshotChanges();
+  }
+
+
   async confirmarServicio(mesa) {
     this.actualizarMesaMozo(mesa, 'inicioServicio');
     const toast = await this.toastCtrl.create({

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-cocina',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CocinaPage implements OnInit {
 
-  constructor() { }
+  constructor(private spinner: SpinnerService) { }
 
   ngOnInit() {
+    this.spinner.hide();
   }
 
 }

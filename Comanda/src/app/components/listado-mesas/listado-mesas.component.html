@@ -1,6 +1,7 @@
 <ion-content [scrollEvents]="true">
     <ion-list style="height: 93vh; overflow-y: auto;" color="dark">
         <ion-list-header color="dark">Listado de Mesas</ion-list-header>
+        <ion-button expand="full" (click)="limpiarTodasLasMesas()">limpiar</ion-button>
 
 
         <ion-item *ngFor="let mesa of mesas">
@@ -39,7 +40,7 @@
             </ion-label>
         </ion-item>
     </ion-list>
-    <ion-footer style="height: 10vh;">
-        <ion-button expand="full" (click)="limpiarTodasLasMesas()">limpiar</ion-button>
-    </ion-footer>
+
+
+
 </ion-content>
