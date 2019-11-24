@@ -12,12 +12,15 @@ import { Router } from '@angular/router';
 })
 export class PedirMesaQrPage implements OnInit {
 
+  esperando:boolean;
+
   constructor(private spinner: SpinnerService, private router: Router,
     private qr: BarcodeScanner,
     private archivos: ArchivosService,
     private mesasServ: MesasService) { }
 
   ngOnInit() {
+    this.esperando= false;
     setTimeout(() => this.spinner.hide(), 500);
   }
 
@@ -28,8 +31,9 @@ export class PedirMesaQrPage implements OnInit {
       let resp = false;
       await this.mesasServ.asignarMesaDisponible(10).then((e) => {
     
-        if (this.mesasServ.mesaActual.estado=="reservada") {
-          this.router.navigate(['/ocupar-mesa']);
+        if (this.mesasServ.mesaActual.estado=="solicitada") {
+         this.router.navigate(['/cliente']);
+        
         }
 
       })

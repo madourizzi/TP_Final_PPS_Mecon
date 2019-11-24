@@ -96,12 +96,12 @@ export class MesasService {
               flag2 = true;
               console.log("disponible", mesa);
               this.mesaActual = mesa;
-              this.actualizarMesa(this.mesaActual, "reservada");
+              this.actualizarMesa(this.mesaActual, "solicitada");
               const toast = await this.toastCtrl.create({
-                message: "La mesa nro: " + this.mesaActual.numero + " se encuentra reservada para usted.",
+                message: "Será atendido por un Mozo en Breve",
                 duration: 3000,
-                position: 'middle',
-                color: "secondary"
+                position: 'top',
+                color: "warning"
                 //middle || top
               });
               toast.present();
@@ -144,6 +144,44 @@ export class MesasService {
     return this.objFirebase.collection("mesa").doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
   }
 
+  async confirmarMesa(mesa) {
+    this.actualizarMesaMozo(mesa, 'reservada');
+
+    const toast = await this.toastCtrl.create({
+      message: 'buscar a ' +  mesa.cliente + 'para llevarlo a su mesa',
+      duration: 3000,
+      position: 'top',
+      color: "secondary"
+      //middle || top
+    });
+    toast.present();
+   
+  }
+
+  async confirmarServicio(mesa) {
+    this.actualizarMesaMozo(mesa, 'inicioServicio');
+    const toast = await this.toastCtrl.create({
+      message: 'Cliente' +  mesa.cliente + 'Iniciado servicio',
+      duration: 3000,
+      position: 'top',
+      color: "danger"
+      //middle || top
+    });
+    toast.present();
+   
+  }
+
+
+  actualizarMesaMozo(mesa: Mesa, estado) {
+    mesa.estado = estado;
+    return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
+  }
+
+
+  actualizarMesaEmpleado(mesa: Mesa, estado) {
+    mesa.estado = estado;
+    return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
+  }
 
 
   traerMesaPorUsuarioMail(mail) {

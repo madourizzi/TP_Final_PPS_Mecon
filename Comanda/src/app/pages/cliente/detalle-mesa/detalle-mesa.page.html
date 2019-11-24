@@ -14,10 +14,24 @@
             <ion-label>
                 <h3>Mesa Nº {{nroMesa.numero}}</h3>
                 <p>Comensales: {{nroMesa.cantidadComensales}} </p>
-                <p style="font-weight: bold; color:brown" *ngIf="nroMesa.estado=='ocupada'">Estado {{nroMesa.estado}} </p>
-                <p style="font-weight: bold; color:rgb(236, 205, 26)" *ngIf="nroMesa.estado=='reservada'">Estado {{nroMesa.estado}} </p>
-                <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="nroMesa.estado=='disponible'">Estado {{nroMesa.estado}} </p>
-                <p style="font-weight: bold; color:rgb(9, 88, 6)" *ngIf="nroMesa.estado=='esperandoComida'">Estado {{nroMesa.estado}} </p>
+                <p style="font-weight: bold; color:rgb(203, 25, 219)" *ngIf="nroMesa.estado=='comiendo'">Estado {{nroMesa.estado}} </p>
+                <p style="font-weight: bold; color:brown" *ngIf="nroMesa.estado=='terminada'">Estado {{nroMesa.estado}} </p>
+                <p style="font-weight: bold; color:rgb(236, 205, 26)" *ngIf="nroMesa.estado=='reservada'">Estado {{nroMesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="nroMesa.estado=='disponible'">Estado {{nroMesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(9, 88, 6)" *ngIf="nroMesa.estado=='esperandoComida'">Estado {{nroMesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(6, 11, 88)" *ngIf="nroMesa.estado=='solicitada'">Estado {{nroMesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(0, 0, 0)" *ngIf="nroMesa.estado=='inicioServicio'">Estado {{nroMesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(77, 7, 134)" *ngIf="nroMesa.estado=='cuentaPedida'">Estado {{nroMesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(19, 187, 14)" *ngIf="nroMesa.estado=='pagando'">Estado {{nroMesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="nroMesa.estado=='cerrada'">Estado {{nroMesa.estado}}
+                </p>
             </ion-label>
         </ion-item>
     </ion-list>

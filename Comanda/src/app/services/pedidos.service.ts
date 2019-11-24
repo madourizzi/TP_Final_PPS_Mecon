@@ -65,8 +65,10 @@ export class PedidosService {
     return nroPedidos;
   }
 
-
-
+  eliminarPedido(uid)
+  {
+    this.db.collection("pedidos").doc(uid).delete();
+  }
 
   traerTodosPedidos() {
     return this.db.collection('pedidos').snapshotChanges();
