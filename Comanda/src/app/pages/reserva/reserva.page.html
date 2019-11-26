@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar class="productoNavBar">
+    <ion-title>Reserva de Cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding class="productoMenu">
+  <form [formGroup]="registroForm" (submit)="Registrar()">
+    <ion-item padding
+      style="background-color: rgba(0,0,0,0.7) !important; color: rgb(235, 75, 75); border-radius: 10px;">
+      <ion-label>Fecha</ion-label>
+      <ion-datetime displayFormat="YYYY-MM-DD" placeholder="Seleccione una fecha de reserva" [min]="this.hoy"
+        name="fecha" [formControl]="fecha" required></ion-datetime>
+    </ion-item>
+    <ion-item padding
+      style="background-color: rgba(0,0,0,0.7) !important; color: rgb(235, 75, 75); border-radius: 10px;">
+      <ion-label>Hora</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" name="hora" [formControl]="hora" required>
+      </ion-datetime>
+    </ion-item>
+    <ion-item padding
+      style="background-color: rgba(0,0,0,0.7) !important; color: rgb(235, 75, 75); border-radius: 10px;">
+      <ion-label>Cantidad de comensales</ion-label>
+      <ion-input type="number" name="cant_comensales" [formControl]="cant_comensales" required></ion-input>
+    </ion-item>
+    <ion-item padding
+      style="background-color: rgba(0,0,0,0.7) !important; color: rgb(235, 75, 75); border-radius: 10px;">
+      <ion-label>VIP</ion-label>
+      <ion-checkbox name="vip" [formControl]="vip"></ion-checkbox>
+    </ion-item>
+    <div padding>
+      <ion-button type="submit" size="large" color="primary" [disabled]="!registroForm.valid" block>Reservar
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

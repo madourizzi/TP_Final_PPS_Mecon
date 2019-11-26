@@ -77,24 +77,27 @@ export class LoginPage implements OnInit {
                   this.router.navigate(['/admin']);
                   break;
                 case "cliente":
-
                   localStorage.setItem("perfil", 'cliente');
-                  //definir routing por si ya tiene un mesa asignada o no      
                   this.router.navigate(['/cliente']);
                   break;
                 case "mozo":
+                  localStorage.setItem("perfil", 'mozo');
                   this.router.navigate(['/mozo']);
                   break;
                 case "cocina":
+                          localStorage.setItem("perfil", 'cocina');
                   this.router.navigate(['/cocina']);
                   break;
-                case "barman":
+                case "barra":
+                  localStorage.setItem("perfil", 'barra');
                   this.router.navigate(['/barman']);
                   break;
-                case "cervecero":
+                case "cerveza":
+                  localStorage.setItem("perfil", "cerveza");
                   this.router.navigate(['/cervecero']);
                   break;
-                case "candyBar":
+                case "postre":
+                  localStorage.setItem("perfil", "postre");
                   this.router.navigate(['/candy-bar']);
                   break;
               }
@@ -126,7 +129,7 @@ export class LoginPage implements OnInit {
       usuario.nombre = "anonimo";
       usuario.apellido = "anonimo";
       usuario.registrado = true;
-      usuario.activo=true;
+      usuario.activo = true;
       this.userServ.enviarUsuario(usuario)
         .then(e => {
           this.userServ.traerUnUsuarioPorMail(usuario.email);

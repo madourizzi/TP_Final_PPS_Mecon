@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MozoPage } from './mozo.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { ReservaPage } from './reserva.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: MozoPage
+    component: ReservaPage
   }
 ];
 
@@ -19,11 +18,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes),    ComponentsModule,
-    FormsModule,
-    ReactiveFormsModule
+    RouterModule.forChild(routes)
   ],
-  declarations: [MozoPage]
+  declarations: [ReservaPage]
 })
-export class MozoPageModule {}
+export class ReservaPageModule {}

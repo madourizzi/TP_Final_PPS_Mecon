@@ -6,37 +6,68 @@
 
 <ion-content>
     <ion-list-header color="dark">Estado de Tu Mesa</ion-list-header>
-    <ion-list color="dark">
-        <ion-item>
-            <ion-thumbnail slot="start">
-                <img src="{{nroMesa.url}}">
-            </ion-thumbnail>
-            <ion-label>
-                <h3>Mesa Nº {{nroMesa.numero}}</h3>
-                <p>Comensales: {{nroMesa.cantidadComensales}} </p>
-                <p style="font-weight: bold; color:brown" *ngIf="nroMesa.estado=='ocupada'">Estado {{nroMesa.estado}} </p>
-                <p style="font-weight: bold; color:rgb(236, 205, 26)" *ngIf="nroMesa.estado=='reservada'">Estado {{nroMesa.estado}} </p>
-                <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="nroMesa.estado=='disponible'">Estado {{nroMesa.estado}} </p>
-                <p style="font-weight: bold; color:rgb(9, 88, 6)" *ngIf="nroMesa.estado=='esperandoComida'">Estado {{nroMesa.estado}} </p>
-            </ion-label>
-        </ion-item>
-    </ion-list>
-
-    <ion-list-header color="primary">Pedidos</ion-list-header>
-    <ion-list *ngFor="let productos of pedidos">
-        <ion-list-header color="dark">Prodcutos X Area {{productos.area}}</ion-list-header>
-        <ion-list>
-            <ion-item *ngFor="let producto of productos.productos">
+    <div *ngIf="sacarDetalle">
+        <ion-list color="dark">
+            <ion-item>
+                <ion-thumbnail slot="start">
+                    <img src="{{nroMesa.url}}">
+                </ion-thumbnail>
                 <ion-label>
-                    <h3>{{producto.nombre}}</h3>
-                    <p>{{producto.descripcion}} </p>
-                    <p>{{producto.precio}} </p>
+                    <h3>Mesa Nº {{nroMesa.numero}}</h3>
+                    <p>Comensales: {{nroMesa.cantidadComensales}} </p>
+                    <p style="font-weight: bold; color:rgb(203, 25, 219)" *ngIf="nroMesa.estado=='comiendo'">Estado {{nroMesa.estado}} </p>
+                    <p style="font-weight: bold; color:brown" *ngIf="nroMesa.estado=='terminada'">Estado {{nroMesa.estado}} </p>
+                    <p style="font-weight: bold; color:rgb(236, 205, 26)" *ngIf="nroMesa.estado=='reservada'">Estado {{nroMesa.estado}}
+                    </p>
+                    <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="nroMesa.estado=='disponible'">Estado {{nroMesa.estado}}
+                    </p>
+                    <p style="font-weight: bold; color:rgb(9, 88, 6)" *ngIf="nroMesa.estado=='esperandoComida'">Estado {{nroMesa.estado}}
+                    </p>
+                    <p style="font-weight: bold; color:rgb(6, 11, 88)" *ngIf="nroMesa.estado=='solicitada'">Estado {{nroMesa.estado}}
+                    </p>
+                    <p style="font-weight: bold; color:rgb(0, 0, 0)" *ngIf="nroMesa.estado=='inicioServicio'">Estado {{nroMesa.estado}}
+                    </p>
+                    <p style="font-weight: bold; color:rgb(77, 7, 134)" *ngIf="nroMesa.estado=='cuentaPedida'">Estado {{nroMesa.estado}}
+                    </p>
+                    <p style="font-weight: bold; color:rgb(19, 187, 14)" *ngIf="nroMesa.estado=='pagando'">Estado {{nroMesa.estado}}
+                    </p>
+                    <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="nroMesa.estado=='cerrada'">Estado {{nroMesa.estado}}
+                    </p>
+                    <ion-button color="dark" (click)=" cerrarMesa()" *ngIf="nroMesa.estado=='comiendo'">Pedir Cuenta</ion-button>
                 </ion-label>
-                <ion-button color="danger" (click)="elegir(producto)" *ngIf="admin=='cliente'">Elegir</ion-button>
-                <ion-button color="secondary" (click)=" enviarProducto(producto)" *ngIf="admin=='admin'">Editar</ion-button>
             </ion-item>
         </ion-list>
-    </ion-list>
+
+        <ion-list-header color="primary">Pedidos</ion-list-header>
+        <ion-list *ngFor="let productos of pedidos">
+            <ion-list-header color="dark">Prodcutos X Area {{productos.area}} <span *ngIf="productos.tiempo_espera != -1 " class="animated bounce"> Tiempo {{productos.tiempo_espera}} </span> </ion-list-header>
+            <ion-list>
+                <ion-item *ngFor="let producto of productos.productos">
+                    <ion-label>
+                        <h3>{{producto.nombre}}</h3>
+                        <p>{{producto.descripcion}} </p>
+                        <p>{{producto.precio}} </p>
+                    </ion-label>
+                    <ion-button color="danger" (click)="elegir(producto)" *ngIf="admin=='cliente'">Elegir</ion-button>
+                    <ion-button color="secondary" (click)=" enviarProducto(producto)" *ngIf="admin=='admin'">Editar</ion-button>
+                </ion-item>
+            </ion-list>
+        </ion-list>
+    </div>
+    <!--  esto se podria poner en el padre  -->
+    <div *ngIf="nroMesa.estado=='cuentaPedida'">
+        <h2>Cerrando<span class="animated infinite fadeOut "> ...</span></h2>
+        app-encuesta
+    </div>
+    <div *ngIf="nroMesa.estado=='pagando'">
+        <h2>Pagando<span class="animated infinite fadeOut "> ...</span></h2>
+        app-Cuenta
+    </div>
+    <div *ngIf="nroMesa.estado=='cerrada'">
+        <h2>Pagando<span class="animated infinite fadeOut "> ...</span></h2>
+        gracias por su visita
+    </div>
+
 
 
     <ion-footer style="height: 10vh" *ngIf="admin=='cliente'">

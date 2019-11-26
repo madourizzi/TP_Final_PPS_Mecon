@@ -106,6 +106,10 @@ export class AdminPage implements OnInit {
     this.router.navigate(['/stats']);
   }
 
+  reservas() {    
+    this.router.navigate(['/reservas']);
+  }
+
   volver($event)
   {
     this.cargarProducto = false;

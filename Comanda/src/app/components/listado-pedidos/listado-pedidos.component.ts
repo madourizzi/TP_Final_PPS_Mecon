@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PedidosService } from 'src/app/services/pedidos.service';
 import { Pedido } from 'src/app/models/pedido';
 import { Producto } from 'src/app/models/producto';
+import { MesasService } from 'src/app/services/mesas.service';
+import { Mesa } from 'src/app/models/mesa';
 
 @Component({
   selector: 'app-listado-pedidos',
@@ -10,28 +12,113 @@ import { Producto } from 'src/app/models/producto';
 })
 export class ListadoPedidosComponent{
 
-  filtroDelivery: boolean;
-  listaProductos: Array<Producto>;
-  pedido;
+ 
+  pedidos: Array<any> = Array<any>();
+  productoElegido;
+  @Output() pedidoEmit: EventEmitter<any>;
 
-  @Input() pedidos: Array<Pedido>;
+  detalleMesa = false;
 
+  tipoOrden = "tipo";
+  orden = "asc";
+
+  ////modal
+  modificar;
+  tiempo;
+  modal;
+  pedidoActual;
+  perfil;
+  listaProductos;
   constructor(
-    private pedidoService: PedidosService
+    private pedidoService: PedidosService, private mesaService: MesasService
   ) {
 
-    this.filtroDelivery = false;
-
-    let usuario = JSON.parse(sessionStorage.getItem('usuario'));
-
-    if (usuario.tipo == 'delivery') {
-      this.filtroDelivery = true;
-    }
+    this.pedidoEmit = new EventEmitter();
+    this.modal = false;
+    this.perfil = localStorage.getItem('perfil');
 
   }
 
-  //FUNCIONES DELIVERY
 
+  ngOnInit() {
+    this.pedidoService.traerTodosPedidos().subscribe((actions => {
+      this.pedidos = [];
+      actions.forEach((e) => {
+        let data = e.payload.doc.data() as Pedido;
+        console.log(data.area);
+        console.log('perfil',this.perfil);
+        
+    if (data.area == this.perfil || this.perfil=="admin" ) {
+       /*    if (data.estado != "terminado") { */
+            this.pedidos.push(data);
+          /* } */
+      }
+
+      });
+      this.detalleMesa = true;
+
+    }));
+
+
+
+  }
+  
+  tomarPedido(pedido, tiempo) {  
+    console.log("pedido", pedido);    
+    this.pedidoActual = pedido;
+    this.tiempo= tiempo;
+    this.prepararPedido('enPreparacion');
+  }
+
+
+
+  prepararPedido(estado) {   
+    console.log("tiempo", this.tiempo);
+    this.pedidoActual.estado = estado;
+    this.pedidoActual.tiempo_espera = this.tiempo;
+    this.pedidoService.actualizarUnPedido(this.pedidoActual, estado);
+  }
+
+  terminarPedido(estado, pedido) {
+    pedido.estado = estado;
+    pedido.tiempo_espera=-1;
+    this.pedidoService.actualizarUnPedido(pedido, estado);
+    let mesa;
+    this.mesaService
+      .traerUnaMesaUID(pedido.mesa)
+      .subscribe((e) => {
+        mesa = e.payload.data () as Mesa;         
+        if (estado == "terminado") {
+          this.mesaService.actualizarMesaEmpleado(mesa, "comiendo");
+        }
+      });
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //FUNCIONES DELIVERY
+/* 
   RetirarEntrega(pedido: Pedido) {
 
 
@@ -48,9 +135,9 @@ export class ListadoPedidosComponent{
 
     });
 
-  }
+  } */
 
-  Entregar(pedido: Pedido) {
+ /*  Entregar(pedido: Pedido) {
 
     this.pedidoService.actualizarUnPedido(pedido.uid).update({
 
@@ -132,6 +219,6 @@ export class ListadoPedidosComponent{
 
     });
 
-  }
+  } */
 }
 

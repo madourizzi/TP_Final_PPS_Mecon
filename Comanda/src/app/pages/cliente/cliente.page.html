@@ -16,11 +16,19 @@
                 <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidosAnonimo() " style="max-height: 80% ">
             </ion-col>
         </ion-row>
+        <ion-row style=" height:25%; ">
+            <ion-col class="col-12 " style="height:98%; background-color: rgb(10, 184, 146); color: seashell; border-radius: 15px; " (click)=" reservarMesa() ">
+                <img class="icon " src="../../../assets/botoneraadmin-09.png " alt="" style="max-width: 70%">
+            </ion-col>
+        </ion-row>
         <ion-row style="height:50%; " *ngIf="mesasServ.mesaActual !=null">
             <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px; ">
-                <ion-icon name="menu " style="color: white; zoom: 4; vertical-align: auto; " (click)="ingresarPedido() ">
+                <ion-icon name="menu" style="color: white; zoom: 4; vertical-align: auto; " (click)="ingresarPedido()" *ngIf="mesasServ.mesaActual.estado =='inicioServicio'">
                 </ion-icon>
-                <label for=" ">Menu</label>
+                <label *ngIf="mesasServ.mesaActual.estado =='inicioServicio'" for=" ">Menu</label>
+                <label *ngIf="mesasServ.mesaActual.estado =='solicitada'" for=" ">Aguarde Confirmacion para Pedir</label>
+                <label *ngIf="mesasServ.mesaActual.estado =='reservada'" for=" ">Aguarde Confirmacion para Pedir</label>
+                <label *ngIf="mesasServ.mesaActual.estado =='esperandoComida'" for=" ">Aguarde su pedido</label>
             </ion-col>
         </ion-row>
     </div>

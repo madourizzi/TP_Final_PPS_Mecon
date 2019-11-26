@@ -1,1 +1,6 @@
-<h2>Página de Mozos</h2>
+<app-header [titulo]="title" [backButton]="true" (volver)="volver($event)"></app-header>
+
+<ion-content no-bounce>
+    <div class="unGranDiv" style="height: 93vh;">
+        <app-listado-mesas></app-listado-mesas>
+    </div>

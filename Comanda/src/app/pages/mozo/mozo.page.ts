@@ -7,6 +7,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { SpinnerService } from 'src/app/services/spinner.service';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ArchivosService } from 'src/app/services/archivos.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-mozo',
@@ -14,42 +18,39 @@ import { SpinnerService } from 'src/app/services/spinner.service';
   styleUrls: ['./mozo.page.scss'],
 })
 export class MozoPage implements OnInit {
+ 
+  adminPerfilUser;
+  editarUsuario;
+  usuarioElegido:User;
+  title: string;
+  cargarProducto;
+  botonera;
   usuarioActual: User;
 
-  constructor(private usuarios: UsersService,
-    private spinner: SpinnerService,
-    public afs: AngularFirestore,
-    private alertController: AlertController,
-    public fcm: FirebaseX,
-    public platform: Platform
-  ) {
+  altaMesa;
 
+  constructor(
+    private spinner: SpinnerService,    
+    private router: Router, 
+    private qr: BarcodeScanner,
+    public fcm: FirebaseX,
+    public platform: Platform,
+    public afs: AngularFirestore,
+    private archivos: ArchivosService,
+    private usuarios: UsersService) {
+    this.title = "MOZO";
   }
 
   ngOnInit() {
     setTimeout(() => this.spinner.hide(), 500);
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
-      console.log("el usuario actual en Pagina Mozo es: ", this.usuarioActual);
+      console.log("el usuario actual en MOZO es: ", this.usuarioActual);
+
       this.getTokenControl();
 
     }, 1000);
-    this.fcm.onMessageReceived().subscribe(async data => {
-      console.log(`FCM message: ${data}`);
-      const alert = await this.alertController.create({
-        header: 'Aviso.',
-        message: `FCM message: ${data.body}`,
-
-        buttons: ['OK']
-      });
-      await alert.present();
-
-  
-    });
   }
-
-
-
 
   async getTokenControl() {
 
@@ -58,8 +59,10 @@ export class MozoPage implements OnInit {
 
       token = await this.fcm.getToken()
         .then(async token => {
+          console.log(`The token is ${token}`);
           await this.saveTokenToFirestore(token);
         })
+
         .catch(error => console.error('Error getting token', error));
     }
   }
@@ -83,8 +86,3 @@ export class MozoPage implements OnInit {
 
 
 }
-
-
-
-
-

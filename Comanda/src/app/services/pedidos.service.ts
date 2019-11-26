@@ -42,7 +42,7 @@ export class PedidosService {
 
     nroPedidos = new Array();
 
-    let areas = ["candyBar", "cocina", "cerveza", "barra"];
+    let areas = ["postre", "cocina", "cerveza", "barra"];
     areas.forEach((area) => {
       productosDelArea = new Pedido();
       nuevoPedido.productos.forEach((producto: Producto) => {
@@ -54,10 +54,10 @@ export class PedidosService {
       if(productosDelArea.productos.length>0)
       {
         productosDelArea.area= area;
-        productosDelArea.mesa = mesa.nummero;
+        productosDelArea.mesa = mesa.uid;
         productosDelArea.estado = "pendiente";
         let id = this.db.createId();
-        nuevoPedido.uid = id;
+        productosDelArea.uid = id;
         this.db.collection('pedidos').doc(id).set(JSON.parse(JSON.stringify(productosDelArea)), { merge: true });      
         nroPedidos.push(id);        
       }
@@ -65,8 +65,10 @@ export class PedidosService {
     return nroPedidos;
   }
 
-
-
+  eliminarPedido(uid)
+  {
+    this.db.collection("pedidos").doc(uid).delete();
+  }
 
   traerTodosPedidos() {
     return this.db.collection('pedidos').snapshotChanges();
@@ -84,8 +86,9 @@ export class PedidosService {
     return this.pedidosCollection.doc(pedido.uid).update(pedido);
   }
 
-  actualizarUnPedido(idPedido: string) {
-    let pedidoActualizar = this.db.collection<Pedido>("pedidos").doc(idPedido);
+  actualizarUnPedido(idPedido: Pedido, estado) {
+    idPedido.estado = estado;
+    let pedidoActualizar = this.db.collection<Pedido>("pedidos").doc(idPedido.uid).update(idPedido);
     return pedidoActualizar;
   }
 

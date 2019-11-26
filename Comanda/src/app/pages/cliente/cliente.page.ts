@@ -116,7 +116,9 @@ export class ClientePage implements OnInit {
     return devicesRef.doc(token).set(docData)
   }
 
-
+  reservarMesa() {    
+    this.router.navigate(['/reserva']);
+  }
 
   async registroClienteAlertConfirm() {
     const alert = await this.alertController.create({

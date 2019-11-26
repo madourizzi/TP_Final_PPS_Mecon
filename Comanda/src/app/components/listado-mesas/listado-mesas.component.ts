@@ -3,8 +3,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Mesa } from 'src/app/models/mesa';
 import { UsersService } from 'src/app/services/users.service';
-import { ProductosService } from 'src/app/services/productos.service';
 import { MesasService } from 'src/app/services/mesas.service';
+import { PedidosService } from 'src/app/services/pedidos.service';
+import { User } from 'src/app/models/user';
+import { Pedido } from 'src/app/models/pedido';
 
 @Component({
   selector: 'app-listado-mesas',
@@ -19,11 +21,11 @@ export class ListadoMesasComponent implements OnInit {
 
   mesas: Array<Mesa>;
 
-  constructor(private productosService: MesasService,
+  constructor(private mesasService: MesasService, private pedidoServicio: PedidosService, private usuarioServ: UsersService,
     private toastService: ToastService) {
     this.mesas = new Array();
     this.productosPedidos = new Array();
-    this.productosService.TraerMesas().subscribe(actions => {
+    this.mesasService.TraerMesas().subscribe(actions => {
       this.mesas = [];
       actions.map(a => {
         const data = a.payload.doc.data() as Mesa;
@@ -40,27 +42,86 @@ export class ListadoMesasComponent implements OnInit {
 
   elegir(producto) {
     //toaster y sumarlo a un array
-    this.toastService.confirmationToast("eligio mesa" + producto.numero);
+    alert("eligio mesa" + producto.numero);
 
 
+  }
+
+
+
+
+
+
+  emitirFactura(mesa:Mesa)
+  {
+    this.mesasService.actualizarMesaEmpleado(mesa, "pagando");
+  }
+  cerrarMesa(mesa, estado)
+  {
+    this.mesasService.actualizarMesaEmpleado(mesa, estado);
+  }
+
+  confirmarReserva(mesa)
+  {
+    this.mesasService.confirmarMesa(mesa);
+  }
+
+  confirmarServicio(mesa)
+  {
+    this.mesasService.confirmarServicio(mesa);
   }
 
 
 
   limpiarTodasLasMesas() {
-    this.productosService.TraerMesas().subscribe(actions => {
+
+    let pedi = this.eliminarPedidos();
+  //  this.eliminarClientes();
+
+    let mesass = this.mesasService.TraerMesas().subscribe(actions => {
       actions.map(a => {
         const data = a.payload.doc.data() as Mesa;
-        this.productosService.limpiarMesa(data);
+        this.mesasService.limpiarMesa(data);
+        console.log('mesas');
+        
+      });
+    });
+
+    setTimeout(()=>{
+      pedi.unsubscribe();
+      mesass.unsubscribe();  
+    }, 3000);
+ 
+  }
+
+
+
+  limpiarUnaMesa(mesa) {
+    this.mesasService.limpiarMesa(mesa);
+  }
+
+
+  eliminarPedidos() {
+    return this.pedidoServicio.traerTodosPedidos().subscribe(actions => {
+      actions.map(a => {
+        const data = a.payload.doc.data() as Pedido;
+        console.log('pedido');
+        this.pedidoServicio.eliminarPedido(data.uid);
       });
     });
   }
 
-
-
-  limpiarUnaMesa(mesa)
-  {
-    this.productosService.limpiarMesa(mesa);
+  eliminarClientes() {
+    return this.usuarioServ.traerTodosUsuarios ().subscribe(actions => {
+      actions.map(a => {
+        const data = a.payload.doc.data() as User;
+        if(data.registrado)
+        {
+          data.registrado=false;
+          console.log("true a false");
+          this.usuarioServ.actualizarUsuario(data);
+        }
+      });
+    });
   }
-
 }
