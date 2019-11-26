@@ -1,7 +1,12 @@
 <ion-header>
 
   <ion-toolbar>
-    <ion-title>Listado de Reservas</ion-title>
+    <ion-title routerLink="/admin"><ion-icon name="arrow-back"></ion-icon> Listado de Reservas</ion-title>
+    <ion-buttons *ngIf="this.url !== '/login'" slot="end">
+      <ion-button (click)="onLogout()">
+          <ion-icon class="icon" name="exit"></ion-icon>
+      </ion-button>
+  </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
@@ -15,7 +20,7 @@
     <div *ngFor="let reserva of lista_de_reservas">
       <ion-card *ngIf="reserva.estado=='pendiente'" padding
         style="background-color: rgba(77, 76, 76, 0.589); color: white">
-        <!-- Cliente: {{ reserva.cliente.apellido }}-->
+        Cliente: {{ reserva.cliente}}
         <br>
         Fecha: {{ reserva.fecha }}
         Hora: {{ reserva.hora }}

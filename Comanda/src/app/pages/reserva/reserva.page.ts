@@ -6,6 +6,8 @@ import { ReservasService } from 'src/app/services/reservas.service';
 import { MesasService } from 'src/app/services/mesas.service';
 import { ToastController } from '@ionic/angular';
 import { UsersService } from 'src/app/services/users.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -19,18 +21,21 @@ export class ReservaPage implements OnInit {
   usuario: User;
   mesas;
   hoy: string;
-  hoyy: Date;
-
+ 
+  url: string;
+  tresDiasDespues: string;
 
   constructor(
     private builder: FormBuilder,
     public toastCtrl: ToastController,
-    private mesasProv: MesasService,
     private usuarios: UsersService,
-    private reservaSvc: ReservasService) {
+    private reservaSvc: ReservasService,
+    private authService: AuthService, 
+    private router: Router,
+    private mesaServe:MesasService, 
+    private usuarioServ: UsersService) {
 
-    this.hoyy = new Date();
-
+    this.url = this.router.url;
     this.TraerReservas();
 
   }
@@ -40,7 +45,10 @@ export class ReservaPage implements OnInit {
       this.usuario = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual es: ", this.usuario);
     }, 1500);
-    this.hoy = this.hoyy.getFullYear() + "-" + (this.hoyy.getMonth() + 1) + "-" + this.hoyy.getDate();
+
+    this.hoy = new Date().toISOString();
+    this.tresDiasDespues= new Date(new Date().setDate(new Date().getDate() + 3)).toISOString(); 
+ 
   }
 
   fecha = new FormControl('', [
@@ -54,29 +62,20 @@ export class ReservaPage implements OnInit {
     Validators.required,
   ]);
 
-  vip = new FormControl('', [
-
-  ]);
-
-
   registroForm: FormGroup = this.builder.group({
     fecha: this.fecha,
     hora: this.hora,
     cant_comensales: this.cant_comensales,
-    vip: this.vip,
   });
 
   Registrar() {
 
     let reserva = new Reserva();
-
     reserva.fecha = this.registroForm.get('fecha').value;
-
     reserva.hora = this.registroForm.get('hora').value;
     reserva.cliente = this.usuario;
     let cant_comensales = this.registroForm.get('cant_comensales').value;
-    let tipo;
-    this.registroForm.get('vip').value ? tipo = "normal" : tipo = "normal";
+    let tipo="normal";
     this.BuscarMesaReserva(reserva.fecha, reserva.hora, cant_comensales, tipo);
 
   }
@@ -87,7 +86,7 @@ export class ReservaPage implements OnInit {
     let disponible: boolean = true;
     let ok: boolean = true;
 
-    let mesasAdecuadas = this.mesasProv.mesas.filter((mesa) => {
+    let mesasAdecuadas = this.mesaServe.mesas.filter((mesa) => {
       return (mesa.cantidadComensales >= cant_comensales && mesa.tipoMesa == tipo);
     });
 
@@ -148,6 +147,11 @@ export class ReservaPage implements OnInit {
     })
   }
 
-
+  onLogout() {
+    this.mesaServe.mesaActual=null;
+    this.usuarioServ.limpiarUsuarioActual();
+    this.authService.logout();
+    
+  }
 
 }
