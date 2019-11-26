@@ -81,6 +81,7 @@ export class ListadoPedidosComponent{
 
   terminarPedido(estado, pedido) {
     pedido.estado = estado;
+    pedido.tiempo_espera=-1;
     this.pedidoService.actualizarUnPedido(pedido, estado);
     let mesa;
     this.mesaService

@@ -35,7 +35,7 @@
                     <ion-button *ngIf="mesa.estado=='cuentaPedida'" (click)="emitirFactura(mesa)">Emitir Factura</ion-button>
                     <ion-button *ngIf="mesa.estado=='pagando'" (click)="cerrarMesa(mesa, 'cerrada')"> <span *ngIf="servicioGeneral.usuarios().usuarioActual.perfil=='admin'"> Cerrar </span> </ion-button>
                     <button type="button" class="btn btn-warning" *ngIf="mesa.estado=='cerrada'" (click)="limpiarUnaMesa(mesa)"><span>Limpiar</span></button>
-                    <ion-button (click)="limpiarUnaMesa(mesa)">limpiar</ion-button>
+
                 </p>
             </ion-label>
         </ion-item>
