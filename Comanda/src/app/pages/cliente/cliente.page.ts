@@ -34,7 +34,7 @@ export class ClientePage implements OnInit {
     private archivos: ArchivosService,
     public afs: AngularFirestore,
     private usuarios: UsersService,
-    private mesasServ: MesasService,
+    public mesasServ: MesasService,
     private alertController: AlertController,
     public fcm: FirebaseX,
     public platform: Platform,
@@ -71,29 +71,7 @@ export class ClientePage implements OnInit {
 
       token = await this.fcm.getToken()
         .then(async token => {
-          const alert = await this.alertController.create({
-            header: 'alert de token',
-            message: "'This is the token.' + ${token}",
-
-            buttons: [
-              {
-                text: 'Cancel',
-                role: 'cancel',
-                cssClass: 'secondary',
-                handler: () => {
-                  console.log('Confirm Cancel');
-                }
-              }, {
-                text: 'Ok',
-                handler: (alertData) => { //takes the data 
-                  console.log(alertData.name1);
-                }
-              }
-            ]
-          });
-          await alert.present();
-          console.log(`The token is ${token}`);
-          this.saveTokenToFirestore(token);
+          console.error('se obtuvo el token perren', token)
         })
 
         .catch(error => console.error('Error getting token', error));
