@@ -21,7 +21,6 @@ export class ReservaPage implements OnInit {
   usuario: User;
   mesas;
   hoy: string;
- 
   url: string;
   tresDiasDespues: string;
 
@@ -30,9 +29,9 @@ export class ReservaPage implements OnInit {
     public toastCtrl: ToastController,
     private usuarios: UsersService,
     private reservaSvc: ReservasService,
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
-    private mesaServe:MesasService, 
+    private mesaServe: MesasService,
     private usuarioServ: UsersService) {
 
     this.url = this.router.url;
@@ -47,8 +46,8 @@ export class ReservaPage implements OnInit {
     }, 1500);
 
     this.hoy = new Date().toISOString();
-    this.tresDiasDespues= new Date(new Date().setDate(new Date().getDate() + 3)).toISOString(); 
- 
+    this.tresDiasDespues = new Date(new Date().setDate(new Date().getDate() + 3)).toISOString();
+
   }
 
   fecha = new FormControl('', [
@@ -75,7 +74,7 @@ export class ReservaPage implements OnInit {
     reserva.hora = this.registroForm.get('hora').value;
     reserva.cliente = this.usuario;
     let cant_comensales = this.registroForm.get('cant_comensales').value;
-    let tipo="normal";
+    let tipo = "normal";
     this.BuscarMesaReserva(reserva.fecha, reserva.hora, cant_comensales, tipo);
 
   }
@@ -148,10 +147,9 @@ export class ReservaPage implements OnInit {
   }
 
   onLogout() {
-    this.mesaServe.mesaActual=null;
+    this.mesaServe.mesaActual = null;
     this.usuarioServ.limpiarUsuarioActual();
     this.authService.logout();
-    
   }
 
 }

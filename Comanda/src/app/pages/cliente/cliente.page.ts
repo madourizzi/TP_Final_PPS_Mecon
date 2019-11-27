@@ -52,14 +52,16 @@ export class ClientePage implements OnInit {
 
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
-      console.log("el usuario actual es: ", this.usuarioActual);
-        if (!this.usuarioActual.registrado) {
+      console.log("el usuario actual en cliente es: ", this.usuarioActual);
+      if (!this.usuarioActual.registrado) {
         this.registroClienteAlertConfirm();
       }
+
+    }, 1500);
+    setTimeout(() => {
       this.getTokenControl();
       this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
-    }, 1500);
-    
+    }, 500);
 
 
   }
@@ -94,7 +96,7 @@ export class ClientePage implements OnInit {
     return devicesRef.doc(token).set(docData)
   }
 
-  reservarMesa() {    
+  reservarMesa() {
     this.router.navigate(['/reserva']);
   }
 
@@ -145,7 +147,7 @@ export class ClientePage implements OnInit {
     this.botonera = false;
   }
 
-  consultarPedidos() {   
+  consultarPedidos() {
     this.router.navigate(['/detalle-mesa']);
   }
 
@@ -153,16 +155,19 @@ export class ClientePage implements OnInit {
     this.router.navigate(['/pedir-mesa-qr']);
   }
 
+  hacerEncuesta() {
+    this.router.navigate(['/encuesta-cliente']);
+  }
+
 
   consultarPedidosAnonimo() {
-    this.mesasServ.EstadoPedido().then(()=>{
-      if(this.mesasServ.mesaActual)
-      {
+    this.mesasServ.EstadoPedido().then(() => {
+      if (this.mesasServ.mesaActual) {
         this.router.navigate(['/detalle-mesa']);
       }
-      else{
-      console.log("no hay mesa actual, tiene q ingresar qr");
-      
+      else {
+        console.log("no hay mesa actual, tiene q ingresar qr");
+
       }
 
     })

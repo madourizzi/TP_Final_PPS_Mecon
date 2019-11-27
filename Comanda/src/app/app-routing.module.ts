@@ -34,7 +34,8 @@ const routes: Routes = [
   { path: 'ocupar-mesa', loadChildren: './pages/cliente/ocupar-mesa/ocupar-mesa.module#OcuparMesaPageModule' },
   { path: 'detalle-mesa', loadChildren: './pages/cliente/detalle-mesa/detalle-mesa.module#DetalleMesaPageModule' },
   { path: 'cliente-registro', loadChildren: './pages/cliente/cliente-registro/cliente-registro.module#ClienteRegistroPageModule' },
-  { path: 'reserva', loadChildren: './pages/reserva/reserva.module#ReservaPageModule' }
+  { path: 'reserva', loadChildren: './pages/reserva/reserva.module#ReservaPageModule' },  { path: 'encuesta-cliente', loadChildren: './pages/encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' }
+
   
 
 

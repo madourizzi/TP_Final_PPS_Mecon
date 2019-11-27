@@ -21,6 +21,11 @@
                 <img class="icon " src="../../../assets/botoneraadmin-10.png " alt="" style="max-width: 70%">
             </ion-col>
         </ion-row>
+        <ion-row style=" height:25%; ">
+            <ion-col class="col-12 " style="height:98%; background-color: rgb(231, 5, 231); color: seashell; border-radius: 15px; " (click)=" hacerEncuesta() ">
+                <img class="icon " src="../../../assets/botoneraadmin-10.png " alt="" style="max-width: 70%">
+            </ion-col>
+        </ion-row>
         <ion-row style="height:50%; " *ngIf="mesasServ.mesaActual !=null">
             <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px; ">
                 <ion-icon name="menu" style="color: white; zoom: 4; vertical-align: auto; " (click)="ingresarPedido()" *ngIf="mesasServ.mesaActual.estado =='inicioServicio'">
