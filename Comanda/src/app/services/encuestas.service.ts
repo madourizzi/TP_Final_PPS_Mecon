@@ -31,6 +31,12 @@ export class EncuestasService {
     return this.listaEncuestasObservable;
   }
 
+  traerEncuestasClientes() {
+    this.listaEncuestasFirebase = this.objFirebase.collection<EncuestaAdministrador>("encuestas_cliente");
+    this.listaEncuestasObservable = this.listaEncuestasFirebase.valueChanges();
+    return this.listaEncuestasObservable;
+  }
+
   cargarEncuesta(encuestaAGuardarJSON: any){
     return this.objFirebase.collection<EncuestaAdministrador>("encuestas_administrador").add(encuestaAGuardarJSON);
   }
