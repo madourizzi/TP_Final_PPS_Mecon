@@ -176,6 +176,22 @@ export class MesasService {
    
   }
 
+  async entregarPedido(mesa) {
+    this.actualizarMesaMozo(mesa, 'comiendo');
+    //aca podria confirmar en el pedido que fue entregado
+
+    const toast = await this.toastCtrl.create({
+      message: mesa.numero+ 'Comiendo',
+      duration: 2000,
+      position: 'top',
+      color: "danger"
+      //middle || top
+    });
+    toast.present();
+ 
+  }
+
+
 
   actualizarMesaMozo(mesa: Mesa, estado) {
     mesa.estado = estado;

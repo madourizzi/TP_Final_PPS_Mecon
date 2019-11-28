@@ -29,12 +29,24 @@
                 </p>
                 <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="mesa.estado=='cerrada'">Estado {{mesa.estado}}
                 </p>
+                <p style="font-weight: bold; color:rgb(134, 10, 10)" *ngIf="mesa.estado=='pedidoListo'">Estado {{mesa.estado}}
+                </p>
                 <p>
-                    <ion-button *ngIf="mesa.estado=='solicitada'" (click)="confirmarReserva(mesa)">Confirmar Reserva</ion-button>
+                    <!-- <ion-button *ngIf="mesa.estado=='solicitada'" (click)="confirmarReserva(mesa)">Confirmar Reserva</ion-button>
                     <ion-button *ngIf="mesa.estado=='reservada'" (click)="confirmarServicio(mesa)">Confirmar inicio del servicio</ion-button>
                     <ion-button *ngIf="mesa.estado=='cuentaPedida'" (click)="emitirFactura(mesa)">Emitir Factura</ion-button>
                     <ion-button *ngIf="mesa.estado=='pagando'" (click)="cerrarMesa(mesa, 'cerrada')"> Cerrar </ion-button>
-                    <button type="button" class="btn btn-warning" *ngIf="mesa.estado=='cerrada'" (click)="limpiarUnaMesa(mesa)"><span>Limpiar</span></button>
+                    <button type="button" class="btn btn-warning" *ngIf="mesa.estado=='cerrada'" (click)="limpiarUnaMesa(mesa)"><span>Limpiar</span></button> -->
+                    <!--  -->
+                    <ion-button *ngIf="mesa.estado=='solicitada'" (click)="confirmarReserva(mesa)">Confirmar Reserva</ion-button>
+                    <ion-button *ngIf="mesa.estado=='solicitada'" (click)="cerrarMesa(mesa, 'cerrada')"> No aceptar Solicitud </ion-button>
+                    <ion-button *ngIf="mesa.estado=='pedidoListo'" (click)="entregarPedido(mesa)">Entregar Pedido</ion-button>
+                    <ion-button *ngIf="mesa.estado=='reservada'" (click)="confirmarServicio(mesa)">Confirmar inicio del servicio</ion-button>
+                    <ion-button *ngIf="mesa.estado=='cuentaPedida'" (click)="emitirFactura(mesa)">Emitir Factura</ion-button>
+                    <ion-button *ngIf="mesa.estado=='pagando'" (click)="cerrarMesa(mesa, 'cerrada')"> Cerrar </ion-button>
+                    <ion-button *ngIf="mesa.estado=='cerrada'" (click)="limpiarUnaMesa(mesa)">Limpiar</ion-button>
+
+
 
                 </p>
             </ion-label>

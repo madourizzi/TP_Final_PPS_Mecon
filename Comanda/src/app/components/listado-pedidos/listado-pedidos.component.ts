@@ -89,7 +89,7 @@ export class ListadoPedidosComponent{
       .subscribe((e) => {
         mesa = e.payload.data () as Mesa;         
         if (estado == "terminado") {
-          this.mesaService.actualizarMesaEmpleado(mesa, "comiendo");
+          this.mesaService.actualizarMesaEmpleado(mesa, "pedidoListo");
         }
       });
 

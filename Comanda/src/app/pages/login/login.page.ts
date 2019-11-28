@@ -170,6 +170,8 @@ export class LoginPage implements OnInit {
         break;
 
     }
+
+    this.onSubmitLogin() ;
   }
 
 

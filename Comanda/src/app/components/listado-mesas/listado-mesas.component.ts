@@ -43,10 +43,7 @@ export class ListadoMesasComponent implements OnInit {
   elegir(producto) {
     //toaster y sumarlo a un array
     alert("eligio mesa" + producto.numero);
-
-
   }
-
 
 
 
@@ -56,10 +53,14 @@ export class ListadoMesasComponent implements OnInit {
   {
     this.mesasService.actualizarMesaEmpleado(mesa, "pagando");
   }
+
   cerrarMesa(mesa, estado)
   {
     this.mesasService.actualizarMesaEmpleado(mesa, estado);
+    setTimeout(()=> this.limpiarUnaMesa(mesa), 5000);
   }
+
+
 
   confirmarReserva(mesa)
   {
@@ -70,6 +71,13 @@ export class ListadoMesasComponent implements OnInit {
   {
     this.mesasService.confirmarServicio(mesa);
   }
+
+  entregarPedido(mesa)
+  {
+    this.mesasService.entregarPedido(mesa);
+  }
+
+
 
 
 
