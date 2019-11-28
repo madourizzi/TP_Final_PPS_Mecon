@@ -40,26 +40,35 @@ export class ClientePage implements OnInit {
     public platform: Platform,
     private toastCtrl: ToastController) {
     this.title = "Bienvenido Cliente: ";
+    this.usuarioActual = new User();
 
 
   }
 
   ngOnInit() {
-    setTimeout(() => this.spinner.hide(), 500);
+    setTimeout(() => this.spinner.hide(), 1500);
     this.botonera = true;
     this.menu = false;
     this.confirmar = false;
 
+    try {
+      this.usuarioActual.registrado
+    } catch (e) {
+      this.usuarioActual.registrado == null
+    }
+
+
+
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual es: ", this.usuarioActual);
-        if (!this.usuarioActual.registrado) {
+      if (!this.usuarioActual.registrado) {
         this.registroClienteAlertConfirm();
       }
       this.getTokenControl();
       this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
     }, 1500);
-    
+
 
 
   }
@@ -165,7 +174,7 @@ export class ClientePage implements OnInit {
     this.botonera = false;
   }
 
-  consultarPedidos() {   
+  consultarPedidos() {
     this.router.navigate(['/detalle-mesa']);
   }
 
@@ -175,14 +184,13 @@ export class ClientePage implements OnInit {
 
 
   consultarPedidosAnonimo() {
-    this.mesasServ.EstadoPedido().then(()=>{
-      if(this.mesasServ.mesaActual)
-      {
+    this.mesasServ.EstadoPedido().then(() => {
+      if (this.mesasServ.mesaActual) {
         this.router.navigate(['/detalle-mesa']);
       }
-      else{
-      console.log("no hay mesa actual, tiene q ingresar qr");
-      
+      else {
+        console.log("no hay mesa actual, tiene q ingresar qr");
+
       }
 
     })

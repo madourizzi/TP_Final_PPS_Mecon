@@ -1,0 +1,70 @@
+<div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class="title">
+                            <img src="../../../assets/icon/icon.png" style="width:60px; max-width:300px;">
+                        </td>
+
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            La Comanda de Madou Rizzi Mecon 2019
+                        </td>
+                        <td>
+
+                            <strong> Pago Online </strong>
+                            <hr><strong> Cuenta #000-0000123456 </strong>
+                            <div style="font-weight: bold; font-size:12pt">Mesa Nº {{mesa.numero}}</div>
+                            <div style="font-weight: bold; font-size:12pt">Cliente {{mesa.cliente}}</div>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+        <tr class="heading">
+            <td>
+                Item
+            </td>
+
+            <td>
+                Price
+            </td>
+        </tr>
+
+        <tr class="item" *ngFor="let producto of todosPedidos">
+            <!-- ngfor -->
+            <td>
+                {{producto.nombre}}
+            </td>
+
+            <td>
+                ${{producto.stock}}
+            </td>
+        </tr>
+
+
+
+        <tr class="total">
+            <td></td>
+
+            <td>
+                Total: {{total}}
+            </td>
+        </tr>
+    </table>
+</div>

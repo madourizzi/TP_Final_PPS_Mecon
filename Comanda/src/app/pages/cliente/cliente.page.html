@@ -1,33 +1,58 @@
 <app-header [titulo]="title" [backButton]="true" (volver)="volver($event)"></app-header>
-<ion-content no-bounce>
-    <div class="unGranDiv" style="height: 92vh;" *ngIf="botonera">
-        <ion-row style="height:50%; " *ngIf="mesasServ.mesaActual ==null">
-            <ion-col style="height:98%; background-color: rgb(231, 112, 15); color: seashell; border-radius: 15px; " (click)="pedirMesaQR()">
-                <img src="../../../assets/images/qrPedi-01.png" alt="" style="max-height: 80% ">
-            </ion-col>
-        </ion-row>
-        <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual !=null">
-            <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
-                <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidos() " style="max-height: 80% ">
-            </ion-col>
-        </ion-row>
-        <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual ==null">
-            <ion-col style="height:98%; background-color: rgb(243, 229, 35); color: seashell; border-radius: 15px; ">
-                <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidosAnonimo() " style="max-height: 80% ">
-            </ion-col>
-        </ion-row>
-        <ion-row style="height:50%; " *ngIf="mesasServ.mesaActual !=null">
-            <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px; ">
-                <ion-icon name="menu" style="color: white; zoom: 4; vertical-align: auto; " (click)="ingresarPedido()" *ngIf="mesasServ.mesaActual.estado =='inicioServicio'">
-                </ion-icon>
-                <label *ngIf="mesasServ.mesaActual.estado =='inicioServicio'" for=" ">Menu</label>
-                <label *ngIf="mesasServ.mesaActual.estado =='solicitada'" for=" ">Aguarde Confirmacion para Pedir</label>
-                <label *ngIf="mesasServ.mesaActual.estado =='reservada'" for=" ">Aguarde Confirmacion para Pedir</label>
-                <label *ngIf="mesasServ.mesaActual.estado =='esperandoComida'" for=" ">Aguarde su pedido</label>
-            </ion-col>
-        </ion-row>
-    </div>
+<ion-content no-bounce color="dark">
+    <div *ngIf="this.usuarioActual.activo!=null">
+        <div class="unGranDiv" style="height: 92vh;" *ngIf="botonera">
+            <ion-row style="height:50%; " *ngIf="mesasServ.mesaActual ==null">
+                <ion-col style="height:98%; background-color: rgb(231, 112, 15); color: seashell; border-radius: 15px; " (click)="pedirMesaQR()">
+                    <img src="../../../assets/images/qrPedi-01.png" alt="" style="max-height: 80% ">
+                </ion-col>
+            </ion-row>
 
+            <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual ==null">
+                <ion-col style="height:98%; background-color: rgb(243, 229, 35); color: seashell; border-radius: 15px; ">
+                    <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidosAnonimo() " style="max-height: 80% ">
+                </ion-col>
+            </ion-row>
+
+            <div *ngIf="mesasServ.mesaActual !=null">
+                <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual.estado !='pagando'">
+                    <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
+                        <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidos() " style="max-height: 80% ">
+                    </ion-col>
+                </ion-row>
+                <ion-row style="height:100%; " color="light" *ngIf="mesasServ.mesaActual.estado =='pagando'">
+                    <ion-col style="height:98%; background-color:rgb(255, 255, 255); color: rgb(24, 22, 20); border-radius: 15px;">
+                        <app-detalle-cuenta></app-detalle-cuenta>
+                    </ion-col>
+                </ion-row>
+                <ion-row style="height:100%; " *ngIf="mesasServ.mesaActual.estado !='pagando'">
+                    <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px;">
+                        <ion-icon name="menu" style="color: white; zoom: 4; vertical-align: auto; " (click)="ingresarPedido()" *ngIf="mesasServ.mesaActual.estado =='inicioServicio'">
+                        </ion-icon>
+                        <label *ngIf="mesasServ.mesaActual.estado =='inicioServicio'" for=" ">Menu</label>
+                        <label *ngIf="mesasServ.mesaActual.estado =='solicitada'" for=" ">Aguarde Confirmacion para
+                        Pedir</label>
+                        <label *ngIf="mesasServ.mesaActual.estado =='reservada'" for=" ">Aguarde Confirmacion para
+                        Pedir</label>
+                        <label *ngIf="mesasServ.mesaActual.estado =='esperandoComida'" for=" ">Aguarde su pedido</label>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="this.usuarioActual.activo==null" style="height:90vh; ">
+        <ion-row style="height:10%; ">
+            <ion-col style="height:98%; background-color:rgb(153, 10, 141); color: seashell; border-radius: 15px;">
+                <h4>Esperando Autorizacion </h4>
+            </ion-col>
+        </ion-row>
+        <ion-row style="height:90%; ">
+            <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px;">
+                <iframe src="https://giphy.com/embed/buLnnhWURdY4M" width="384" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            </ion-col>
+        </ion-row>
+
+    </div>
 
     <ion-content *ngIf="menu ">
         <app-listado-productos (enviar)="recibirPedido($event) "></app-listado-productos>

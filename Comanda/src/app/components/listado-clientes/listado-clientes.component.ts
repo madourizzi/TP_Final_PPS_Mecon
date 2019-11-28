@@ -49,6 +49,18 @@ export class ListadoClientesComponent implements OnInit {
   ngOnInit() {  
   }
 
+  eliminarAnonimos() {
+    this.usuarios.forEach((e: User) => {
+     
+      console.log("elim anonimos", e);
+      
+      if (e.nombre == "anonimo") {
+        this.usuariosServ.EliminarUsuario(e.uid);
+      }
+    });
+  }
+
+
   elegir(empleado) {
       this.usuarioElegido.emit( empleado);
   }
