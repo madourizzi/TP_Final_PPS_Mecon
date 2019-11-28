@@ -31,7 +31,7 @@ export class DetalleCuentaComponent implements OnInit {
 
       this.pedidServicio.traerUnPedido(pedido).subscribe((pedidoDb: Pedido) => {
         console.log("pedidodb", pedidoDb);        
-        if (pedidoDb.estado == 'terminado') {
+        if (pedidoDb.estado == 'entregado') {
           pedidoDb.productos.forEach((e: Producto) => {
             this.todosPedidos.push(e);
             this.total += e.stock;
