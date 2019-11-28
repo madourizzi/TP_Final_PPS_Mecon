@@ -43,7 +43,7 @@ export class ConfirmarPedidoComponent implements OnInit {
     });
     this.pedidoCOnfirmado=true;
     this.mesaServicio.mesaActual.pedidos = this.pedidoServ.crearPedidoXArea(this.pedidoAConfirmar, this.mesaServicio.mesaActual);
-    this.mesaServicio.actualizarMesa(this.mesaServicio.mesaActual, "esperandoComida" );  
+    this.mesaServicio.actualizarMesa(this.mesaServicio.mesaActual, "pedidoAConfirmar" );  
 
   }
 

@@ -88,7 +88,8 @@ export class ListadoPedidosComponent{
       .traerUnaMesaUID(pedido.mesa)
       .subscribe((e) => {
         mesa = e.payload.data () as Mesa;         
-        if (estado == "terminado") {
+        if (estado == "terminado") 
+        {
           this.mesaService.actualizarMesaEmpleado(mesa, "pedidoListo");
         }
       });

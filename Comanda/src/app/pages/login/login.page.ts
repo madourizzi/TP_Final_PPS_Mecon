@@ -168,6 +168,10 @@ export class LoginPage implements OnInit {
         this.form.get('mail').setValue('rolando@gmail.com');
         this.form.get('password').setValue('123456');
         break;
+      case Roles.cervecero:
+        this.form.get('mail').setValue('popo@popo.com');
+        this.form.get('password').setValue('111111');
+        break;
 
     }
 

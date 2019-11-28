@@ -15,16 +15,17 @@ import { AltaMesaComponent } from './alta-mesa/alta-mesa.component';
 import { ListadoMesasComponent } from './listado-mesas/listado-mesas.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 import { DetalleCuentaComponent } from './detalle-cuenta/detalle-cuenta.component';
+import { BotonesEnviarPedidoAreasComponent } from './botones-enviar-pedido-areas/botones-enviar-pedido-areas.component';
 
 
 @NgModule({
   declarations: [
-    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent,
+    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent, AltaMesaComponent
   ],
-  exports: [
-    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent,
+  exports: [ 
+    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent , AltaMesaComponent
   ],

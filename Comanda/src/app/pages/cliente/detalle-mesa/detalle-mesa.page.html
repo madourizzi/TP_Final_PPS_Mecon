@@ -40,7 +40,8 @@
 
         <ion-list-header color="primary">Pedidos</ion-list-header>
         <ion-list *ngFor="let productos of pedidos">
-            <ion-list-header color="dark">Prodcutos X Area {{productos.area}} <span *ngIf="productos.tiempo_espera != -1 " class="animated bounce"> Tiempo {{productos.tiempo_espera}} </span> </ion-list-header>
+            <ion-list-header color="dark">Prodcutos X Area {{productos.area}}
+                <h5>{{productos.estado}}</h5> <span *ngIf="productos.tiempo_espera != -1 " class="animated bounce"> Tiempo {{productos.tiempo_espera}} </span> </ion-list-header>
             <ion-list>
                 <ion-item *ngFor="let producto of productos.productos">
                     <ion-label>

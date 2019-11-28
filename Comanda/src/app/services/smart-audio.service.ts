@@ -38,7 +38,7 @@ export class SmartAudioService {
                 type: 'native'
             };
 
-            this.sounds.push(audio);
+           this.sounds.push(audio);
         }
 
     }
@@ -52,16 +52,16 @@ export class SmartAudioService {
         if (audio.type === 'html5') {
 
             const audioAsset = new Audio(audio.asset);
-            audioAsset.play();
+           // audioAsset.play();
 
         } else {
 
-            this.nativeAudio.play(audio.key).then((res) => {
+        /*     this.nativeAudio.play(audio.key).then((res) => {
                 console.log(res);
             }, (err) => {
                 console.log(err);
             });
-
+ */
         }
 
     }
