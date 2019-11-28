@@ -13,14 +13,13 @@ export class ReservasService {
   private listaReservasFirebase: AngularFirestoreCollection<Reserva>;
   private listaReservasObservable: Observable<Reserva[]>;
   public reservas: Array<Reserva>
-  url = ""; //asignar una url con el estado de la reserva
+  url = "https://us-central1-lacomandapps.cloudfunctions.net/EstadoReserva"; //asignar una url con el estado de la reserva
 
   constructor(
     public http: HttpClient,
     private db: AngularFirestore,
     public toastCtrl: ToastController) {
-    this.reservas = new Array<any>();
-    //this.TraerReservas();
+    this.reservas = new Array<any>();   
   }
 
   TraerReservas() {
@@ -66,8 +65,7 @@ export class ReservasService {
   AutorizarReseva(reserva: Reserva) {
     reserva.estado = "Autorizada";
 
-    this.db.collection("SP_reservas").doc(reserva.uid).set(reserva).then(() => {
-
+    this.db.collection("reservas").doc(reserva.id).set(reserva).then(() => {
 
       console.log('Documento editado exitósamente');
 
@@ -86,7 +84,7 @@ export class ReservasService {
   CancelarReserva(reserva: Reserva) {
     reserva.estado = "Cancelada";
 
-    this.db.collection("SP_reservas").doc(reserva.uid).set(reserva).then(() => {
+    this.db.collection("reservas").doc(reserva.id).set(reserva).then(() => {
 
 
       console.log('Documento editado exitósamente');

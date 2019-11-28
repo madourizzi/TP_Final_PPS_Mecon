@@ -34,7 +34,7 @@ export class ClientePage implements OnInit {
     private archivos: ArchivosService,
     public afs: AngularFirestore,
     private usuarios: UsersService,
-    private mesasServ: MesasService,
+    public mesasServ: MesasService,
     private alertController: AlertController,
     public fcm: FirebaseX,
     public platform: Platform,
@@ -46,30 +46,28 @@ export class ClientePage implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => this.spinner.hide(), 1500);
+    setTimeout(() => this.spinner.hide(), 500);
     this.botonera = true;
     this.menu = false;
     this.confirmar = false;
 
     try {
-      this.usuarioActual.registrado
+      this.usuarioActual.activo
     } catch (e) {
-      this.usuarioActual.registrado == null
+      this.usuarioActual.activo == null
     }
-
-
 
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
-      console.log("el usuario actual es: ", this.usuarioActual);
-      if (!this.usuarioActual.registrado) {
+      console.log("el usuario actual en cliente es: ", this.usuarioActual);
+  /*     if (!this.usuarioActual.registrado) {
         this.registroClienteAlertConfirm();
-      }
+      } */
       this.getTokenControl();
       this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
+
     }, 1500);
-
-
+ 
 
   }
 
@@ -80,29 +78,7 @@ export class ClientePage implements OnInit {
 
       token = await this.fcm.getToken()
         .then(async token => {
-          const alert = await this.alertController.create({
-            header: 'alert de token',
-            message: "'This is the token.' + ${token}",
-
-            buttons: [
-              {
-                text: 'Cancel',
-                role: 'cancel',
-                cssClass: 'secondary',
-                handler: () => {
-                  console.log('Confirm Cancel');
-                }
-              }, {
-                text: 'Ok',
-                handler: (alertData) => { //takes the data 
-                  console.log(alertData.name1);
-                }
-              }
-            ]
-          });
-          await alert.present();
-          console.log(`The token is ${token}`);
-          this.saveTokenToFirestore(token);
+          console.error('se obtuvo el token perren', token)
         })
 
         .catch(error => console.error('Error getting token', error));
@@ -125,7 +101,9 @@ export class ClientePage implements OnInit {
     return devicesRef.doc(token).set(docData)
   }
 
-
+  reservarMesa() {
+    this.router.navigate(['/reserva']);
+  }
 
   async registroClienteAlertConfirm() {
     const alert = await this.alertController.create({
@@ -180,6 +158,10 @@ export class ClientePage implements OnInit {
 
   pedirMesaQR() {
     this.router.navigate(['/pedir-mesa-qr']);
+  }
+
+  hacerEncuesta() {
+    this.router.navigate(['/encuesta-cliente']);
   }
 
 

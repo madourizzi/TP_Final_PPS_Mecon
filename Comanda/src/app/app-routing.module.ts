@@ -27,12 +27,16 @@ const routes: Routes = [
   { path: 'empleados', loadChildren: './pages/admin/empleados/empleados.module#EmpleadosPageModule' },
   { path: 'productos', loadChildren: './pages/admin/productos/productos.module#ProductosPageModule' },
   { path: 'stats', loadChildren: './pages/admin/stats/stats.module#StatsPageModule' },
+  { path: 'reservas', loadChildren: './pages/reservas/reservas.module#ReservasPageModule' },
   //routing cliente
   { path: 'cliente', loadChildren: './pages/cliente/cliente.module#ClientePageModule' },
   { path: 'pedir-mesa-qr', loadChildren: './pages/cliente/pedir-mesa-qr/pedir-mesa-qr.module#PedirMesaQrPageModule' },
   { path: 'ocupar-mesa', loadChildren: './pages/cliente/ocupar-mesa/ocupar-mesa.module#OcuparMesaPageModule' },
   { path: 'detalle-mesa', loadChildren: './pages/cliente/detalle-mesa/detalle-mesa.module#DetalleMesaPageModule' },
   { path: 'cliente-registro', loadChildren: './pages/cliente/cliente-registro/cliente-registro.module#ClienteRegistroPageModule' },
+  { path: 'reserva', loadChildren: './pages/reserva/reserva.module#ReservaPageModule' },  { path: 'encuesta-cliente', loadChildren: './pages/encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' }
+
+  
 
 
 

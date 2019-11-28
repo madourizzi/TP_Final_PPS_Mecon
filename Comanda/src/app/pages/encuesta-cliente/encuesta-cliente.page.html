@@ -1,0 +1,99 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title routerLink="/cliente">
+        <ion-icon name="arrow-back"></ion-icon> Encuesta para clientes
+      </ion-title>
+      <ion-buttons *ngIf="this.url !== '/login'" slot="end">
+        <ion-button (click)="onLogout()">
+          <ion-icon class="icon" name="exit"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding>
+  <form>
+    <ion-label style="color: rgb(168, 53, 53)">
+      ¿Cómo fue la atención de los mozos?
+    </ion-label><ion-note slot="end" color="primary">{{valorMozo}}</ion-note>
+    <ion-item style="background-color: rgba(0, 0, 0, 0.555)">
+      <ion-range name="valorMozo" [(ngModel)]="valorMozo" min="0" max="10" step="1" snaps="true">
+        <ion-icon color="primary" size="small" slot="start" name="happy"></ion-icon>
+        <ion-icon color="primary" size="large" slot="end" name="happy"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-label style="color: rgb(168, 53, 53)">
+      ¿Cómo estuvo la comida?
+    </ion-label><ion-note horizontal="end" color="primary">{{valorCocinero}}</ion-note>
+    <ion-item style="background-color: rgba(0, 0, 0, 0.555)">
+      <ion-range name="valorCocinero" [(ngModel)]="valorCocinero" min="0" max="10" step="1" snaps="true">
+          <ion-icon color="primary" size="small" slot="start" name="happy"></ion-icon>
+          <ion-icon color="primary" size="large" slot="end" name="happy"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-label style="color: rgb(168, 53, 53)">
+      ¿Cómo estuvo la bebida ó los tragos?
+    </ion-label><ion-note horizontal="end" color="primary">{{valorBartender}}</ion-note>
+    <ion-item style="background-color: rgba(0, 0, 0, 0.555)">
+      <ion-range name="valorBartender" [(ngModel)]="valorBartender" min="0" max="10" step="1" snaps="true">
+          <ion-icon color="primary" size="small" slot="start" name="happy"></ion-icon>
+          <ion-icon color="primary" size="large" slot="end" name="happy"></ion-icon>
+      </ion-range>
+    </ion-item>
+    <ion-list>
+      <ion-radio-group name="valorMesa" class="formItem" [(ngModel)]="valorMesa">
+        <ion-label style="color: rgb(168, 53, 53)">
+          ¿Que te parecio el estado de la mesa?
+        </ion-label>
+
+        <ion-item class="formItem">
+          <ion-label>Malo</ion-label>
+          <ion-radio checked="true" value="malo"></ion-radio>
+        </ion-item>
+
+        <ion-item class="formItem">
+          <ion-label>Bueno</ion-label>
+          <ion-radio value="bueno"></ion-radio>
+        </ion-item>
+
+        <ion-item class="formItem">
+          <ion-label>Muy bueno</ion-label>
+          <ion-radio value="muybueno"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+
+    <ion-item padding class="formItem">
+      <ion-label style="color: rgb(168, 53, 53)">Valore de 1 a 5 el estado de La Comanda MadouRizzi </ion-label>
+      <ion-select name="valorRestaurant" [(ngModel)]="valorRestaurant">
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="2">2</ion-select-option>
+        <ion-select-option value="3">3</ion-select-option>
+        <ion-select-option value="4">4</ion-select-option>
+        <ion-select-option value="5">5</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-label style="color: rgb(168, 53, 53)">
+      Escriba aquí sus comentarios o sugerencias
+    </ion-label>
+    <ion-item class="formItem">
+      <ion-input placeholder="Ingrese una sugerencia" name="sugerencia" [(ngModel)]="sugerencia">
+
+      </ion-input>
+    </ion-item>
+
+
+    <ion-button full (click)="Guardar()">Enviar</ion-button>
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [disabled]="!puedeSacarFoto" color="danger" size="large" (click)="SacarFoto()">
+      <ion-icon size="large" name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-footer>

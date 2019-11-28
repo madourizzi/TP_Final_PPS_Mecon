@@ -17,164 +17,157 @@ export class ListadoClientesComponent implements OnInit {
 
   usuarios: Array<User>;
   usuariosCopia: Array<User>;
-@Output() usuarioElegido: EventEmitter<any>;
+  @Output() usuarioElegido: EventEmitter<any>;
 
-  constructor(private authServ: AuthService,  private spinner: SpinnerService,
-    private toastService: ToastService, 
+  constructor(private authServ: AuthService, private spinner: SpinnerService,
+    private toastService: ToastService,
     private usuariosServ: UsersService,
-    private emailComposer: EmailComposer, 
+    private emailComposer: EmailComposer,
     public toastCtrl: ToastController,
     private mailProd: HttpMailService,
-    ) {
-   
-      this.usuarios = new Array();
-      this.usuariosCopia = new Array();
-      this.usuariosServ.traerTodosUsuarios().subscribe(actions => {
-        this.usuarios = [];
-        actions.map(a => {
-          const data = a.payload.doc.data() as User;
-          if(data.perfil=="cliente")
-          {
-            console.info(data, " data");
-            this.usuarios.push(data);
-            this.usuariosCopia.push(data);
-          }
-        });
-    
+  ) {
+
+    this.usuarios = new Array();
+    this.usuariosCopia = new Array();
+    this.usuariosServ.traerTodosUsuarios().subscribe(actions => {
+      this.usuarios = [];
+      actions.map(a => {
+        const data = a.payload.doc.data() as User;
+        if (data.perfil == "cliente") {
+          console.info(data, " data");
+          this.usuarios.push(data);
+          this.usuariosCopia.push(data);
+        }
       });
-    this.usuarioElegido= new EventEmitter();
+
+    });
+    this.usuarioElegido = new EventEmitter();
 
   }
 
-  ngOnInit() {  
+  ngOnInit() {
+  }
+
+  elegir(empleado) {
+    this.usuarioElegido.emit(empleado);
   }
 
   eliminarAnonimos() {
     this.usuarios.forEach((e: User) => {
-     
+
       console.log("elim anonimos", e);
-      
+
       if (e.nombre == "anonimo") {
         this.usuariosServ.EliminarUsuario(e.uid);
       }
     });
   }
 
+  async autorizar(usuario) {
+    setTimeout(() => this.spinner.hide(), 500);
+    console.log(usuario.uid);
+    usuario.activo = true;
+    this.usuariosServ.actualizarUsuario(usuario);
+    this.mailProd.EnviarMail(usuario.email, usuario.uid)
+      .then(async (data) => {
 
-  elegir(empleado) {
-      this.usuarioElegido.emit( empleado);
+        console.log(data);
+
+        let toast = await this.toastCtrl.create({
+          message: "Correo de confirmacion enviado.",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+      })
+      .catch(async (data) => {
+        console.log(data);
+
+        let toast = await this.toastCtrl.create({
+          message: "Correo de confirmacion enviadou.",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+      })
+
+    console.log("autoriza");
+
   }
 
-async autorizar(usuario)
-{
-  setTimeout(() => this.spinner.hide(), 500);
-  console.log(usuario.uid);
-  usuario.activo= true;
-  this.usuariosServ.actualizarUsuario(usuario);
-    this.mailProd.EnviarMail(usuario.email,usuario.uid)
-    .then(async (data)=>{
+  async autorizarEmpleado(usuario) {
+    setTimeout(() => this.spinner.hide(), 500);
+    console.log(usuario.uid);
+    usuario.activo = true;
+    usuario.perfil = "nuevo";
+    usuario.nombre = undefined;
+    this.usuariosServ.actualizarUsuario(usuario);
+    this.mailProd.EnviarMail(usuario.email, usuario.uid)
+      .then(async (data) => {
 
+        console.log(data);
+
+        let toast = await this.toastCtrl.create({
+          message: "Correo de confirmacion enviado.",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+      })
+      .catch(async (data) => {
+        console.log(data);
+
+        let toast = await this.toastCtrl.create({
+          message: "Correo de confirmacion enviadou.",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+      })
+
+    console.log("autoriza");
+
+  }
+
+  async noAutorizar(usuario: User) {
+    usuario.activo = null;
+    this.usuariosServ.EliminarUsuario(usuario.uid).then(async (data) => {
       console.log(data);
 
       let toast = await this.toastCtrl.create({
-        message: "Correo de confirmacion enviado.",
+        message: "Usuario eliminado.",
         duration: 3000,
         position: 'middle' //middle || top
       });
       toast.present();
     })
-    .catch(async (data)=>{
-      console.log(data);
+      .catch(async (data) => {
+        console.log(data);
+        let toast = await this.toastCtrl.create({
+          message: "Error al eliminar usuario.",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+      })
+    console.log("NO autoriza");
 
-      let toast = await this.toastCtrl.create({
-        message: "Correo de confirmacion enviadou.",
-        duration: 3000,
-        position: 'middle' //middle || top
-      });
-      toast.present();
-    })
+  }
 
-  console.log("autoriza");
-  
-}
+  mostrarTodos() {
+    this.usuarios = this.usuariosCopia;
 
-async autorizarEmpleado(usuario)
-{
-  setTimeout(() => this.spinner.hide(), 500);
-  console.log(usuario.uid);
-  usuario.activo= true;
-  usuario.perfil="nuevo";
-  usuario.nombre=undefined;
-  this.usuariosServ.actualizarUsuario(usuario);
-    this.mailProd.EnviarMail(usuario.email,usuario.uid)
-    .then(async (data)=>{
+  }
 
-      console.log(data);
-
-      let toast = await this.toastCtrl.create({
-        message: "Correo de confirmacion enviado.",
-        duration: 3000,
-        position: 'middle' //middle || top
-      });
-      toast.present();
-    })
-    .catch(async (data)=>{
-      console.log(data);
-
-      let toast = await this.toastCtrl.create({
-        message: "Correo de confirmacion enviadou.",
-        duration: 3000,
-        position: 'middle' //middle || top
-      });
-      toast.present();
-    })
-
-  console.log("autoriza");
-  
-}
-
-async noAutorizar(usuario:User)
-{
-  usuario.activo= null;
-  this.usuariosServ.EliminarUsuario(usuario.uid).then(async (data)=>{
-    console.log(data);
-
-    let toast = await this.toastCtrl.create({
-      message: "Usuario eliminado.",
-      duration: 3000,
-      position: 'middle' //middle || top
+  mostrarPendientes() {
+    this.usuarios = [];
+    this.usuariosCopia.forEach((data: User) => {
+      console.log("data" + data.activo);
+      if (data.activo == null) {
+        this.usuarios.push(data);
+      }
     });
-    toast.present();
-  })
-  .catch(async (data)=>{
-    console.log(data);
-    let toast = await this.toastCtrl.create({
-      message: "Error al eliminar usuario.",
-      duration: 3000,
-      position: 'middle' //middle || top
-    });
-    toast.present();
-  })
-  console.log("NO autoriza");
-
-}
-
-mostrarTodos()
-{
-  this.usuarios= this.usuariosCopia;
-  
-}
-
-mostrarPendientes()
-{
-  this.usuarios=[];
-  this.usuariosCopia.forEach((data : User )=> {
-    console.log("data" + data.activo);    
-    if(data.activo == null){
-      this.usuarios.push(data);
-    }
-  });
-}
+  }
 
 
 }
