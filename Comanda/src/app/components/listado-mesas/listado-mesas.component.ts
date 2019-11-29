@@ -32,7 +32,7 @@ export class ListadoMesasComponent implements OnInit {
       this.mesas = [];
       actions.map(a => {
         const data = a.payload.doc.data() as Mesa;
-      //  console.info(data, " data");
+        //  console.info(data, " data");
         this.mesas.push(data);
       });
 
@@ -67,17 +67,42 @@ export class ListadoMesasComponent implements OnInit {
   confirmarServicio(mesa) {
     this.mesasService.confirmarServicio(mesa);
   }
-
+  
   entregarPedido(mesa: Mesa) {
+    
+    let contadorEntregado = 0;
+    let varioPedido = new Array();
     this.mesasService.entregarPedido(mesa).then(() =>
       mesa.pedidos.forEach(element => {
+
         this.pedidoServicio.traerUnPedido(element).subscribe((e: Pedido) => {
-          if (e.estado == 'terminado') {
-            this.pedidoServicio.actualizarUnPedido(e, 'entregado');
-          }
-        })
+          console.log("segundo pedido", e);
+          varioPedido.push(e);
+
+        });
       }));
+    varioPedido.forEach(ele => {
+      if (ele.estado == 'terminado') {
+        this.pedidoServicio.actualizarUnPedido(ele, 'entregado');
       }
+      if(ele.esta=="entregado")
+      {
+        contadorEntregado++;
+      }
+    });      
+
+    if (contadorEntregado == mesa.pedidos.length) {
+      localStorage.setItem('pedidosP', 'comiendo');
+      this.mesasService.actualizarMesaEmpleado(mesa, 'comiendo');
+
+    }
+
+    contadorEntregado = 0;
+
+
+
+  }
+    
 
 
 
@@ -85,22 +110,22 @@ export class ListadoMesasComponent implements OnInit {
 
   limpiarTodasLasMesas() {
 
-        let pedi = this.eliminarPedidos();
-        //  this.eliminarClientes();
+    let pedi = this.eliminarPedidos();
+    //  this.eliminarClientes();
 
-        let mesass = this.mesasService.TraerMesas().subscribe(actions => {
-          actions.map(a => {
-            const data = a.payload.doc.data() as Mesa;
-            this.mesasService.limpiarMesa(data);
-            console.log('mesas');
+    let mesass = this.mesasService.TraerMesas().subscribe(actions => {
+      actions.map(a => {
+        const data = a.payload.doc.data() as Mesa;
+        this.mesasService.limpiarMesa(data);
+        console.log('mesas');
 
-          });
-        });
+      });
+    });
 
-        setTimeout(() => {
-        pedi.unsubscribe();
-        mesass.unsubscribe();
-      }, 3000);
+    setTimeout(() => {
+      pedi.unsubscribe();
+      mesass.unsubscribe();
+    }, 3000);
 
   }
 

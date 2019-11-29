@@ -87,7 +87,7 @@ export class BotonesEnviarPedidoAreasComponent implements OnInit {
       case 'cocina':
         this.btnComida = false;
         break;
-      case 'candyBar':
+      case 'postre':
         this.btnPostre = false;
         break;
       case 'cerveza':
@@ -116,7 +116,6 @@ export class BotonesEnviarPedidoAreasComponent implements OnInit {
     let contadorPedido = 0;
 
     this.pedido.forEach(element => {
-      console.log("this peiddo foreach" ,element);
       contadorPedido++;
       if (element.estado == "entregado") {
         contadorEntregado++;
@@ -124,13 +123,13 @@ export class BotonesEnviarPedidoAreasComponent implements OnInit {
 
     });
 
-    if (contadorEntregado == contadorPedido) {
+    if (contadorEntregado == this.mesa.pedidos.length) {
       localStorage.setItem('pedidosP', 'comiendo');
       this.mesaServicio.actualizarMesaEmpleado(this.mesa, 'comiendo');
 
     }
 
-    this.pedido=[];
+
   }
 
 

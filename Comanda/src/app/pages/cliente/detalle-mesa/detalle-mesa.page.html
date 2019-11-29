@@ -33,7 +33,8 @@
                     </p>
                     <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="nroMesa.estado=='cerrada'">Estado {{nroMesa.estado}}
                     </p>
-                    <ion-button color="dark" (click)=" cerrarMesa()" *ngIf="nroMesa.estado=='comiendo'">Pedir Cuenta</ion-button>
+
+                    <ion-button color="dark" (click)="  actualizar()">Actualizar</ion-button>
                 </ion-label>
             </ion-item>
         </ion-list>

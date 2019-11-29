@@ -8,6 +8,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 })
 export class CerveceroPage implements OnInit {
 
+  title="Cervecero"
   constructor(private spinner: SpinnerService) { }
 
   ngOnInit() {

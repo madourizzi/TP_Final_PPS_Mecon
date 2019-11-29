@@ -144,6 +144,12 @@ export class ClientePage implements OnInit {
     this.botonera = true;
   }
 
+
+  cerrarMesa() {
+    console.log("'cuentaPedida'");
+    this.mesasServ.actualizarMesaEmpleado(this.mesasServ.mesaActual, 'cuentaPedida');
+  }
+
   recibirPedido($event) {
     this.pedido = $event;
     console.log("emit cliente pedido", this.pedido);
