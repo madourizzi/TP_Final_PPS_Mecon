@@ -46,6 +46,15 @@ export class DetalleMesaPage implements OnInit {
 
   }
 
+  actualizar()
+  {
+    this.pedidos=[];
+    this.ngOnInit();
+  }
+
+
+
+
   cerrarMesa() {
     console.log("'cuentaPedida'");
     this.sacarDetalle=false;

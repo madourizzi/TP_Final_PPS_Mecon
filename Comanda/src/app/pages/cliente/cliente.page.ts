@@ -11,6 +11,7 @@ import { ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Pedido } from 'src/app/models/pedido';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-cliente',
@@ -38,8 +39,10 @@ export class ClientePage implements OnInit {
     private alertController: AlertController,
     public fcm: FirebaseX,
     public platform: Platform,
+    private toast: ToastService,
     private toastCtrl: ToastController) {
     this.title = "Bienvenido Cliente: ";
+    this.usuarioActual = new User();
 
 
   }
@@ -50,19 +53,23 @@ export class ClientePage implements OnInit {
     this.menu = false;
     this.confirmar = false;
 
+    try {
+      this.usuarioActual.activo
+    } catch (e) {
+      this.usuarioActual.activo == null
+    }
+
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual en cliente es: ", this.usuarioActual);
-      if (!this.usuarioActual.registrado) {
+  /*     if (!this.usuarioActual.registrado) {
         this.registroClienteAlertConfirm();
-      }
-
-    }, 1500);
-    setTimeout(() => {
+      } */
       this.getTokenControl();
       this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
-    }, 500);
 
+    }, 1500);
+ 
 
   }
 
@@ -139,6 +146,12 @@ export class ClientePage implements OnInit {
     this.botonera = true;
   }
 
+
+  cerrarMesa() {
+    console.log("'cuentaPedida'");
+    this.mesasServ.actualizarMesaEmpleado(this.mesasServ.mesaActual, 'cuentaPedida');
+  }
+
   recibirPedido($event) {
     this.pedido = $event;
     console.log("emit cliente pedido", this.pedido);
@@ -155,7 +168,8 @@ export class ClientePage implements OnInit {
     this.router.navigate(['/pedir-mesa-qr']);
   }
 
-  hacerEncuesta() {
+  async hacerEncuesta() {
+    await this.toast.confirmationToastEncuesta("Le agradeceremos que llene la siguiente encuesta anónima");
     this.router.navigate(['/encuesta-cliente']);
   }
 

@@ -11,7 +11,7 @@
             <ion-label>
                 <h3>Mesa Nº {{mesa.numero}}</h3>
                 <p>Comensales: {{mesa.cantidadComensales}} </p>
-                <p style="font-weight: bold; color:rgb(203, 25, 219)" *ngIf="mesa.estado=='comiendo'">Estado {{mesa.estado}} </p>
+                <!--                 <p style="font-weight: bold; color:rgb(203, 25, 219)" *ngIf="mesa.estado=='comiendo'">Estado {{mesa.estado}} </p>
                 <p style="font-weight: bold; color:brown" *ngIf="mesa.estado=='terminada'">Estado {{mesa.estado}} </p>
                 <p style="font-weight: bold; color:rgb(236, 205, 26)" *ngIf="mesa.estado=='reservada'">Estado {{mesa.estado}}
                 </p>
@@ -29,12 +29,40 @@
                 </p>
                 <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="mesa.estado=='cerrada'">Estado {{mesa.estado}}
                 </p>
+                <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="mesa.estado=='pedidoAConfirmar'">Estado {{mesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="mesa.estado=='pedidosPendiente1'">Estado {{mesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="mesa.estado=='pedidosPendiente2'">Estado {{mesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="mesa.estado=='pedidosPendiente3'">Estado {{mesa.estado}}
+                </p>
+                <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="mesa.estado=='pedidosPendiente0'">Estado {{mesa.estado}}
+                </p> -->
+                <!--    <p style="font-weight: bold; color:rgb(134, 10, 10)" *ngIf="mesa.estado=='pedidoListo'">Estado {{mesa.estado}}
+                </p> -->
+                <span style="font-weight: bold; ">Estado {{mesa.estado}}
+                        </span>
                 <p>
+
                     <ion-button *ngIf="mesa.estado=='solicitada'" (click)="confirmarReserva(mesa)">Confirmar Reserva</ion-button>
+                    <ion-button *ngIf="mesa.estado=='solicitada'" (click)="cerrarMesa(mesa, 'cerrada')"> No aceptar Solicitud </ion-button>
+
                     <ion-button *ngIf="mesa.estado=='reservada'" (click)="confirmarServicio(mesa)">Confirmar inicio del servicio</ion-button>
                     <ion-button *ngIf="mesa.estado=='cuentaPedida'" (click)="emitirFactura(mesa)">Emitir Factura</ion-button>
-                    <ion-button *ngIf="mesa.estado=='pagando'" (click)="cerrarMesa(mesa, 'cerrada')"> <span *ngIf="servicioGeneral.usuarios().usuarioActual.perfil=='admin'"> Cerrar </span> </ion-button>
-                    <button type="button" class="btn btn-warning" *ngIf="mesa.estado=='cerrada'" (click)="limpiarUnaMesa(mesa)"><span>Limpiar</span></button>
+                    <ion-button *ngIf="mesa.estado=='pagando'" (click)="cerrarMesa(mesa, 'cerrada')"> Cerrar</ion-button>
+                    <ion-button *ngIf="mesa.estado=='cerrada'" (click)="limpiarUnaMesa(mesa)">Limpiar</ion-button>
+
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidoAConfirmar'"></app-botones-enviar-pedido-areas>
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente1'"> </app-botones-enviar-pedido-areas>
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente2'"> </app-botones-enviar-pedido-areas>
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente3'"></app-botones-enviar-pedido-areas>
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente3'"></app-botones-enviar-pedido-areas>
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='comiendo'"></app-botones-enviar-pedido-areas>
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='esperandoComida'"></app-botones-enviar-pedido-areas>
+
+                    <ion-button *ngIf="mesa.estado=='pedidoListo'" (click)="entregarPedido(mesa)">Entregar Pedido</ion-button>
+
 
                 </p>
             </ion-label>

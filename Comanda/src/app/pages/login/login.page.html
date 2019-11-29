@@ -46,23 +46,30 @@
                 Adm
             </ion-fab-button>
 
-            <ion-fab-button side="bottom" size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.cliente)">
+            <ion-fab-button side="bottom" size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.mozo)">
                 Mozo
             </ion-fab-button>
 
-            <ion-fab-button size="large" color="tertiary" (click)="cargarDatos(this.rolesEnum.candyBar)">
+            <ion-fab-button size="large" color="tertiary" (click)="cargarDatos(this.rolesEnum.cocina)">
                 Cocina
             </ion-fab-button>
-            <!-- 
-            <ion-fab-button size="large" color="success" (click)="cargarDatos(this.rolesEnum.barman)">
-                <ion-icon name="bulb"></ion-icon>
-            </ion-fab-button> -->
 
-            <ion-fab-button size="large" color="warning" (click)="cargarDatos(this.rolesEnum.cocina)">
-                <ion-icon name="card"></ion-icon>
+            <ion-fab-button size="large" color="success" (click)="cargarDatos(this.rolesEnum.barman)">
+                tragos
             </ion-fab-button>
-            <ion-fab-button size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.mozo)">
-                Cliente
+
+            <ion-fab-button size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.cervecero)">
+                Birra
+            </ion-fab-button>
+            <ion-fab-button size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.candyBar)">
+                Postre
+            </ion-fab-button>
+
+            <ion-fab-button size="large" color="warning" (click)="cargarDatos('cliente1')">
+                Silvia
+            </ion-fab-button>
+            <ion-fab-button size="large" color="secondary" (click)="cargarDatos('cliente2')">
+                Rolando
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>

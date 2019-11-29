@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-barman',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BarmanPage implements OnInit {
 
-  constructor() { }
+  title=" barra de tagos y vinos";
+  constructor(private spinner: SpinnerService) { }
 
   ngOnInit() {
+    this.spinner.hide();
   }
+
 
 }
