@@ -30,6 +30,9 @@ export class PedirMesaQrPage implements OnInit {
 
       let resp = false;
       await this.mesasServ.asignarMesaDisponible(10).then((e) => {
+
+
+        //elegir entre disponibles
     
         if (this.mesasServ.mesaActual.estado=="solicitada") {
          this.router.navigate(['/cliente']);
