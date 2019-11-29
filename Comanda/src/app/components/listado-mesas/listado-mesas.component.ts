@@ -80,6 +80,8 @@ export class ListadoMesasComponent implements OnInit {
     });
 
 
+
+
     setTimeout(()=>{
 
       
@@ -109,7 +111,7 @@ export class ListadoMesasComponent implements OnInit {
     varioPedido = [];
 
 
-    }, 4000)
+    }, 2000)
 
 
 
