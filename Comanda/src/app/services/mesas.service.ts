@@ -204,9 +204,7 @@ export class MesasService {
       return this.objFirebase.collection("mesa").snapshotChanges().subscribe(e => {
         e.map(a => {
           const data = a.payload.doc.data() as Mesa;
-          console.log("contruecot", data);
-          if (data.cliente == mail) {
-            console.log("contruecot2", data);
+         if (data.cliente == mail) {
             this.mesaActual = data;
             //localStorage.setItem('perfil', this.usuarioActual.perfil)
             console.info(" traerMesaPorUsuarioMail(mail)", this.mesaActual);

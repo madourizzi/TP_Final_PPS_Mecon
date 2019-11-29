@@ -67,42 +67,53 @@ export class ListadoMesasComponent implements OnInit {
   confirmarServicio(mesa) {
     this.mesasService.confirmarServicio(mesa);
   }
-  
+
   entregarPedido(mesa: Mesa) {
-    
+
     let contadorEntregado = 0;
     let varioPedido = new Array();
-    this.mesasService.entregarPedido(mesa).then(() =>
-      mesa.pedidos.forEach(element => {
+    mesa.pedidos.forEach(element => {
+      this.pedidoServicio.traerUnPedido(element).subscribe((e: Pedido) => {
+        console.log("segundo pedido", e);
+        varioPedido.push(e);
+      });
+    });
 
-        this.pedidoServicio.traerUnPedido(element).subscribe((e: Pedido) => {
-          console.log("segundo pedido", e);
-          varioPedido.push(e);
 
-        });
-      }));
+    setTimeout(()=>{
+
+      
     varioPedido.forEach(ele => {
+      console.log("vario", ele);
       if (ele.estado == 'terminado') {
         this.pedidoServicio.actualizarUnPedido(ele, 'entregado');
       }
-      if(ele.esta=="entregado")
-      {
+      else {
         contadorEntregado++;
       }
-    });      
+    });
 
-    if (contadorEntregado == mesa.pedidos.length) {
+
+    if (contadorEntregado == varioPedido.length) {
       localStorage.setItem('pedidosP', 'comiendo');
       this.mesasService.actualizarMesaEmpleado(mesa, 'comiendo');
+    }
+    else {
+      this.mesasService.actualizarMesaEmpleado(mesa, 'esperandoComida');
 
     }
 
     contadorEntregado = 0;
+    varioPedido = [];
+
+
+    }, 4000)
+
 
 
 
   }
-    
+
 
 
 

@@ -41,10 +41,8 @@ export class BotonesEnviarPedidoAreasComponent implements OnInit {
       this.pedidoServicio.traerUnPedido(pedido).subscribe((pedidoDb: Pedido) => {
         this.verPedido(pedidoDb);
         this.pedido.push(pedidoDb);              
-        this.contarEntregado(); 
       });
     });
-
 
 
   }
@@ -63,7 +61,7 @@ export class BotonesEnviarPedidoAreasComponent implements OnInit {
           this.btnComida = pedidoDb;
           this.contadorPedido++;
           break;
-        case 'candyBar':
+        case 'postre':
           this.btnPostre = pedidoDb;
           this.contadorPedido++;
           break;
@@ -110,27 +108,6 @@ export class BotonesEnviarPedidoAreasComponent implements OnInit {
 
 
 
-  contarEntregado() {
-
-    let contadorEntregado = 0;
-    let contadorPedido = 0;
-
-    this.pedido.forEach(element => {
-      contadorPedido++;
-      if (element.estado == "entregado") {
-        contadorEntregado++;
-      }
-
-    });
-
-    if (contadorEntregado == this.mesa.pedidos.length) {
-      localStorage.setItem('pedidosP', 'comiendo');
-      this.mesaServicio.actualizarMesaEmpleado(this.mesa, 'comiendo');
-
-    }
-
-
-  }
 
 
 

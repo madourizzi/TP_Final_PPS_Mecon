@@ -1,7 +1,7 @@
 <app-header [titulo]="title" [backButton]="true" (volver)="volver($event)"></app-header>
 <ion-content no-bounce>
     <div *ngIf="this.usuarioActual.activo!=null">
-        <div class="unGranDiv" style="height: 92vh;" *ngIf="botonera">
+        <div class="unGranDiv" style="height: 100vh;" *ngIf="botonera">
             <ion-row style="height:40%; " *ngIf="mesasServ.mesaActual ==null">
                 <ion-col style="height:98%; background-color: rgb(231, 112, 15); color: seashell; border-radius: 15px; " (click)="pedirMesaQR()">
                     <img src="../../../assets/images/qrPedi-01.png" alt="" style="max-height: 80% ">
@@ -13,7 +13,7 @@
                 </ion-col>
             </ion-row>
 
-            <div *ngIf="mesasServ.mesaActual !=null" style="height:75%; ">
+            <div *ngIf="mesasServ.mesaActual !=null" style="height:100%; ">
                 <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual.estado !='pagando'">
                     <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
                         <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidos() " style="max-height: 80% ">
@@ -24,12 +24,12 @@
                         ENCUESTA
                     </ion-col>
                 </ion-row>
-                <ion-row style="height:80%; " color="light" *ngIf="mesasServ.mesaActual.estado =='pagando'">
-                    <ion-col style="height:98%; background-color:rgb(255, 255, 255); color: rgb(24, 22, 20); border-radius: 15px;">
+                <ion-row style="height:100%; " *ngIf="mesasServ.mesaActual.estado =='pagando'">
+                    <ion-col style="background-color:rgb(255, 255, 255); color: rgb(24, 22, 20); ">
                         <app-detalle-cuenta></app-detalle-cuenta>
                     </ion-col>
                 </ion-row>
-                <ion-row style="height:50%; " *ngIf="mesasServ.mesaActual.estado !='pagando'">
+                <ion-row style="height:30%; " *ngIf="mesasServ.mesaActual.estado !='pagando'">
                     <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px; ">
                         <ion-icon name="menu" style="color: white; zoom: 4; vertical-align: auto; " (click)="ingresarPedido()" *ngIf="mesasServ.mesaActual.estado =='inicioServicio'">
                         </ion-icon>
@@ -40,8 +40,8 @@
                     </ion-col>
                 </ion-row>
             </div>
-            <ion-row style=" height:20%;">
-                <ion-col class="col-12 " style="height:98%; background-color: rgb(10, 184, 146); color: seashell; border-radius: 15px; " (click)=" reservarMesa() ">
+            <ion-row style=" height:10%;">
+                <ion-col class="col-12 " style="background-color: rgb(10, 184, 146); color: seashell; border-radius: 15px; " (click)=" reservarMesa() ">
                     RESERVA
                 </ion-col>
             </ion-row>
@@ -62,10 +62,10 @@
     </div>
 
 
-    <ion-content *ngIf="menu ">
+    <ion-content *ngIf="menu">
         <app-listado-productos (enviar)="recibirPedido($event) "></app-listado-productos>
     </ion-content>
 
-    <ion-content *ngIf="confirmar ">
+    <ion-content *ngIf="confirmar">
         <app-confirmar-pedido [pedidoAConfirmar]="pedido"></app-confirmar-pedido>
     </ion-content>
