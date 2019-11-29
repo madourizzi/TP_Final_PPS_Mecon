@@ -1,15 +1,45 @@
-<ion-content>
+<ion-content *ngIf="!pedida">
     <div class="unGranDiv" style="height: 100vh;">
-        <ion-row style="height:100%; ">
+        <ion-row style="height:50%; ">
+            <form action="" style="height:98%; background-color: rgb(216, 105, 188); color: seashell; border-radius: 15px; padding: 10px; ">
+                <div class="row">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-4">
+                        <h1> Comensales </h1>
+                    </div>
+                    <div class="col-2">
+                        <div class="md-form">
+                            <input class="form-control" type="number" name="comensales" min="1" max="16" [(ngModel)]="comensales">
+                        </div>
+                    </div>
+                    <div class="col-3">
+
+                    </div>
+                </div>
+
+            </form>
+        </ion-row>
+        <ion-row style="height:50%; ">
             <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; padding: 10px; ">
                 <img src="../../../assets/images/qrPedi-01.png" alt="" (click)="pedirMesaQr()">
             </ion-col>
         </ion-row>
-        <ion-row style="height:100%; ">
-            <ion-col style="height:98%; background-color: rgb(238, 116, 207); color: seashell; border-radius: 15px; padding: 10px; ">
-                <h2 class=" animated infinite flash">Esperando...</h2>
-                <h4> Será atendido por un Mozo en Breve</h4>
-            </ion-col>
-        </ion-row>
+    </div>
+</ion-content>
+
+<ion-content *ngIf="pedida">
+    <div *ngIf="pedida">
+        <h3>Listado de Mesas Disponibles</h3>
+        <div class="row mt-5">
+            <div class="card col-md-6 col-lg-3" *ngFor="let mesa of mesas">
+                <div class=" card-body ">
+                    <img src="{{mesa.url}}" style="max-width: 100%">
+                    <h3>Mesa Nº {{mesa.numero}}</h3>
+                    <p>Comensales: {{mesa.cantidadComensales}} </p>
+                    <button type="button" class="btn btn-warning" (click)="elegirMesa(mesa)">Solicitar Mesa</button>
+                </div>
+            </div>
+        </div>
     </div>
 </ion-content>

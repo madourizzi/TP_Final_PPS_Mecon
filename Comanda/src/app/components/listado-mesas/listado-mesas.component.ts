@@ -94,6 +94,8 @@ export class ListadoMesasComponent implements OnInit {
     });
 
 
+    console.log(contadorEntregado , varioPedido.length) ;
+
     if (contadorEntregado == varioPedido.length) {
       localStorage.setItem('pedidosP', 'comiendo');
       this.mesasService.actualizarMesaEmpleado(mesa, 'comiendo');

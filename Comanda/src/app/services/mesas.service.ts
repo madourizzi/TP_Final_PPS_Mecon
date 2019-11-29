@@ -138,6 +138,77 @@ export class MesasService {
     } */
 
 
+
+  /**
+   * 
+   * @param comensales 
+   */
+   traerTodasDisponible(comensales){
+
+    const mesasDisponible = this.MesasDisponibles();
+    let mesasReturn : Array<Mesa> = new Array<Mesa>()
+
+    mesasDisponible.forEach(async (mesa: Mesa) => { 
+
+      console.log("entra a mesas disponibole foreach");
+      
+
+      if (mesa.estado === 'disponible' && mesa.cantidadComensales >= comensales && (comensales + 5) >= mesa.cantidadComensales) {
+
+        mesasReturn.push(mesa);
+        const toast = await this.toastCtrl.create({
+          message: mesa.numero + " disponible",
+          duration: 1000,
+          position: 'top',
+          color: "warning"
+          //middle || top
+        });
+        toast.present();
+      }
+    });
+
+    if (mesasReturn.length == 0) {
+     /*  const toast = await this.toastCtrl.create({
+        message: 'No hay mesas disponibles',
+        duration: 1000,
+        position: 'top',
+        color: "warning"
+        //middle || top
+      });
+      toast.present();
+      */
+    }
+
+    return mesasReturn;
+
+
+  }
+
+
+  
+  /**
+   * 
+   * @param comensales 
+   */
+  solicitarMesa(mesa: Mesa) {
+    this.mesaActual = mesa;
+    return this.actualizarMesaNueva(this.mesaActual, 'solicitada');
+  
+  }
+
+  actualizarMesaNueva(mesa: Mesa, estado) {
+    mesa.estado = estado;
+    mesa.cliente = this.usuarioServ.traerUsuarioActual().email;
+    return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
+  }
+
+
+
+
+
+
+
+
   actualizarMesa(mesa: Mesa, estado) {
     mesa.estado = estado;
     mesa.cliente = this.usuarioServ.traerUsuarioActual().email;

@@ -59,6 +59,7 @@
                     <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente3'"></app-botones-enviar-pedido-areas>
                     <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente3'"></app-botones-enviar-pedido-areas>
                     <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='comiendo'"></app-botones-enviar-pedido-areas>
+                    <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='esperandoComida'"></app-botones-enviar-pedido-areas>
 
                     <ion-button *ngIf="mesa.estado=='pedidoListo'" (click)="entregarPedido(mesa)">Entregar Pedido</ion-button>
 
