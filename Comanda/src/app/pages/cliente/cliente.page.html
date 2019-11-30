@@ -1,27 +1,34 @@
 <app-header [titulo]="title" [backButton]="true" (volver)="volver($event)"></app-header>
 <ion-content no-bounce>
     <div *ngIf="this.usuarioActual.activo!=null">
+
         <div class="unGranDiv" style="height: 100vh;" *ngIf="botonera">
-            <ion-row style="height:40%; " *ngIf="mesasServ.mesaActual ==null">
-                <ion-col style="height:98%; background-color: rgb(231, 112, 15); color: seashell; border-radius: 15px; " (click)="pedirMesaQR()">
-                    <img src="../../../assets/images/qrPedi-01.png" alt="" style="max-height: 80% ">
+            <ion-row style="height:40%;" *ngIf="mesasServ.mesaActual ==null">
+                <ion-col class="col-12" style="height:98%; background-color: rgb(172, 6, 6); color: seashell;  " (click)="pedirMesaQR()">
+                    <h1 style="font-family: 'Raleway', sans-serif; font-size: 20pt; font-weight: 800;  margin-left:10px ;">PEDIR MESA CON QR
+                    </h1>
+                    <p><img src="../../../assets/mapa-mesa-01.png" alt=""> </p>
                 </ion-col>
+
             </ion-row>
             <ion-row style="height:40%;" *ngIf="mesasServ.mesaActual ==null">
-                <ion-col style="height:98%; background-color: rgb(243, 229, 35); color: seashell; border-radius: 15px; ">
-                    <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidosAnonimo() " style="max-height: 80% ">
+                <ion-col style="height:98%; background-color: rgb(0, 0, 0); color: seashell;" (click)="consultarPedidosAnonimo() ">
+                    <h1 style="font-family: 'Raleway', sans-serif; font-size: 32pt; font-weight: 800;">CONSULTAR COMO ANONIMO
+                    </h1>
                 </ion-col>
             </ion-row>
 
             <div *ngIf="mesasServ.mesaActual !=null" style="height:100%; ">
                 <ion-row style="height:50%;" *ngIf="mesasServ.mesaActual.estado !='pagando'">
-                    <ion-col style="height:98%; background-color: rgb(153, 10, 117); color: seashell; border-radius: 15px; ">
-                        <img src="../../../assets/images/qrPedi-02.png " alt=" " (click)="consultarPedidos() " style="max-height: 80% ">
+                    <ion-col style="height:98%; background-color: rgb(172, 6, 6); color: seashell;" (click)="consultarPedidos() ">
+                        <h1 style="font-family: 'Raleway', sans-serif; font-size: 32pt; font-weight: 800;">CONSULTA TU MESA
+                        </h1>
+
                     </ion-col>
                 </ion-row>
                 <ion-row style=" height:25%; " *ngIf="mesasServ.mesaActual.estado =='cuentaPedida'">
-                    <ion-col class="col-12 " style="height:98%; background-color: rgb(231, 5, 231); color: seashell; border-radius: 15px; " (click)=" hacerEncuesta() ">
-                        ENCUESTA
+                    <ion-col class="col-12 " style="height:98%; background-color: rgb(231, 5, 231); color: seashell; " (click)=" hacerEncuesta() ">
+                        <h1 style="font-family: 'Raleway', sans-serif; font-size: 32pt; font-weight: 800;">ENCUESTA</h1>
                     </ion-col>
                 </ion-row>
                 <ion-row style="height:100%; " *ngIf="mesasServ.mesaActual.estado =='pagando'">
@@ -30,40 +37,41 @@
                     </ion-col>
                 </ion-row>
                 <ion-row style="height:30%; " *ngIf="mesasServ.mesaActual.estado !='pagando'">
-                    <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px; ">
+                    <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; ">
                         <ion-icon name="menu" style="color: white; zoom: 4; vertical-align: auto; " (click)="ingresarPedido()" *ngIf="mesasServ.mesaActual.estado =='inicioServicio'">
                         </ion-icon>
                         <ion-button color="dark" (click)=" cerrarMesa()" *ngIf="mesasServ.mesaActual.estado=='comiendo'">Pedir Cuenta</ion-button>
                         <ion-button color="dark" (click)=" cerrarMesa()" *ngIf="mesasServ.mesaActual.estado=='esperandoComida'">Pedir Cuenta</ion-button>
                         <label *ngIf="mesasServ.mesaActual.estado =='inicioServicio'" for=" ">Menu</label>
-                        <label *ngIf="mesasServ.mesaActual.estado =='solicitada'" for=" ">Aguarde Confirmacion para Pedir</label>
+                        <label *ngIf="mesasServ.mesaActual.estado =='solicitada'" for=" ">Aguarde Confirmacion para
+                            Pedir</label>
                     </ion-col>
                 </ion-row>
             </div>
-            <ion-row style=" height:10%;">
-                <ion-col class="col-12 " style="background-color: rgb(10, 184, 146); color: seashell; border-radius: 15px; " (click)=" reservarMesa() ">
+            <ion-row style=" height: 10vh;">
+                <ion-col class="col-12 " style="background-color: rgb(10, 184, 146); color: seashell; " (click)=" reservarMesa() ">
                     RESERVA
                 </ion-col>
             </ion-row>
-            <ion-row style=" height:10%;">
-                <ion-col class="col-12 " style="background-color: rgb(10, 184, 146); color: seashell; border-radius: 15px; " (click)=" hacerEncuesta() ">
+            <ion-row style=" height:10vh;">
+                <ion-col class="col-12 " style="background-color: rgb(10, 184, 146); color: seashell; " (click)=" hacerEncuesta() ">
                     Encuestas
                 </ion-col>
             </ion-row>
         </div>
     </div>
-    <div *ngIf="this.usuarioActual.activo==null" style="height:90vh; ">
+    <div *ngIf="this.usuarioActual.activo==null" style="height:100vh; ">
         <ion-row style="height:10%; ">
-            <ion-col style="height:98%; background-color:rgb(153, 10, 141); color: seashell; border-radius: 15px;">
-                <h4>Esperando Autorizacion </h4>
+            <ion-col style="height:100%; background-color: rgb(153, 10, 117); color: seashell;" (click)="consultarPedidos() ">
+                <h1 style="font-family: 'Raleway', sans-serif; font-size: 15pt; font-weight: 800;">Esperando Autorizacion
+                    <span class="animated infinite flash">...</span> </h1>
             </ion-col>
         </ion-row>
         <ion-row style="height:90%; ">
-            <ion-col style="height:98%; background-color:rgb(12, 10, 153); color: seashell; border-radius: 15px;">
+            <ion-col style="height:100%; background-color: rgb(153, 10, 117); color: seashell;" (click)="consultarPedidos() ">
                 <iframe src="https://giphy.com/embed/buLnnhWURdY4M" width="384" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
             </ion-col>
         </ion-row>
-
     </div>
 
 

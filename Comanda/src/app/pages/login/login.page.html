@@ -1,6 +1,6 @@
 <ion-content padding color="dark">
-    <div>
-        <img src="../../../assets/icon/icon-12.png" alt="">
+    <div class="animated rubberBand delay-4s">
+        <img src="../../../assets/icon/icon_Mesa de trabajo 1.svg" alt="">
     </div>
     <form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
         <ion-item color="light">
@@ -26,7 +26,7 @@
         <br>
     </form>
 
-    <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab vertical="top" horizontal="end" slot="fixed" style="margin-top: 22vh;">
         <ion-fab-button color="warning">
             <ion-icon name="person"></ion-icon>
         </ion-fab-button>
@@ -47,17 +47,18 @@
                 tragos
             </ion-fab-button>
 
-            <ion-fab-button size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.cervecero)">
+            <ion-fab-button size="large" color="danger" (click)="cargarDatos(this.rolesEnum.cervecero)">
                 Birra
             </ion-fab-button>
-            <ion-fab-button size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.candyBar)">
+            <ion-fab-button size="large" color="warning" (click)="cargarDatos(this.rolesEnum.candyBar)">
                 Postre
             </ion-fab-button>
-
+        </ion-fab-list>
+        <ion-fab-list side="start">
             <ion-fab-button size="large" color="warning" (click)="cargarDatos('cliente1')">
                 Silvia
             </ion-fab-button>
-            <ion-fab-button size="large" color="secondary" (click)="cargarDatos('cliente2')">
+            <ion-fab-button size="large" color="danger" (click)="cargarDatos('cliente2')">
                 Rolando
             </ion-fab-button>
         </ion-fab-list>
@@ -65,7 +66,7 @@
 </ion-content>
 
 <ion-footer color="dark">
-    <ion-toolbar color="dark" class="mb-5">
+    <ion-toolbar color="dark" class="mb-5" class="animated flash delay-5s">
         <ion-button color="danger" style="height: 50px;" size="large" expand="full" type="submit" [disabled]="!form.valid"> Entrar</ion-button>
     </ion-toolbar>
 

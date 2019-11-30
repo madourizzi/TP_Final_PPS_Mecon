@@ -13,6 +13,8 @@ import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Pedido } from 'src/app/models/pedido';
 import { ToastService } from 'src/app/services/toast.service';
 
+
+
 @Component({
   selector: 'app-cliente',
   templateUrl: './cliente.page.html',
@@ -41,8 +43,16 @@ export class ClientePage implements OnInit {
     public platform: Platform,
     private toast: ToastService,
     private toastCtrl: ToastController) {
+
     this.title = "Bienvenido Cliente: ";
     this.usuarioActual = new User();
+    try {
+      console.log("try");      
+      this.usuarioActual.activo
+    } catch (e) {
+      console.log("catcjh");
+      this.usuarioActual.activo == null
+    }
 
 
   }
@@ -53,11 +63,7 @@ export class ClientePage implements OnInit {
     this.menu = false;
     this.confirmar = false;
 
-    try {
-      this.usuarioActual.activo
-    } catch (e) {
-      this.usuarioActual.activo == null
-    }
+    
 
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();

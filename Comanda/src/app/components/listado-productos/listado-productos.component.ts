@@ -2,7 +2,6 @@ import { Component, OnInit , EventEmitter, Output} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Producto } from 'src/app/models/producto';
 import { ToastService } from 'src/app/services/toast.service';
-import { AdminFormPage } from 'src/app/pages/admin-form/admin-form.page';
 import { ProductosService } from 'src/app/services/productos.service';
 import { MesasService } from 'src/app/services/mesas.service';
 import { Pedido } from 'src/app/models/pedido';
