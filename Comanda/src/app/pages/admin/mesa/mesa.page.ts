@@ -15,6 +15,7 @@ export class MesaPage implements OnInit {
   listaMesa;
   botonera;
   title;
+  productoElegido;
 
   constructor(private spinner: SpinnerService,
     private qr: BarcodeScanner,
@@ -49,6 +50,16 @@ export class MesaPage implements OnInit {
     this.listaMesa = false;
     this.botonera = true;
     this.altaMesa = false;
+  }
+
+  
+  editarUsu($event)
+  {
+    this.listaMesa = false;
+    this.botonera = false;
+    this.altaMesa = true;
+    this.productoElegido= $event;        
+
   }
 
 

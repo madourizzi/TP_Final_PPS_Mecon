@@ -4,8 +4,8 @@
 
     <div class="ion-text-center">
         <ion-avatar class="mb-3" size="large" style="align-self: center; margin: auto; height: 200px; width: 200px;">
-            <img class="icon" *ngIf="!selectedFiles" src="../../../assets/images/nofoto.jpg" alt="">
-            <img class="icon" *ngIf="selectedFiles" [src]="foto" alt="">
+            <img class="icon" *ngIf="!foto" src="../../../assets/images/nofoto.jpg" alt="">
+            <img class="icon" *ngIf="foto" [src]="foto" alt="">
         </ion-avatar>
     </div>
 

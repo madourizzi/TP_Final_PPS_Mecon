@@ -38,6 +38,8 @@ export class ListadoMesasComponent implements OnInit {
 
     });
 
+    this.enviar= new EventEmitter();
+
 
   }
 
@@ -78,66 +80,45 @@ export class ListadoMesasComponent implements OnInit {
         varioPedido.push(e);
       });
     });
+    setTimeout(() => {
+      varioPedido.forEach(ele => {
+        console.log("vario", ele);
+        if (ele.estado == 'terminado') {
+          this.pedidoServicio.actualizarUnPedido(ele, 'entregado');
+        }
+        varioPedido = [];
+      }, 2000)
 
 
 
 
-    setTimeout(()=>{
-
-      
-    varioPedido.forEach(ele => {
-      console.log("vario", ele);
-      if (ele.estado == 'terminado') {
-        this.pedidoServicio.actualizarUnPedido(ele, 'entregado');
-      }
-      else {
-        contadorEntregado++;
-      }
     });
-
-
-    console.log(contadorEntregado , varioPedido.length) ;
-
-    if (contadorEntregado == varioPedido.length) {
-      localStorage.setItem('pedidosP', 'comiendo');
-      this.mesasService.actualizarMesaEmpleado(mesa, 'comiendo');
-    }
-    else {
-      this.mesasService.actualizarMesaEmpleado(mesa, 'esperandoComida');
-
-    }
-
-    contadorEntregado = 0;
-    varioPedido = [];
-
-
-    }, 2000)
-
-
-
-
   }
 
-
+  enviarProducto(producto)
+    {
+       this.enviar.emit(producto);        
+    }
+  
 
 
 
 
   limpiarTodasLasMesas() {
 
-    let pedi = this.eliminarPedidos();
-    //  this.eliminarClientes();
+      let pedi = this.eliminarPedidos();
+      //  this.eliminarClientes();
 
-    let mesass = this.mesasService.TraerMesas().subscribe(actions => {
-      actions.map(a => {
-        const data = a.payload.doc.data() as Mesa;
-        this.mesasService.limpiarMesa(data);
-        console.log('mesas');
+      let mesass = this.mesasService.TraerMesas().subscribe(actions => {
+        actions.map(a => {
+          const data = a.payload.doc.data() as Mesa;
+          this.mesasService.limpiarMesa(data);
+          console.log('mesas');
 
+        });
       });
-    });
 
-    setTimeout(() => {
+      setTimeout(() => {
       pedi.unsubscribe();
       mesass.unsubscribe();
     }, 3000);
