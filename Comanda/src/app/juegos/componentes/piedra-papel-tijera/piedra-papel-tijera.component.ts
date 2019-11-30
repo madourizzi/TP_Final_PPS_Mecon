@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { JuegosService } from '../../services/juegos.service';
 import { JuegoPiedraPapelTijera } from '../../clases/juego-piedra-papel-tijera';
+import swal from 'sweetalert';
+import { Router } from '@angular/router';
+import { Juego } from '../../clases/juego';
 
 @Component({
   selector: 'app-piedra-papel-tijera',
@@ -9,33 +12,122 @@ import { JuegoPiedraPapelTijera } from '../../clases/juego-piedra-papel-tijera';
   styleUrls: ['./piedra-papel-tijera.component.css']
 })
 
-export class PiedraPapelTijeraComponent  {
+export class PiedraPapelTijeraComponent {
 
   nuevoJuego: JuegoPiedraPapelTijera;
   mensaje: string;
-  constructor(public juegosServicio: JuegosService, private authService: AuthService) {
-    
+  value: string = "nodef";
+  jugadas: number = 0;
+  descuento: number = 0;
+  constructor(public juegosServicio: JuegosService, private authService: AuthService, private router: Router) {
+
     this.nuevoJuego = new JuegoPiedraPapelTijera();
-   }
+  }
 
-  
-   templateForm(value: any) {
-    this.nuevoJuego = new JuegoPiedraPapelTijera();
 
-    this.nuevoJuego.generarnumero();   
- 
-    if (value.inlineRadioOptions == ""){
-      this.mensaje="Elija una opción para jugar";
-    }
-    else {
-      this.nuevoJuego.valorIngresado = value.inlineRadioOptions;
-      if(this.nuevoJuego.verificar()){
-        this.mensaje="Ganaste!!";
-      }else {
-        this.mensaje="No ganaste, vuelve a intertarlo";
+  verificar() {
 
+    if (this.value == "nodef") {
+      this.mensaje = "Elija una opción para jugar";
+      swal(this.mensaje, "Click para continuar", "error");
+    } else {
+     
+      this.nuevoJuego = new JuegoPiedraPapelTijera();
+      this.nuevoJuego.valorIngresado = this.value;
+      this.nuevoJuego.generarnumero();
+      this.jugadas++;
+
+      if (this.nuevoJuego.verificar()) {
+        this.descuento = this.descuento + 5;
+        this.mensaje = "Ganaste, tienes " + this.descuento.toString() + "% de descuento";
+        if (this.jugadas < 3) {
+          this.mensaje = this.mensaje + " , obtén más beneficios en el próximo juego";
+          this.mensajePop();
+          this.value = "nodef";
+        }
+        else {
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = '<p><b>Resultado:</b></p><p>Tu -> <img src="../../../../assets/' + this.value + '.png" ><p><p align=center><b>  Vs </b></p><p><img src="../../../../assets/' + this.nuevoJuego.valor.toString() + '.png"> <- Android';
+          const value = swal('', {
+            content: {
+              element: wrapper,
+            }
+      
+          }).then(() => {
+          swal(this.mensaje, "Click para teminar", "success");
+          this.value = "";
+          this.router.navigate(['/cliente']);
+        })
+
+        }
+
+      } else {
+        this.mensaje = "No ganaste, llevas ganado " + this.descuento.toString() + " de descuento";
+        if (this.jugadas < 3) {
+          this.mensaje = this.mensaje + " , obtén más beneficios en el próximo juego";
+          this.mensajePop();
+          this.value = "nodef";
+        }
+        else {
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = '<p><b>Resultado:</b></p><p>Tu -> <img src="../../../../assets/' + this.value + '.png" ><p><p align=center><b>  Vs </b></p><p><img src="../../../../assets/' + this.nuevoJuego.valor.toString() + '.png"> <- Android';
+          const value = swal('', {
+            content: {
+              element: wrapper,
+            }
+      
+          }).then(() => {
+          swal(this.mensaje, "Click para teminar", "success");
+          this.router.navigate(['/cliente']);
+          this.value = "nodef";
+        })
       }
+      }
+      this.juegosServicio.registrar(<Juego>this.nuevoJuego);
+      console.info(this.juegosServicio.buscartodas());
+
+
     }
+
+  }
+
+
+  mensajePop() {
+
+    let eleccion = {
+      buttons: ["Seguir Jugando", "Terminar"],
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = '<p><b>Resultado:</b></p><p>Tu -> <img src="../../../../assets/' + this.value + '.png" ><p><p align=center><b>  Vs </b></p><p><img src="../../../../assets/' + this.nuevoJuego.valor.toString() + '.png"> <- Android';
+    const value = swal('', {
+      content: {
+        element: wrapper,
+      }
+
+    }).then(() => {
+
+      swal(this.mensaje, eleccion)
+        .then((value) => {
+
+          console.info(value);
+          switch (value) {
+            case null:
+              this.router.navigate(['/Juegos/PPT']);
+              break;
+            case true:
+              this.router.navigate(['/cliente']);
+              break;
+
+          }
+        });
+
+    });
+
+
+
+
+
   }
 
 

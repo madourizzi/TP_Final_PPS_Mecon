@@ -1,5 +1,6 @@
 import { Juego } from '../clases/juego'
 import { Jugador } from './jugador';
+import swal from 'sweetalert';
 
 export class JuegoPiedraPapelTijera extends  Juego {
     valorIngresado:string;

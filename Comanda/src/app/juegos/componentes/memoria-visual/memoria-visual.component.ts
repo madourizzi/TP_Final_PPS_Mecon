@@ -36,7 +36,7 @@ export class MemoriaVisualComponent implements OnInit {
 
   constructor(public juegosServicio: JuegosService, private authService: AuthService, private router: Router) {
     this.ocultartablero = true;
-    this.Tiempo = 5;
+    this.Tiempo = 3;
     this.nuevoJuego = new JuegoMemoria();
     console.info("Inicio memoria");
   }
@@ -55,7 +55,7 @@ export class MemoriaVisualComponent implements OnInit {
   ngOnInit() {
 
     const wrapper = document.createElement('div');
-    wrapper.innerHTML = "<p>1) Has click en `nuevo´ tendrás 5 segundos para memorizar las posiciones y colores en el tablero</p><p>2) Selecciona el color del panel inferior `+´ y luego ubicalo en el panel haciendo click sobre el recuadro elegido en el tablero </p><p>3) Al finalizar podrás verificar el resultado y obtener beneficios. Éxitos! </p>";
+    wrapper.innerHTML = "<p>1) Has click en `nuevo´ tendrás 3 segundos para memorizar las posiciones y colores en el tablero</p><p>2) Selecciona el color del panel inferior `+´ y luego ubicalo en el panel haciendo click sobre el recuadro elegido en el tablero </p><p>3) Al finalizar podrás verificar el resultado y obtener beneficios. Éxitos! </p>";
     const value = swal('Bienvenido! Sigue las instrucciones para jugar:', {
       content: {
         element: wrapper,       
