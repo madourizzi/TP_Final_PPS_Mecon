@@ -1,10 +1,17 @@
 <ion-header>
     <ion-toolbar>
-        <ion-icon name="arrow-dropleft-circle" routerLink="/admin" style="zoom: 2"></ion-icon> Stats</ion-title>
+    <ion-title><ion-icon name="arrow-dropleft-circle" routerLink="/admin" style="zoom: 2"></ion-icon> Stats</ion-title>
 
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-</ion-content>
+<ion-content padding class="bartenderMenu">
+    <ion-card id="grafico" class="backgroundCard_graph">
+      <ion-card-header>
+        Promedio de calificaciones
+      </ion-card-header>
+      <ion-card-content>
+        <canvas height="500" #doughnutCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>

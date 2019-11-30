@@ -52,6 +52,11 @@
         </ion-item>
 
         <ion-item class="formItem">
+          <ion-label>Regular</ion-label>
+          <ion-radio checked="true" value="regular"></ion-radio>
+        </ion-item>
+
+        <ion-item class="formItem">
           <ion-label>Bueno</ion-label>
           <ion-radio value="bueno"></ion-radio>
         </ion-item>
@@ -92,7 +97,7 @@
 
 <ion-footer>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [disabled]="!puedeSacarFoto" color="danger" size="large" (click)="SacarFoto()">
+    <ion-fab-button [disabled]="!puedeSacarFoto" color="danger" size="large" (click)="TomarFoto()">
       <ion-icon size="large" name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>

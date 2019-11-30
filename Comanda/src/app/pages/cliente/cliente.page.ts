@@ -11,6 +11,7 @@ import { ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Pedido } from 'src/app/models/pedido';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-cliente',
@@ -38,6 +39,7 @@ export class ClientePage implements OnInit {
     private alertController: AlertController,
     public fcm: FirebaseX,
     public platform: Platform,
+    private toast: ToastService,
     private toastCtrl: ToastController) {
     this.title = "Bienvenido Cliente: ";
     this.usuarioActual = new User();
@@ -166,7 +168,8 @@ export class ClientePage implements OnInit {
     this.router.navigate(['/pedir-mesa-qr']);
   }
 
-  hacerEncuesta() {
+  async hacerEncuesta() {
+    await this.toast.confirmationToastEncuesta("Le agradeceremos que llene la siguiente encuesta anónima");
     this.router.navigate(['/encuesta-cliente']);
   }
 

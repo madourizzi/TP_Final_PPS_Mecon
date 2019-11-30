@@ -45,6 +45,11 @@
                     RESERVA
                 </ion-col>
             </ion-row>
+            <ion-row style=" height:10%;">
+                <ion-col class="col-12 " style="background-color: rgb(10, 184, 146); color: seashell; border-radius: 15px; " (click)=" hacerEncuesta() ">
+                    Encuestas
+                </ion-col>
+            </ion-row>
         </div>
     </div>
     <div *ngIf="this.usuarioActual.activo==null" style="height:90vh; ">

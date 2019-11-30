@@ -31,7 +31,7 @@ exports.validarMail = functions.https.onRequest((req, res) => {
 
     const db = admin.firestore()
     console.log('en validar mail query:?  ', req.query.id)
-    db.collection("users").doc(req.query.id).update("activo", "true")
+    db.collection("users").doc(req.query.id).update("registrado", "true")
         .then((data: any) => {
             return res.send('El registro se ha concretado correctamente. Bienvenido a LA COMANDA MADOURIZZI!');
         }).catch((data: any) => {

@@ -85,7 +85,7 @@ export class LoginPage implements OnInit {
                   this.router.navigate(['/mozo']);
                   break;
                 case "cocina":
-                          localStorage.setItem("perfil", 'cocina');
+                  localStorage.setItem("perfil", 'cocina');
                   this.router.navigate(['/cocina']);
                   break;
                 case "barra":
@@ -148,10 +148,10 @@ export class LoginPage implements OnInit {
         this.form.get('mail').setValue('mariano@gmail.com');
         this.form.get('password').setValue('123456');
         break;
-        case Roles.mozo:
-          this.form.get('mail').setValue('nano@gmail.com');
-          this.form.get('password').setValue('123456');
-          break;
+      case Roles.mozo:
+        this.form.get('mail').setValue('nano@gmail.com');
+        this.form.get('password').setValue('123456');
+        break;
       case Roles.barman:
         this.form.get('mail').setValue('lucila@hotmail.com');
         this.form.get('password').setValue('lulo1234');
@@ -179,7 +179,7 @@ export class LoginPage implements OnInit {
 
     }
 
-    this.onSubmitLogin() ;
+    this.onSubmitLogin();
   }
 
 
