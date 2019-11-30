@@ -24,7 +24,9 @@ export class ListadoMesasComponent implements OnInit {
 
 
 
-  constructor(private mesasService: MesasService, private pedidoServicio: PedidosService, private usuarioServ: UsersService,
+  constructor(private mesasService: MesasService, 
+    private pedidoServicio: PedidosService, 
+    private usuarioServ: UsersService,
     private toastService: ToastService) {
     this.mesas = new Array();
     this.productosPedidos = new Array();
@@ -71,8 +73,6 @@ export class ListadoMesasComponent implements OnInit {
   }
 
   entregarPedido(mesa: Mesa) {
-
-    let contadorEntregado = 0;
     let varioPedido = new Array();
     mesa.pedidos.forEach(element => {
       this.pedidoServicio.traerUnPedido(element).subscribe((e: Pedido) => {
@@ -80,6 +80,9 @@ export class ListadoMesasComponent implements OnInit {
         varioPedido.push(e);
       });
     });
+
+    
+
     setTimeout(() => {
       varioPedido.forEach(ele => {
         console.log("vario", ele);
@@ -87,12 +90,9 @@ export class ListadoMesasComponent implements OnInit {
           this.pedidoServicio.actualizarUnPedido(ele, 'entregado');
         }
         varioPedido = [];
-      }, 2000)
-
-
-
-
+      }, 4000)
     });
+    this.mesasService.actualizarMesaEmpleado(mesa, 'esperandoComida');
   }
 
   enviarProducto(producto)
@@ -105,9 +105,7 @@ export class ListadoMesasComponent implements OnInit {
 
 
   limpiarTodasLasMesas() {
-
-      let pedi = this.eliminarPedidos();
-      //  this.eliminarClientes();
+      let pedi = this.eliminarPedidos();      //  this.eliminarClientes();
 
       let mesass = this.mesasService.TraerMesas().subscribe(actions => {
         actions.map(a => {

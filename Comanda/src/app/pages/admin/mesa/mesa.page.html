@@ -1,11 +1,14 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title (click)=" volver()">
-            Mesa</ion-title>
 
-        <ion-button slot="end" color="light" routerLink="/admin">
-            <ion-icon class="icon" name="arrow-dropleft-circle"></ion-icon>
+        <ion-title> Mesa</ion-title>
+        <ion-button *ngIf="botonera" slot="end" color="light" routerLink="/admin">
+            <ion-icon name="arrow-back"> </ion-icon> Admin
         </ion-button>
+        <ion-button *ngIf="!botonera" slot="end" color="light" (click)=" volver()">
+            <ion-icon *ngIf="!botonera" name="arrow-back">Mesas</ion-icon>
+        </ion-button>
+
     </ion-toolbar>
 </ion-header>
 
@@ -30,3 +33,7 @@
 <ion-content *ngIf="listaMesa">
     <app-listado-mesas (enviar)="editarUsu($event)"></app-listado-mesas>
 </ion-content>
+
+<ion-footer *ngIf="listaMesa">
+    <ion-button color="dark" expand="full" (click)="limpiarTodasLasMesas()">limpiar todas las mesas</ion-button>
+</ion-footer>

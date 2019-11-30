@@ -1,45 +1,36 @@
 <ion-content [scrollEvents]="true">
     <ion-list style="height: 93vh; overflow-y: auto;" color="dark">
         <ion-list-header color="dark">Listado de Mesas</ion-list-header>
-        <ion-button expand="full" (click)="limpiarTodasLasMesas()">limpiar</ion-button>
-
-
         <ion-item *ngFor="let mesa of mesas">
             <ion-thumbnail slot="start">
                 <img src="{{mesa.url}}">
             </ion-thumbnail>
             <ion-label>
                 <h3>Mesa Nº {{mesa.numero}}
-                    <ion-button color="secondary" (click)=" enviarProducto(mesa)">Editar</ion-button>
                 </h3>
+                <p>
+                    <ion-badge color="danger"> {{mesa.estado}}</ion-badge>
+
+                </p>
                 <p>Comensales: {{mesa.cantidadComensales}} </p>
                 <p>cliente: {{mesa.cliente}} </p>
-                <p>
-                    <span style="font-weight: bold; ">Estado  <ion-badge color="danger"> {{mesa.estado}}</ion-badge></span>
-                    <p>
 
-                        <ion-button *ngIf="mesa.estado=='solicitada'" (click)="confirmarReserva(mesa)">Confirmar Reserva</ion-button>
-                        <ion-button *ngIf="mesa.estado=='solicitada'" (click)="cerrarMesa(mesa, 'cerrada')"> No aceptar Solicitud </ion-button>
-                        <ion-button *ngIf="mesa.estado=='reservada'" (click)="confirmarServicio(mesa)">Confirmar inicio del servicio</ion-button>
-                        <ion-button *ngIf="mesa.estado=='cuentaPedida'" (click)="emitirFactura(mesa)">Emitir Factura</ion-button>
-                        <ion-button *ngIf="mesa.estado=='pagando'" (click)="cerrarMesa(mesa, 'cerrada')"> Cerrar</ion-button>
-                        <ion-button *ngIf="mesa.estado=='cerrada'" (click)="limpiarUnaMesa(mesa)">Limpiar</ion-button>
-
-                        <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidoAConfirmar'"></app-botones-enviar-pedido-areas>
-                        <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente1'"> </app-botones-enviar-pedido-areas>
-                        <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente2'"> </app-botones-enviar-pedido-areas>
-                        <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente3'"></app-botones-enviar-pedido-areas>
-                        <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='pedidosPendiente3'"></app-botones-enviar-pedido-areas>
-                        <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='comiendo'"></app-botones-enviar-pedido-areas>
-                        <app-botones-enviar-pedido-areas [mesa]="mesa" *ngIf="mesa.estado=='esperandoComida'"></app-botones-enviar-pedido-areas>
-                        <ion-button *ngIf="mesa.estado=='pedidoListo'" (click)="entregarPedido(mesa)">Entregar Pedido</ion-button>
+                <ion-button *ngIf="mesa.estado=='solicitada'" size="small" (click)="confirmarReserva(mesa)">Confirmar Reserva </ion-button>
+                <ion-button *ngIf="mesa.estado=='solicitada'" size="small" (click)="cerrarMesa(mesa, 'cerrada')"> No aceptar Solicitud </ion-button>
+                <ion-button *ngIf="mesa.estado=='reservada'" size="small" (click)="confirmarServicio(mesa)">Confirmar inicio del servicio
+                </ion-button>
+                <ion-button *ngIf="mesa.estado=='cuentaPedida'" size="small" (click)="emitirFactura(mesa)">Emitir Factura
+                </ion-button>
+                <ion-button *ngIf="mesa.estado=='pagando'" size="small" (click)="cerrarMesa(mesa, 'cerrada')"> Cerrar</ion-button>
+                <ion-button *ngIf="mesa.estado=='cerrada'" size="small" (click)="limpiarUnaMesa(mesa)">Limpiar</ion-button>
+                <ion-button color="secondary" (click)=" enviarProducto(mesa)" *ngIf="mesa.estado=='disponible'" size="small">Editar</ion-button>
+                <app-botones-enviar-pedido-areas [mesa]="mesa"></app-botones-enviar-pedido-areas>
+                <ion-button size="small" *ngIf="mesa.estado=='pedidoListo'" size="small" (click)="entregarPedido(mesa)">Entregar Pedido
+                </ion-button>
 
 
-                    </p>
             </ion-label>
         </ion-item>
     </ion-list>
-
-
 
 </ion-content>
