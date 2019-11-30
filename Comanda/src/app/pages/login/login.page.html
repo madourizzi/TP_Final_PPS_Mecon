@@ -66,11 +66,11 @@
 
 <ion-footer color="dark">
     <ion-toolbar color="dark" class="mb-5">
-        <ion-button color="success" size="large" expand="full" type="submit" [disabled]="!form.valid"> Entrar</ion-button>
+        <ion-button color="danger" style="height: 50px;" size="large" expand="full" type="submit" [disabled]="!form.valid"> Entrar</ion-button>
     </ion-toolbar>
 
     <ion-toolbar color="dark">
-        <ion-button color="secondary" expand="full" routerLink="/register">Registrar</ion-button>
+        <ion-button color="warning" expand="full" routerLink="/register">Registrar</ion-button>
         <ion-button color="light" expand="full" (click)="entrarAnonimo()">Entrar Anonimo</ion-button>
     </ion-toolbar>
 
