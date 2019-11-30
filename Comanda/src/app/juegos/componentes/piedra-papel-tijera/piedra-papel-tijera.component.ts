@@ -113,7 +113,7 @@ export class PiedraPapelTijeraComponent {
           console.info(value);
           switch (value) {
             case null:
-              this.router.navigate(['/Juegos/PPT']);
+              this.router.navigate(['/Juegos/Tateti']);
               break;
             case true:
               this.router.navigate(['/cliente']);
