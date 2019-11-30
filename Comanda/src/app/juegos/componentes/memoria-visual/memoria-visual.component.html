@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-avatar size="small" slot="start">
+        <img src="../../../../assets/memoria_visual.png">
+      </ion-avatar> <ion-title>Juego Memoria Visual</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- Page Content -->
+
+<ion-content>
+
+<div class="container" style="padding: 10%;">
+
+   
+  <div class="row">
+    <div class="col-xs-5 mt-1">
+      <h2 [hidden]="!btnM"><button class="btn btn-success btn-lg">Memorizar en {{Tiempo}}</button></h2>
+      <h2 [hidden]="!btnNJ"><button (click)="NuevoJuego()" class="btn btn-info btn-lg">Nuevo</button></h2>
+      <h2 [hidden]="!btnVf"><button (click)="verificar()" class="btn btn-info btn-lg">Verificar</button></h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row justify-content-md-center">
+      <app-colores-lista [listadoBotones]="nuevoJuego.listadoBotones"
+        [listadoBotonesRandom]="nuevoJuego.listadoBotonesRandom" [boton]="boton" [ocultartablero]="ocultartablero"
+        [colorSelecionado]="btnColor">
+      </app-colores-lista>
+    </div>
+  </div>
+  <div class="row">
+    <app-colores-menu (seSeleccionoColor)="seleccionadoColor($event);"></app-colores-menu>
+  </div>
+
+
+</div>
+
+</ion-content>
+

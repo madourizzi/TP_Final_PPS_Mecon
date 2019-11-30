@@ -31,9 +31,19 @@ import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} 
 import { FcmService} from '../app/services/fcm.service';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { MemoriaVisualComponent } from './juegos/componentes/memoria-visual/memoria-visual.component';
+import { PiedraPapelTijeraComponent } from './juegos/componentes/piedra-papel-tijera/piedra-papel-tijera.component';
+import { TatetiComponent } from './juegos/componentes/tateti/tateti.component';
+import { JuegosComponent } from './juegos/componentes/juegos/juegos.component';
+import { ColoresListaComponent } from './juegos/componentes/colores-lista/colores-lista.component';
+import { ColoresMenuComponent } from './juegos/componentes/colores-menu/colores-menu.component';
+
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,  JuegosComponent,
+    MemoriaVisualComponent,
+    PiedraPapelTijeraComponent,
+    TatetiComponent, ColoresListaComponent,  ColoresMenuComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -44,8 +54,8 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule, AngularFireStorageModule
-  ],
+    HttpClientModule, AngularFireStorageModule,
+    ],
   providers: [
     StatusBar,  BarcodeScanner, ArchivosService, File,
     SplashScreen,

@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-avatar size="small" slot="start">
+        <img src="../../../../assets/ppt.png">
+      </ion-avatar> <ion-title>Piedra, papel o tijera?</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- Page Content -->
+
+<ion-content>
+
+<div class="container" style="padding: 10%;">
+
+   
+ 
+
+  <div class="row">
+    <div class="row justify-content-md-center">
+        <form name="juego" #myForm="ngForm"  novalidate>
+
+            <div class="form-check form-check-inline pl-5"
+                style="background: url(../../../assets/img/piedra.png) no-repeat center orangered; width: 200px; height: 200px;">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                    id="inlineRadio1" value="piedra" ngModel required>
+                <label class="form-check-label" for="inlineRadio1"></label>
+            </div>
+
+
+            <div class="form-check form-check-inline pl-5"
+                style="background: url(../../../assets/img/papel.png) no-repeat center orangered; width: 200px; height: 200px;">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                    value="papel" ngModel required>
+                <label class="form-check-label" for="inlineRadio2"></label>
+            </div>
+            <div class="form-check form-check-inline pl-4"
+                style="background: url(../../../assets/img/tijera.png) no-repeat center orangered; width: 200px; height: 200px;">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                    value="tijera" ngModel required>
+                <label class="form-check-label" for="inlineRadio3"></label>
+            </div>
+
+                <div class="pt-4"><h3>Mensaje: {{mensaje}}</h3></div>
+
+            <!-- Submit Button -->
+            <button type="Button" (click)="templateForm(myForm.value)" class="btn btn-primary btn-xl rounded-pill mt-5">Jugar</button>
+        </form><!-- Form ends -->
+    </div>
+  </div>
+  <div class="row">
+    </div>
+
+
+</div>
+
+</ion-content>
+
+
+
+
+
+

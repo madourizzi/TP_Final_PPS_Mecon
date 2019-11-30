@@ -1,0 +1,58 @@
+<!-- Page Content -->
+<div class="container mt-5">
+    <div class="col-12 mt-5  mb-5">
+        <div class="row mb-5">
+            <div class="col-10">
+
+                <div class="row">
+
+                    <div class="col-5 mt-3">
+
+                        <div class="row justify-content-md-center">
+                            <h1 class="display-4">TA TE TI</h1>
+                            <p class="lead"></p>
+                            <div style="text-align: center" class="col-12">
+
+                                <button mat-raised-button (click)="presion(0,0)"
+                                    class="casilla">{{posiciones[0][0]}}</button>
+                                <button mat-raised-button (click)="presion(0,1)"
+                                    class="casilla">{{posiciones[0][1]}}</button>
+                                <button mat-raised-button (click)="presion(0,2)"
+                                    class="casilla">{{posiciones[0][2]}}</button>
+                                <br>
+                                <button mat-raised-button (click)="presion(1,0)"
+                                    class="casilla">{{posiciones[1][0]}}</button>
+                                <button mat-raised-button (click)="presion(1,1)"
+                                    class="casilla">{{posiciones[1][1]}}</button>
+                                <button mat-raised-button (click)="presion(1,2)"
+                                    class="casilla">{{posiciones[1][2]}}</button>
+                                <br>
+                                <button mat-raised-button (click)="presion(2,0)"
+                                    class="casilla">{{posiciones[2][0]}}</button>
+                                <button mat-raised-button (click)="presion(2,1)"
+                                    class="casilla">{{posiciones[2][1]}}</button>
+                                <button mat-raised-button (click)="presion(2,2)"
+                                    class="casilla">{{posiciones[2][2]}}</button>
+                            </div>
+
+                        </div>
+
+                        <div style="text-align: center" class="col-12">
+                            <button class="btn btn-primary" (click)=" nuevoJugada()">Reiniciar Juego</button>
+                        </div>
+
+                    </div>
+
+                    <div class="col-3 img-center">
+                        <img src="../../../assets/img/tateti.png" alt="">
+                        <div *ngIf="mensaje != ''" class="btn btn-success btn-lg" style="width: 270px">{{mensaje}}</div>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
