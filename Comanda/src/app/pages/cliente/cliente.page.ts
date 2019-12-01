@@ -144,7 +144,10 @@ export class ClientePage implements OnInit {
     this.botonera = true;
   }
 
+  jugar() {
+    console.log(" aca va el juego");
 
+  }
   cerrarMesa() {
     console.log("'cuentaPedida'");
     this.mesasServ.actualizarMesaEmpleado(this.mesasServ.mesaActual, 'cuentaPedida');

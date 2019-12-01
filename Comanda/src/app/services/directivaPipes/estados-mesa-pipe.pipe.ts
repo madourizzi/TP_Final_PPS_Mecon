@@ -19,6 +19,11 @@ export class EstadosMesaPipePipe implements PipeTransform {
       case "entregado":
         return "Pedido Cerrado";
         break;
+      case "esperandoComida":
+        return "Pedido Cerrado";
+        break;
+        default:
+          return value;
 
 
     }

@@ -13,37 +13,45 @@ import { Pedido } from 'src/app/models/pedido';
 export class ConfirmarPedidoComponent implements OnInit {
 
   @Input() pedidoAConfirmar: Pedido;
-  pedidoCOnfirmado:boolean;
-  total:number;
-/*   @Input() backButton: Boolean;
+  pedidoCOnfirmado: boolean;
+  total: number;
+  acumuladorProductos = 0;
+  @Output() final :EventEmitter<any>;
 
-  @Output() volver:  EventEmitter<any> = new EventEmitter()
- */
+  /*   @Input() backButton: Boolean;
+  
+    @Output() volver:  EventEmitter<any> = new EventEmitter()
+   */
 
   constructor(private mesaServicio: MesasService, private pedidoServ: PedidosService) {
 
-    this.pedidoCOnfirmado=false;
-    this.total=0;
-  
-   }
+    this.pedidoCOnfirmado = false;
+    this.total = 0;
+    this.final= new EventEmitter();
 
-  ngOnInit() {}
-
-  eliminar(prod)
-  {
-   console.log("producto a eliminar" + prod);
-   this.pedidoAConfirmar.productos.splice(this.pedidoAConfirmar.productos.indexOf(prod), 1);
   }
 
-  confirmar()  {
-    console.log("CONFIRMAAAAAAAAAAR");
-    
-    this.pedidoAConfirmar.productos.map((e:Producto)=>{
-      this.total+= e.precio;
+  ngOnInit() {
+    this.total = 0; 
+    this.pedidoAConfirmar.productos.map((e: Producto) => {
+      this.total += e.precio;
+    })
+  }
+
+  eliminar(prod) {
+    this.total = 0;
+    console.log("producto a eliminar" + prod);
+    this.pedidoAConfirmar.productos.splice(this.pedidoAConfirmar.productos.indexOf(prod), 1);
+    this.pedidoAConfirmar.productos.map((e: Producto) => {
+      this.total += e.precio;
     });
-    this.pedidoCOnfirmado=true;
+  }
+
+  confirmar() {
+    this.pedidoCOnfirmado = true;
     this.mesaServicio.mesaActual.pedidos = this.pedidoServ.crearPedidoXArea(this.pedidoAConfirmar, this.mesaServicio.mesaActual);
-    this.mesaServicio.actualizarMesa(this.mesaServicio.mesaActual, "pedidoAConfirmar" );  
+    this.mesaServicio.actualizarMesa(this.mesaServicio.mesaActual, "pedidoAConfirmar");
+    setTimeout(()=> this.final.emit(true),6000); 
 
   }
 

@@ -44,11 +44,11 @@ export class ListadoProductosComponent implements OnInit {ç
     console.log("perfil" + this.admin);
    }
 
-  elegir(producto)
+  elegir(producto: Producto)
   {
     //toaster y sumarlo a un array
    this.toastService.confirmationToast("eligio " + producto.nombre);
-   this.acumuladorProductos++;
+   this.acumuladorProductos+= producto.precio;
    this.productosPedidos.productos.push(producto);
    console.log(this.productosPedidos);
    

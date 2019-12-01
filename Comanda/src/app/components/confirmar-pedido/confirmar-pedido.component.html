@@ -14,7 +14,7 @@
 
     <ion-footer style="max-height: 20vh">
         <ion-toolbar>
-            <ion-button color="secondary" style="width: 98%" (click)="confirmar()">Confirmar Pedido ( {{pedidoAConfirmar.productos.length}} )</ion-button>
+            <ion-button color="secondary" style="width: 98%" (click)="confirmar()">Confirmar Pedido ( <span style="font-size: 11pt; font-weight: bolder;">${{total}} )</span></ion-button>
         </ion-toolbar>
     </ion-footer>
 </ion-content>

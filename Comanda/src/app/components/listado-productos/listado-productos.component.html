@@ -9,16 +9,16 @@
             <ion-label>
                 <ion-badge appColoresEstadoMesa [estado]="producto.tipo " style="font-size:9pt; padding: 2px;"> {{producto.tipo | areasPipe}}</ion-badge>
                 <h3>{{producto.nombre}}</h3>
-                <p>{{producto.descripcion}} </p>
-                <p>$ {{producto.precio}} </p>
+                <p style="font-size: 9pt;">{{producto.descripcion}} </p>
+
             </ion-label>
-            <ion-button color="danger" (click)="elegir(producto)" *ngIf="admin=='cliente'">Elegir</ion-button>
+            <ion-button color="danger" (click)="elegir(producto)" *ngIf="admin=='cliente'"><span style="font-size: 11pt; font-weight: bolder;">$ {{producto.precio}} </span></ion-button>
             <ion-button color="secondary" (click)=" enviarProducto(producto)" *ngIf="admin=='admin'">Editar</ion-button>
         </ion-item>
     </ion-list>
     <ion-footer style="height: 10vh" *ngIf="admin=='cliente'">
         <ion-toolbar>
-            <ion-button color="danger" style="width: 98%" (click)="enviarPedido()">Terminar Pedido ( {{acumuladorProductos}} )</ion-button>
+            <ion-button color="danger" style="width: 98%" (click)="enviarPedido()">Terminar Pedido ( <span style="font-size: 11pt; font-weight: bolder;">${{acumuladorProductos}} )</span></ion-button>
         </ion-toolbar>
     </ion-footer>
 </ion-content>
