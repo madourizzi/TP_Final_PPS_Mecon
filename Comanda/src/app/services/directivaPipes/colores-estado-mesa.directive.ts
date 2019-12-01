@@ -13,7 +13,6 @@ export class ColoresEstadoMesaDirective {
 
   cambiarColor() {
 
-    setTimeout(()=> {
       console.log("this.estado", this.estado);    
       console.log("this.el", this.el);    
 
@@ -46,7 +45,7 @@ export class ColoresEstadoMesaDirective {
             this.el.nativeElement.style ="--background:  rgb(43, 224, 224);";
         break;
       }
-    },300)}
+    }
 
 
   private highlight(color: string) {

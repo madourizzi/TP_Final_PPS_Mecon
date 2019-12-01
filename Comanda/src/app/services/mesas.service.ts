@@ -68,6 +68,8 @@ export class MesasService {
 
   limpiarMesa(mesaABlanquear: Mesa) {
     mesaABlanquear.cliente = "sin asignar";
+    mesaABlanquear.propina = 0;
+    mesaABlanquear.descuento = 0;
     mesaABlanquear.pedidos = new Array();
     mesaABlanquear.estado = "disponible";
     return this.objFirebase.collection("mesa").doc(mesaABlanquear.uid).set(JSON.parse(JSON.stringify(mesaABlanquear)), { merge: true });
@@ -78,9 +80,9 @@ export class MesasService {
    * @param comensales 
    */
   async leerQrPedirMesa() {
- await this.qrService. abrirScanner().then(async QRdata => {
-      if ("madourizzi@solicitudDeMesa" == QRdata) {        
-        this.router.navigate(['/pedir-mesa-qr']);      
+    await this.qrService.abrirScanner().then(async QRdata => {
+      if ("madourizzi@solicitudDeMesa" == QRdata) {
+        this.router.navigate(['/pedir-mesa-qr']);
       }
       else {
         const toast = await this.toastCtrl.create({
@@ -90,16 +92,42 @@ export class MesasService {
         });
         toast.present();
         this.spinner.hide();
-      }     
-    }).catch()   
-    {         
+      }
+    }).catch()
+    {
 
     };
+  }
+  /**
+   * 
+   * @param comensales 
+   */
+  async propinaQr() {
 
- 
+  return this.qrService.abrirScanner().then(async QRdata => {
+      switch (QRdata) {
+        case 'propina0':
+         return 0;
+        case 'propina5':
+          return 5;
+        case 'propina10':
+          return 10;
+        case 'propina15':
+          return 15;
+        case 'propina20':
+          return 20;
+          default:
+            return this.mesaActual.propina;
+
+
+      }
 
 
 
+    }).catch()
+    {
+
+    };
   }
 
 

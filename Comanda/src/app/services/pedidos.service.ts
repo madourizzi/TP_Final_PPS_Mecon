@@ -71,7 +71,7 @@ export class PedidosService {
   }
 
   traerTodosPedidos() {
-    return this.db.collection('pedidos').snapshotChanges();
+    return this.db.collection('pedidos',ref => ref.orderBy('estado','asc')).snapshotChanges();
   }
 
   traerUnPedido(id) {

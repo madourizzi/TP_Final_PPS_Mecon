@@ -43,6 +43,22 @@
 
 
         <tr class="total">
+            <td>
+                Propina: {{this.mesa.propina}}
+            </td>
+            <td>
+                {{this.total * (this.mesa.propina / 100)}}
+            </td>
+        </tr>
+        <tr class="total">
+            <td>
+                Descuento: {{this.mesa.descuento}}
+            </td>
+            <td>
+                {{ this.total * (this.mesa.descuento / 100)}}
+            </td>
+        </tr>
+        <tr class="total">
             <td></td>
 
             <td>
@@ -51,14 +67,11 @@
         </tr>
     </table>
 
-    <ion-button color="primary" expand="full">
+    <ion-button color="primary" expand="full" (click)="propina()" *ngIf="this.mesa.estado=='pagando'">
         Escanear Propina
     </ion-button>
-    <ion-button color="danger" expand="full">
+    <ion-button color="danger" expand="full" (click)="enviarPago();" *ngIf="this.mesa.estado=='pagando'">
         Pagar
-    </ion-button>
-    <ion-button color="warning" expand="full">
-        Programa tu Proxima Reserva
     </ion-button>
 
 </div>

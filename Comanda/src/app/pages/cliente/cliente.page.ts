@@ -31,6 +31,8 @@ export class ClientePage implements OnInit {
   esperandoConfirmacion: boolean;
   usuarioActual: User;
 
+  cuenta;
+
   constructor(
     private spinner: SpinnerService, private router: Router,
     private qr: BarcodeScanner,
@@ -46,6 +48,7 @@ export class ClientePage implements OnInit {
 
     this.title = "Bienvenido Cliente: ";
     this.usuarioActual = new User();
+    this.cuenta = false;
 
   }
 
@@ -54,8 +57,6 @@ export class ClientePage implements OnInit {
     this.botonera = true;
     this.menu = false;
     this.confirmar = false;
-
-
 
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
@@ -136,12 +137,14 @@ export class ClientePage implements OnInit {
   ingresarPedido() {
     this.menu = true;
     this.botonera = false;
+    this.cuenta = false;
   }
 
 
   volver($event) {
     this.menu = false;
     this.botonera = true;
+    this.cuenta = false;
   }
 
   jugar() {
@@ -153,12 +156,31 @@ export class ClientePage implements OnInit {
     this.mesasServ.actualizarMesaEmpleado(this.mesasServ.mesaActual, 'cuentaPedida');
   }
 
+  verCuenta() {
+    if (!this.cuenta) {
+      this.cuenta = true;
+      this.menu = false;
+      this.botonera = true;
+ 
+    } else {
+      this.cuenta = false;
+      this.menu = false;
+      this.botonera = true;
+
+    }
+
+
+  }
+
+
+
   recibirPedido($event) {
     this.pedido = $event;
     console.log("emit cliente pedido", this.pedido);
     this.confirmar = true;
     this.menu = false;
     this.botonera = false;
+    this.cuenta = false;
   }
 
   consultarPedidos() {
