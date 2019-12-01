@@ -42,23 +42,21 @@
 
                         <ion-button color="dark" (click)=" jugar()" *ngIf="mesasServ.mesaActual.estado=='pedidoAConfirmar'" class="btnSecundario ">Jugar</ion-button>
                         <ion-button color="dark" (click)=" jugar()" *ngIf="mesasServ.mesaActual.estado=='cuentaPedida'" class="btnSecundario ">Jugar</ion-button>
+                        <ion-button color="dark" (click)=" jugar()" *ngIf="mesasServ.mesaActual.estado=='solicitada'" class="btnSecundario ">Jugar</ion-button>
+                        <ion-button color="dark" (click)=" jugar()" *ngIf="mesasServ.mesaActual.estado=='reservada'" class="btnSecundario ">Jugar</ion-button>
 
                         <label *ngIf="mesasServ.mesaActual.estado =='inicioServicio'" style="font-family: 'Raleway', sans-serif; font-size: 20pt; font-weight: 800;">Menu</label>
-                        <label *ngIf="mesasServ.mesaActual.estado =='solicitada'" style="font-family: 'Raleway', sans-serif; font-size: 20pt; font-weight: 800;">Aguarde
-                            Confirmacion para
-                            Pedir</label>
+
+                        <p *ngIf="mesasServ.mesaActual.estado =='solicitada'"> <label style="font-family: 'Raleway', sans-serif; font-size: 12pt; font-weight: 800;">
+                            Aguarde Confirmacion para Pedir</label>
+                        </p>
                     </ion-col>
 
                 </ion-row>
                 <!-- ticket -->
-                <ion-row style="height:100%;" *ngIf="mesasServ.mesaActual.estado =='pagando'">
+                <ion-row style="height:90%;" *ngIf="mesasServ.mesaActual.estado =='pagando'">
                     <ion-col style="background-color:rgb(255, 255, 255); color: rgb(24, 22, 20); ">
                         <app-detalle-cuenta></app-detalle-cuenta>
-                    </ion-col>
-                </ion-row>
-                <ion-row style="height:10%; " *ngIf="mesasServ.mesaActual.estado =='pagando'">
-                    <ion-col class="col-12 " style=" height:100%; background-color: rgb(13, 87, 71); color: seashell; " (click)=" hacerEncuesta() ">
-                        Encuestas
                     </ion-col>
                 </ion-row>
                 <ion-row style="height:10%; " *ngIf="mesasServ.mesaActual.estado =='cuentaPedida'">
