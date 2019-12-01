@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -31,9 +31,12 @@ import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} 
 import { FcmService} from '../app/services/fcm.service';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { EstadosMesaPipePipe } from './services/directivaPipes/estados-mesa-pipe.pipe';
+import { ColoresEstadoMesaDirective } from './services/directivaPipes/colores-estado-mesa.directive';
+import { AreasPipePipe } from './services/directivaPipes/areas-pipe.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, EstadosMesaPipePipe],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
     AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule, AngularFireStorageModule
+    HttpClientModule, AngularFireStorageModule,
   ],
   providers: [
     StatusBar,  BarcodeScanner, ArchivosService, File,
@@ -68,6 +71,9 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
       multi: true
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+    ]
 })
 export class AppModule {}

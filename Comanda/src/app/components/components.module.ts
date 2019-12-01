@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
@@ -16,22 +16,26 @@ import { ListadoMesasComponent } from './listado-mesas/listado-mesas.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 import { DetalleCuentaComponent } from './detalle-cuenta/detalle-cuenta.component';
 import { BotonesEnviarPedidoAreasComponent } from './botones-enviar-pedido-areas/botones-enviar-pedido-areas.component';
+import { ColoresEstadoMesaDirective } from '../services/directivaPipes/colores-estado-mesa.directive';
+import { AreasPipePipe } from '../services/directivaPipes/areas-pipe.pipe';
+
 
 
 @NgModule({
   declarations: [
-    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent,
+    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent, ColoresEstadoMesaDirective, AreasPipePipe,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent, AltaMesaComponent
   ],
   exports: [ 
-    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent,
+    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent,  AreasPipePipe,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent , AltaMesaComponent
   ],
   imports: [
-    CommonModule,
+    CommonModule, 
     IonicModule, ReactiveFormsModule
-  ]
+  ],
+ 
 })
 export class ComponentsModule { }

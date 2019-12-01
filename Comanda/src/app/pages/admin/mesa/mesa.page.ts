@@ -72,18 +72,18 @@ export class MesaPage implements OnInit {
   
   limpiarTodasLasMesas() {
 
-   // let pedi = this.eliminarPedidos();
     //this.eliminarClientes();
-
+    
     let mesass = this.mesasService.TraerMesas().subscribe(actions => {
       actions.map(a => {
         const data = a.payload.doc.data() as Mesa;
         this.mesasService.limpiarMesa(data);
         console.log('mesas');
-
+        
       });
     });   
-
+    let pedi = this.eliminarPedidos();
+    
 }
 
 
@@ -97,7 +97,7 @@ eliminarPedidos() {
   return this.pedidoServicio.traerTodosPedidos().subscribe(actions => {
     actions.map(a => {
       const data = a.payload.doc.data() as Pedido;
-      console.log('pedido');
+      console.log('pedido', data);
       this.pedidoServicio.eliminarPedido(data.uid);
     });
   });

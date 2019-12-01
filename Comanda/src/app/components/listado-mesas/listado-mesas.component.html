@@ -8,10 +8,10 @@
             <ion-label>
                 <h3>Mesa Nº {{mesa.numero}}
                 </h3>
-                <p>
-                    <ion-badge color="danger"> {{mesa.estado}}</ion-badge>
-
+                <p style="margin-top: 5px; margin-bottom: 5px;">
+                    <span appColoresEstadoMesa [estado]="mesa.estado" style="font-size:9pt; padding: 2px;"> {{mesa.estado}}</span>
                 </p>
+
                 <p>Comensales: {{mesa.cantidadComensales}} </p>
                 <p>cliente: {{mesa.cliente}} </p>
 
