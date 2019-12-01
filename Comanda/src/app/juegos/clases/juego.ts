@@ -4,6 +4,8 @@ export abstract class Juego {
   public nombre = 'Sin Nombre';
   public jugador: Jugador;
   public gano = false;
+  
+
 
   constructor(nombre?: string, gano?: boolean,jugador?:Jugador) {
     if (nombre)

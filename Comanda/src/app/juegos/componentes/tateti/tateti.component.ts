@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Tateti } from '../../clases/tateti';
 import { AuthService } from 'src/app/services/auth.service';
+import { JuegosService } from '../../services/juegos.service';
+import swal from 'sweetalert';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,10 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./tateti.component.css']
 })
 export class TatetiComponent implements OnInit {
- 
-  posiciones = [['-','-','-'],
-              ['-','-','-'],
-              ['-','-','-']];
+
+  posiciones = [['-', '-', '-'],
+  ['-', '-', '-'],
+  ['-', '-', '-']];
   tablero;
   ganoU: boolean = false;
   ganoUI: boolean = false;
@@ -23,26 +26,26 @@ export class TatetiComponent implements OnInit {
   nuevoJuego: Tateti;
   mensaje: string = "";
 
-  constructor(private authService: AuthService) {
+  constructor(public juegosServicio: JuegosService, private authService: AuthService, private router: Router) {
     this.nuevoJuego = new Tateti();
   }
 
   ngOnInit() {
-    
+
   }
 
   nuevoJugada() {
-    this.mensaje="";
- 
+    this.mensaje = "";
+
     this.nuevoJuego.jugador.uid = this.authService.getCurrentUserId();
     this.nuevoJuego.restart();
     this.ganoU = false;
     this.ganoUI = false;
     this.empate = false;
     this.tablero = this.nuevoJuego.tablero;
-    this.  posiciones = [['-','-','-'],
-    ['-','-','-'],
-    ['-','-','-']];
+    this.posiciones = [['-', '-', '-'],
+    ['-', '-', '-'],
+    ['-', '-', '-']];
   }
 
   presion(number1, number2) {
@@ -50,14 +53,14 @@ export class TatetiComponent implements OnInit {
       if (this.ganoU != true && this.empate != true && this.ganoUI != true && this.enUso == false) {
         this.enUso = true;
         this.nuevoJuego.userMoves(number1, number2);
-        this.tablero = this.nuevoJuego.tablero;     
-        this.posiciones[number1][number2] = "x";      
+        this.tablero = this.nuevoJuego.tablero;
+        this.posiciones[number1][number2] = "x";
         this.verificoGanador();
 
         setTimeout(() => {
-          this.tablero = this.nuevoJuego.tablero;       
+          this.tablero = this.nuevoJuego.tablero;
           this.verificarTildar();
-          this.enUso = false;      
+          this.enUso = false;
 
         }, 1500);
 
@@ -79,26 +82,49 @@ export class TatetiComponent implements OnInit {
   }
 
   verificoGanador() {
-   
+
+
     let retorno = this.nuevoJuego.verificarGanador();
     switch (retorno) {
       case -1:
         break;
       case 1:
+        this.juegosServicio.jugadorActual.jugadas++;
         this.ganoUI = true;
-       this.mensaje="Te gano la máquina";
+        this.mensaje = "No ganaste, llevas ganado " + this.juegosServicio.jugadorActual.descuento.toString() + " de descuento";
+        if (this.juegosServicio.jugadorActual.jugadas < 3) {
+          this.mensaje = this.mensaje + " , obtén más beneficios en el próximo juego";
+          this.mensajePop();
+
+        }
+        else {
+
+          swal(this.mensaje, "Click para teminar", "success");
+          this.router.navigate(['/cliente']);
+
+        }
+
+        this.juegosServicio.registrar();
 
         break;
       case 2:
+        this.juegosServicio.jugadorActual.jugadas++;
         this.ganoU = true;
-        this.mensaje="Felicitaciones! Le ganaste a la máquina";
-
+        this.juegosServicio.jugadorActual.descuento = this.juegosServicio.jugadorActual.descuento + 5;
+        this.mensaje = "Ganaste, tienes " + this.juegosServicio.jugadorActual.descuento.toString() + "% de descuento";
+        swal(this.mensaje, "Click para teminar", "success");
+        this.router.navigate(['/cliente']);
+        this.juegosServicio.registrar();
         break;
       case 0:
         this.empate = true;
-        this.mensaje="empataron";
+        this.mensaje = "empataron, este resultado no suma descuentos pero te permite volver a Jugar";
+        this.mensajePop();
         break;
     }
+
+
+
 
   }
 
@@ -106,6 +132,38 @@ export class TatetiComponent implements OnInit {
 
 
 
+
+
+
+
+
+
+
+  mensajePop() {
+
+    let eleccion = {
+      buttons: ["Seguir Jugando", "Terminar"],
+    }
+    swal(this.mensaje, eleccion)
+      .then((value) => {
+
+        console.info(value);
+        switch (value) {
+          case null:
+            this.router.navigate(['/Juegos/Tateti']);
+            break;
+          case true:
+            this.router.navigate(['/cliente']);
+            break;
+
+        }
+      });
+
+
+
+
+
+  }
 
 
 

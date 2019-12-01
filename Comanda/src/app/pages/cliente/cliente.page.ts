@@ -11,6 +11,7 @@ import { ToastController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Pedido } from 'src/app/models/pedido';
+import { JuegosService } from 'src/app/juegos/services/juegos.service';
 
 @Component({
   selector: 'app-cliente',
@@ -27,6 +28,7 @@ export class ClientePage implements OnInit {
   pedirMesa: boolean;
   esperandoConfirmacion: boolean;
   usuarioActual: User;
+  descuento: number = -1;
 
   constructor(
     private spinner: SpinnerService, private router: Router,
@@ -38,7 +40,8 @@ export class ClientePage implements OnInit {
     private alertController: AlertController,
     public fcm: FirebaseX,
     public platform: Platform,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private juegoServicio: JuegosService) {
     this.title = "Bienvenido Cliente: ";
 
 
@@ -174,5 +177,8 @@ export class ClientePage implements OnInit {
   }
 
 
-
+//prueba
+aplicarDescuento(){
+  this.descuento = this.juegoServicio.aplicarDescuento();
+}
 }

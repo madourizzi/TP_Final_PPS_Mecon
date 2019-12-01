@@ -21,6 +21,22 @@
                 <img class="icon " src="../../../assets/botoneraadmin-10.png " alt="" style="max-width: 70%">
             </ion-col>
         </ion-row>
+
+        <ion-row style=" height:25%; ">
+                <ion-col class="col-12 " style="height:98%; background-color: rgb(252, 252, 252); color: seashell; border-radius: 15px; "  [routerLink]="['/Juegos/MemoriaVisual']" >
+                    <img class="icon " src="../../../assets/botoneraadmin-juego.png " alt="" style="max-width: 70%">
+                </ion-col>
+        </ion-row>
+        <ion-row style=" height:25%; ">
+                <ion-col class="col-12 " style="height:98%; background-color: rgb(252, 252, 252); color: seashell; border-radius: 15px; "  >
+                   <button (click)="aplicarDescuento()">prueba aplicar descuento-> {{descuento}}</button>
+                </ion-col>
+        </ion-row>
+
+
+
+
+
         <ion-row style=" height:25%; ">
             <ion-col class="col-12 " style="height:98%; background-color: rgb(231, 5, 231); color: seashell; border-radius: 15px; " (click)=" hacerEncuesta() ">
                 <img class="icon " src="../../../assets/botoneraadmin-10.png " alt="" style="max-width: 70%">

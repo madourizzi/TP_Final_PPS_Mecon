@@ -31,14 +31,18 @@ export class MemoriaVisualComponent implements OnInit {
   btnM: boolean = false;
   mensaje: string;
   btnMensje: boolean;
-  descuento: number = 0
-  jugadas: number = 0;
+ 
 
-  constructor(public juegosServicio: JuegosService, private authService: AuthService, private router: Router) {
+  constructor(public juegosServicio: JuegosService, private router: Router) {
     this.ocultartablero = true;
     this.Tiempo = 3;
     this.nuevoJuego = new JuegoMemoria();
     console.info("Inicio memoria");
+    this.juegosServicio.iniciarJuegos();
+
+    
+   
+
   }
 
   seleccionado($event) {
@@ -68,7 +72,12 @@ export class MemoriaVisualComponent implements OnInit {
 
  
   NuevoJuego() {
-    this.nuevoJuego = new JuegoMemoria();
+    if( this.juegosServicio.jugadorActual.jugadas >= 3){
+      swal("Ha superado las juagadas permitidas por pedido", "Click para teminar", "success");
+      this.router.navigate(['/cliente']);
+
+    } else{
+      this.nuevoJuego = new JuegoMemoria();
     //this.nuevoJuego.jugador.uid = this.authService.getCurrentUserId();
     this.nuevoJuego.mezcladorColores();
 
@@ -90,15 +99,18 @@ export class MemoriaVisualComponent implements OnInit {
       }
     }, 900);
 
+
+    }
+    
   }
   verificar() {
-    this.jugadas++;    
+    this.juegosServicio.jugadorActual.jugadas++;    
     console.log("Gano", this.nuevoJuego.verificar());
     this.btnMensje = true;
     if (this.nuevoJuego.verificar()) {
-      this.descuento = this.descuento + 5;
-      this.mensaje = "Ganaste, tienes " + this.descuento.toString() + "% de descuento";
-      if (this.jugadas < 3) {
+      this.juegosServicio.jugadorActual.descuento =  this.juegosServicio.jugadorActual.descuento + 5;
+      this.mensaje = "Ganaste, tienes " +  this.juegosServicio.jugadorActual.descuento.toString() + "% de descuento";
+      if (this.juegosServicio.jugadorActual.jugadas < 3) {
         this.mensaje = this.mensaje + " , obtén más beneficios en el próximo juego";
         this.mensajePop();
       }
@@ -108,8 +120,8 @@ export class MemoriaVisualComponent implements OnInit {
       }
 
     } else {
-      this.mensaje = "No ganaste, llevas ganado " + this.descuento.toString() + " de descuento";
-      if (this.jugadas < 3) {
+      this.mensaje = "No ganaste, llevas ganado " +  this.juegosServicio.jugadorActual.descuento.toString() + " de descuento";
+      if (this.juegosServicio.jugadorActual.jugadas < 3) {
         this.mensaje = this.mensaje + " , obtén más beneficios en el próximo juego";
         this.mensajePop();
       }
@@ -128,8 +140,8 @@ export class MemoriaVisualComponent implements OnInit {
     this.enviarJuego.emit(<Juego>this.nuevoJuego);
     //envio el juego
 
-    this.juegosServicio.registrar(<Juego>this.nuevoJuego);
-    console.info(this.juegosServicio.buscartodas());
+    this.juegosServicio.registrar();
+  
   }
 
 

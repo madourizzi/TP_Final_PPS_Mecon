@@ -17,8 +17,7 @@ export class PiedraPapelTijeraComponent {
   nuevoJuego: JuegoPiedraPapelTijera;
   mensaje: string;
   value: string = "nodef";
-  jugadas: number = 0;
-  descuento: number = 0;
+ 
   constructor(public juegosServicio: JuegosService, private authService: AuthService, private router: Router) {
 
     this.nuevoJuego = new JuegoPiedraPapelTijera();
@@ -35,12 +34,12 @@ export class PiedraPapelTijeraComponent {
       this.nuevoJuego = new JuegoPiedraPapelTijera();
       this.nuevoJuego.valorIngresado = this.value;
       this.nuevoJuego.generarnumero();
-      this.jugadas++;
+      this.juegosServicio.jugadorActual.jugadas++;
 
       if (this.nuevoJuego.verificar()) {
-        this.descuento = this.descuento + 5;
-        this.mensaje = "Ganaste, tienes " + this.descuento.toString() + "% de descuento";
-        if (this.jugadas < 3) {
+        this.juegosServicio.jugadorActual.descuento = this.juegosServicio.jugadorActual.descuento + 5;
+        this.mensaje = "Ganaste, tienes " + this.juegosServicio.jugadorActual.descuento.toString() + "% de descuento";
+        if (this.juegosServicio.jugadorActual.jugadas < 3) {
           this.mensaje = this.mensaje + " , obtén más beneficios en el próximo juego";
           this.mensajePop();
           this.value = "nodef";
@@ -62,8 +61,8 @@ export class PiedraPapelTijeraComponent {
         }
 
       } else {
-        this.mensaje = "No ganaste, llevas ganado " + this.descuento.toString() + " de descuento";
-        if (this.jugadas < 3) {
+        this.mensaje = "No ganaste, llevas ganado " + this.juegosServicio.jugadorActual.descuento.toString() + " de descuento";
+        if (this.juegosServicio.jugadorActual.jugadas < 3) {
           this.mensaje = this.mensaje + " , obtén más beneficios en el próximo juego";
           this.mensajePop();
           this.value = "nodef";
@@ -83,10 +82,8 @@ export class PiedraPapelTijeraComponent {
         })
       }
       }
-      this.juegosServicio.registrar(<Juego>this.nuevoJuego);
-      console.info(this.juegosServicio.buscartodas());
-
-
+      //lo suba a firebase
+      this.juegosServicio.registrar();
     }
 
   }
