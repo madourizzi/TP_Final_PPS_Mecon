@@ -1,6 +1,9 @@
 <ion-list style="height: 75vh; overflow-y: auto;" color="dark">
     <ion-card *ngFor="let pedido of pedidos">
-        <h5><span class="badge badge-primary" *ngIf="perfil=='admin'">Area: {{pedido.area}} </span> Pedido:<strong> {{pedido.estado}} </strong>
+        <h5>
+            <span>Area :   <ion-badge *ngIf="perfil=='admin'" appColoresEstadoMesa [estado]="pedido.area" style="font-size:9pt; padding: 2px;"> {{pedido.area}}</ion-badge>
+            
+             </span> Pedido:<strong> {{pedido.estado}} </strong>
         </h5>
         <hr>
         <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 15)"> 15 min</button>

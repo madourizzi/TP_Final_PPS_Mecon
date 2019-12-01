@@ -20,21 +20,30 @@ export class ColoresEstadoMesaDirective {
       switch(this.estado)
       {
         case 'comida':
+        case 'cocina':
         case 'enPreparacion':
-          this.el.nativeElement.className = "badge badge-pill badge-warning";
+          this.el.nativeElement.style ="--background: orange;"
+       //   this.el.nativeElement.className = "badge badge-pill badge-warning";
+
           break;
           case 'postre':
           case 'pagando':
           case 'esperandoComida':
-            this.el.nativeElement.className  = "badge badge-pill badge-primary";
+            this.el.nativeElement.style ="--background: green;";
         break;
         case 'pagando':
         case 'pedidoListo':
         case 'cerrada':
-            this.el.nativeElement.className  = "badge badge-pill badge-danger";
+        case 'barra':
+        case 'solicitada':
+            this.el.nativeElement.style ="--background: red;";
         break;
         case 'disponible':
-            this.el.nativeElement.className  = "badge badge-pill badge-dark";
+        case 'cerveza':
+            this.el.nativeElement.style ="--background: black;";
+        break;
+        default:
+            this.el.nativeElement.style ="--background:  rgb(43, 224, 224);";
         break;
       }
     },300)}
