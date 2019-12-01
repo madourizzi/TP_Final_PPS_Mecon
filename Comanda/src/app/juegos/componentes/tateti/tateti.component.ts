@@ -119,6 +119,7 @@ export class TatetiComponent implements OnInit {
       case 0:
         this.empate = true;
         this.mensaje = "empataron, este resultado no suma descuentos pero te permite volver a Jugar";
+        this.nuevoJuego = new Tateti();        
         this.mensajePop();
         break;
     }
