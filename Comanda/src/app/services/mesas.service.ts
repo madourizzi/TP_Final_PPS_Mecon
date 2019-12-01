@@ -8,6 +8,8 @@ import { LectorQrService } from './lector-qr.service';
 import { ToastController } from '@ionic/angular';
 import { UsersService } from './users.service';
 import { getRandomColor } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { SpinnerService } from './spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +28,11 @@ export class MesasService {
   mesaActual: Mesa = null;
 
   constructor(
-    public http: HttpClient,
+    public http: HttpClient, private router: Router,
     private objFirebase: AngularFirestore,
     private qrService: LectorQrService,
     public toastCtrl: ToastController,
-    public usuarioServ: UsersService,
+    public usuarioServ: UsersService, private spinner: SpinnerService,
   ) {
 
     this.mesas = new Array();
@@ -75,67 +77,30 @@ export class MesasService {
    * 
    * @param comensales 
    */
-  async asignarMesaDisponible(comensales) {
-
-    const mesasDisponible = this.MesasDisponibles();
-    console.log("mesas disponibles ", mesasDisponible);
-
-
-    /*     return this.qrService.readQR().then(async QRdata => {
-          let flagQR = false;
-          if ("madourizzi@solicitudDeMesa" == QRdata.text) {
-            flagQR = true;
-            console.log("entro bien el qr pero algo se rompio"); */
-    let flag2 = false;
-    return mesasDisponible.forEach(async (mesa: Mesa) => { //sacar este return cuando se saca el comentando para el qr
-
-      if (flag2 == false) {
-        console.log("mf", mesa);
-
-        if (mesa.estado == "disponible" && mesa.cantidadComensales >= comensales) {
-          flag2 = true;
-          console.log("disponible", mesa);
-          this.mesaActual = mesa;
-          this.actualizarMesa(this.mesaActual, "solicitada");
-          const toast = await this.toastCtrl.create({
-            message: "Será atendido por un Mozo en Breve",
-            duration: 3000,
-            position: 'top',
-            color: "warning"
-            //middle || top
-          });
-          toast.present();
-          return true;
-        }
+  async leerQrPedirMesa() {
+ await this.qrService. abrirScanner().then(async QRdata => {
+      if ("madourizzi@solicitudDeMesa" == QRdata) {        
+        this.router.navigate(['/pedir-mesa-qr']);      
       }
+      else {
+        const toast = await this.toastCtrl.create({
+          message: "Codigo QR incorrecto",
+          duration: 3000,
+          position: 'middle' //middle || top
+        });
+        toast.present();
+        this.spinner.hide();
+      }     
+    }).catch()   
+    {         
 
-    });
-    if (!flag2) {
-      const toast = await this.toastCtrl.create({
-        message: "No hay mesa disponible",
-        duration: 3000,
-        position: 'middle' //middle || top
-      });
-      toast.present();
-      return false;
-    }
+    };
+
+ 
+
+
+
   }
-
-  /* 
-        if (!flagQR) {
-          const toast = await this.toastCtrl.create({
-            message: "Codigo QR incorrecto",
-            duration: 3000,
-            position: 'middle' //middle || top
-          });
-          toast.present();
-          return false;
-        }
-      }).catch(err => {
-        return false;
-        console.log('Error', err);
-      });
-    } */
 
 
 
@@ -143,15 +108,12 @@ export class MesasService {
    * 
    * @param comensales 
    */
-   traerTodasDisponible(comensales){
+  traerTodasDisponible(comensales) {
 
     const mesasDisponible = this.MesasDisponibles();
-    let mesasReturn : Array<Mesa> = new Array<Mesa>()
-
-    mesasDisponible.forEach(async (mesa: Mesa) => { 
-
+    let mesasReturn: Array<Mesa> = new Array<Mesa>()
+    mesasDisponible.forEach(async (mesa: Mesa) => {
       console.log("entra a mesas disponibole foreach");
-      
 
       if (mesa.estado === 'disponible' && mesa.cantidadComensales >= comensales && (comensales + 5) >= mesa.cantidadComensales) {
 
@@ -168,15 +130,16 @@ export class MesasService {
     });
 
     if (mesasReturn.length == 0) {
-     /*  const toast = await this.toastCtrl.create({
-        message: 'No hay mesas disponibles',
-        duration: 1000,
-        position: 'top',
-        color: "warning"
-        //middle || top
-      });
-      toast.present();
-      */
+      alert('no hay mesas disponible, no anda toaster');
+      /*  const toast = await this.toastCtrl.create({
+         message: 'No hay mesas disponibles',
+         duration: 1000,
+         position: 'top',
+         color: "warning"
+         //middle || top
+       });
+       toast.present(); */
+
     }
 
     return mesasReturn;
@@ -185,7 +148,7 @@ export class MesasService {
   }
 
 
-  
+
   /**
    * 
    * @param comensales 
@@ -193,7 +156,7 @@ export class MesasService {
   solicitarMesa(mesa: Mesa) {
     this.mesaActual = mesa;
     return this.actualizarMesaNueva(this.mesaActual, 'solicitada');
-  
+
   }
 
   actualizarMesaNueva(mesa: Mesa, estado) {
@@ -249,8 +212,7 @@ export class MesasService {
 
   async entregarPedido(mesa: Mesa) {
 
-    switch (mesa.estado) 
-    {
+    switch (mesa.estado) {
       case 'pedidoListo':
         this.actualizarMesaMozo(mesa, localStorage.getItem('pedidosP'));
         break;
@@ -259,123 +221,122 @@ export class MesasService {
 
 
 
-    actualizarMesaMozo(mesa: Mesa, estado) {
-      mesa.estado = estado;
-      return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
-    }
+  actualizarMesaMozo(mesa: Mesa, estado) {
+    mesa.estado = estado;
+    return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
+  }
 
 
-    actualizarMesaEmpleado(mesa: Mesa, estado) {
-      mesa.estado = estado;
-      return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
-    }
+  actualizarMesaEmpleado(mesa: Mesa, estado) {
+    mesa.estado = estado;
+    return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
+  }
 
 
-    traerMesaPorUsuarioMail(mail) {
-      return this.objFirebase.collection("mesa").snapshotChanges().subscribe(e => {
-        e.map(a => {
-          const data = a.payload.doc.data() as Mesa;
-         if (data.cliente == mail) {
-            this.mesaActual = data;
-            //localStorage.setItem('perfil', this.usuarioActual.perfil)
-            console.info(" traerMesaPorUsuarioMail(mail)", this.mesaActual);
-          }
+  traerMesaPorUsuarioMail(mail) {
+    return this.objFirebase.collection("mesa").snapshotChanges().subscribe(e => {
+      e.map(a => {
+        const data = a.payload.doc.data() as Mesa;
+        if (data.cliente == mail) {
+          this.mesaActual = data;
+          //localStorage.setItem('perfil', this.usuarioActual.perfil)
+          console.info(" traerMesaPorUsuarioMail(mail)", this.mesaActual);
+        }
 
-        });
+      });
 
-      })
-    }
+    })
+  }
 
 
 
-    EstadoPedido() {
+  EstadoPedido() {
+    return this.qrService.readQR().then(async QRdata => {
+      console.log(QRdata.text);
+      let flag = false;
+      this.mesas.forEach(async (mesa: Mesa) => {
 
-      return this.qrService.readQR().then(async QRdata => {
-        console.log(QRdata.text);
-        let flag = false;
-        this.mesas.forEach(async (mesa: Mesa) => {
-
-          if (mesa.codigoQr == QRdata.text) {
-            this.mesaActual = mesa;
-            flag = true;
-            const toast = await this.toastCtrl.create({
-              message: "La mesa nro: " + mesa.numero + " se encuentra " + mesa.estado + ".",
-              duration: 3000,
-              position: 'middle' //middle || top
-            });
-            toast.present();
-          }
-
-        });
-
-        if (!flag) {
+        if (mesa.codigoQr == QRdata.text) {
+          this.mesaActual = mesa;
+          flag = true;
           const toast = await this.toastCtrl.create({
-            message: "Codigo QR incorrecto",
+            message: "La mesa nro: " + mesa.numero + " se encuentra " + mesa.estado + ".",
             duration: 3000,
             position: 'middle' //middle || top
           });
           toast.present();
         }
 
-      }).catch(err => {
-        console.log('Error', err);
       });
 
-
-    }
-
-    MesasDisponibles() {
-      let mesasFiltradas = [];
-      mesasFiltradas = this.mesas.filter(mesas => mesas.estado == 'disponible');
-      return mesasFiltradas;
-    }
-
-
-    RelacionMesaUsuario(numeroMesa) {
-      this.usuarioEnMesa = null;
-      this.mesas.forEach(mesa => {
-        if (mesa.numero == numeroMesa) {
-          if (mesa.usuario) {
-            this.usuarioEnMesa = mesa.usuario;
-            console.log("La mesa esta siendo ocupada por: " + mesa.usuario.nombre);
-          }
-        }
-      });
-      return this.usuarioEnMesa;
-    }
-
-
-
-
-    async cambiarEstadoMesaOcupada() {
-      var usuario = this.usuarioServ.traerUsuarioActual();
-      /* return this.qrService.readQR().then(async QRdata => {
-  
-        if (this.mesaActual.codigoQr == QRdata.text) { */
-
-      if (this.mesaActual.estado == 'reservada' && this.mesaActual.cliente == usuario.email) {
-
-        this.actualizarMesa(this.mesaActual, "ocupada");
-        this.mesaActual.estado = "ocupada";
-
+      if (!flag) {
         const toast = await this.toastCtrl.create({
-          message: "La mesa nro: " + this.mesaActual.numero + " es ocupada por " + usuario.nombre + " " + usuario.apellido,
+          message: "Codigo QR incorrecto",
           duration: 3000,
           position: 'middle' //middle || top
         });
         toast.present();
-        return true;
-
-      } else if (this.mesaActual.estado == 'reservada') {
-        const toast = await this.toastCtrl.create({
-          message: "La mesa Nro " + this.mesaActual.numero + " no es su reserva",
-          duration: 3000,
-          position: 'middle' //middle || top
-        });
-        toast.present();
-        return false;
       }
-    } /* else {
+
+    }).catch(err => {
+      console.log('Error', err);
+    });
+
+
+  }
+
+  MesasDisponibles() {
+    let mesasFiltradas = [];
+    mesasFiltradas = this.mesas.filter(mesas => mesas.estado == 'disponible');
+    return mesasFiltradas;
+  }
+
+
+  RelacionMesaUsuario(numeroMesa) {
+    this.usuarioEnMesa = null;
+    this.mesas.forEach(mesa => {
+      if (mesa.numero == numeroMesa) {
+        if (mesa.usuario) {
+          this.usuarioEnMesa = mesa.usuario;
+          console.log("La mesa esta siendo ocupada por: " + mesa.usuario.nombre);
+        }
+      }
+    });
+    return this.usuarioEnMesa;
+  }
+
+
+
+
+  async cambiarEstadoMesaOcupada() {
+    var usuario = this.usuarioServ.traerUsuarioActual();
+    /* return this.qrService.readQR().then(async QRdata => {
+ 
+      if (this.mesaActual.codigoQr == QRdata.text) { */
+
+    if (this.mesaActual.estado == 'reservada' && this.mesaActual.cliente == usuario.email) {
+
+      this.actualizarMesa(this.mesaActual, "ocupada");
+      this.mesaActual.estado = "ocupada";
+
+      const toast = await this.toastCtrl.create({
+        message: "La mesa nro: " + this.mesaActual.numero + " es ocupada por " + usuario.nombre + " " + usuario.apellido,
+        duration: 3000,
+        position: 'middle' //middle || top
+      });
+      toast.present();
+      return true;
+
+    } else if (this.mesaActual.estado == 'reservada') {
+      const toast = await this.toastCtrl.create({
+        message: "La mesa Nro " + this.mesaActual.numero + " no es su reserva",
+        duration: 3000,
+        position: 'middle' //middle || top
+      });
+      toast.present();
+      return false;
+    }
+  } /* else {
         const toast = await this.toastCtrl.create({
           message: "usuario y qr incorrectos",
           duration: 3000,
@@ -392,16 +353,16 @@ export class MesasService {
     })
   }
  */
-    LiberarMesa(mesa: Mesa) {
-      mesa.estado = "disponible";
-      mesa.usuario = null;
-      this.objFirebase.collection("SP_mesas").doc(mesa.uid).set(mesa).then(() => {
-        console.log('Documento editado exitósamente');
+  LiberarMesa(mesa: Mesa) {
+    mesa.estado = "disponible";
+    mesa.usuario = null;
+    this.objFirebase.collection("SP_mesas").doc(mesa.uid).set(mesa).then(() => {
+      console.log('Documento editado exitósamente');
 
-      }, (error) => {
-        console.log(error);
-      });
-
-    }
+    }, (error) => {
+      console.log(error);
+    });
 
   }
+
+}

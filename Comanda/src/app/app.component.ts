@@ -33,7 +33,7 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      timer(5000).subscribe( () => {
+      timer(5000).subscribe(() => {
         this.showSplash = false;
       });
 
@@ -56,11 +56,24 @@ export class AppComponent {
             this.smartAudioService.play('boop');
           }
         });
-      });
+    });
 
-      this.showSpinner = false;
-      this.spinner.observableSpinner().subscribe( x => {
-          this.showSpinner = x;
-      });
+
+
+    this.showSpinner = false;
+    this.spinner.observableSpinner().subscribe(x => {
+      this.showSpinner = x;
+    });
+  }
+
+  soundOfF() {
+    console.log("off");
+    this.smartAudioService.sonidoActivo = true;
+  }
+
+
+  soundON() {
+    this.smartAudioService.sonidoActivo = false;
+    console.log("ON");
   }
 }

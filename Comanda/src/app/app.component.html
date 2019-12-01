@@ -3,9 +3,14 @@
     <div class="spinner heartBeat"></div>
     <div class="texto nombre">Madou Rizzi</div>
 </div>
-<ion-fab vertical="top" horizontal="end" slot="fixed" style="margin-top: 10vh; opacity: 0.7;" class="animated rubberBand delay-5s">
+<ion-fab vertical="top" horizontal="end" slot="fixed" style="margin-top: 10vh; opacity: 0.7;" class="animated flip " (click)="soundON()" *ngIf="smartAudioService.sonidoActivo == true">
     <ion-fab-button color="danger">
         <ion-icon name="volume-mute"></ion-icon>
+    </ion-fab-button>
+</ion-fab>
+<ion-fab vertical="top" horizontal="end" slot="fixed" style="margin-top: 10vh; opacity: 0.7;" class="animated flip" (click)='  soundOfF()' *ngIf="smartAudioService.sonidoActivo == false">
+    <ion-fab-button color="light">
+        <ion-icon name="volume-off"></ion-icon>
     </ion-fab-button>
 </ion-fab>
 

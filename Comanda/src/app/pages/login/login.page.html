@@ -61,13 +61,19 @@
             <ion-fab-button size="large" color="danger" (click)="cargarDatos('cliente2')">
                 Rolando
             </ion-fab-button>
+            <ion-fab-button size="large" color="warning" (click)="cargarDatos('cliente1')">
+                Silvia
+            </ion-fab-button>
+            <ion-fab-button size="large" color="danger" (click)="cargarDatos('cliente3')">
+                noReg
+            </ion-fab-button>
         </ion-fab-list>
     </ion-fab>
 </ion-content>
 
 <ion-footer color="dark">
     <ion-toolbar color="dark" class="mb-5" class="animated flash delay-5s">
-        <ion-button color="danger" style="height: 50px;" size="large" expand="full" type="submit" [disabled]="!form.valid"> Entrar</ion-button>
+        <ion-button color="danger" style="height: 50px;" size="large" expand="full" type="submit" [disabled]="!form.valid" (click)="onSubmitLogin()"> Entrar</ion-button>
     </ion-toolbar>
 
     <ion-toolbar color="dark">

@@ -24,17 +24,14 @@ export class DetalleMesaPage implements OnInit {
       this.sacarDetalle=true;
      }
 
-  ngOnInit() {
-    
+  ngOnInit() {    
     this.nroMesa = this.mesaSer.mesaActual;
     this.cliente = this.usuarioSer.traerUsuarioActual();
-
     this.pedidos = new Array();
-
     this.nroMesa.pedidos.forEach(element => {
       this.pedidoSer.traerUnPedido(element).subscribe((e: Pedido) => {
         console.log("this.productos= e.productos;", e);
-        this.pedidos.push(e);
+        this.pedidos.push(e);    
       });
 
     });

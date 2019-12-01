@@ -46,14 +46,6 @@ export class ClientePage implements OnInit {
 
     this.title = "Bienvenido Cliente: ";
     this.usuarioActual = new User();
-    try {
-      console.log("try");      
-      this.usuarioActual.activo
-    } catch (e) {
-      console.log("catcjh");
-      this.usuarioActual.activo == null
-    }
-
 
   }
 
@@ -63,19 +55,19 @@ export class ClientePage implements OnInit {
     this.menu = false;
     this.confirmar = false;
 
-    
+
 
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual en cliente es: ", this.usuarioActual);
-  /*     if (!this.usuarioActual.registrado) {
-        this.registroClienteAlertConfirm();
-      } */
+      /*     if (!this.usuarioActual.registrado) {
+            this.registroClienteAlertConfirm();
+          } */
       this.getTokenControl();
       this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
 
     }, 1500);
- 
+
 
   }
 
@@ -171,6 +163,9 @@ export class ClientePage implements OnInit {
   }
 
   pedirMesaQR() {
+    this.spinner.show();
+    //para testing
+    //this.mesasServ.leerQrPedirMesa();    
     this.router.navigate(['/pedir-mesa-qr']);
   }
 

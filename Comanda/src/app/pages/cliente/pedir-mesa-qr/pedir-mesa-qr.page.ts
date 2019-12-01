@@ -29,6 +29,7 @@ export class PedirMesaQrPage implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.hide();
     this.esperando = false;
     setTimeout(() => this.spinner.hide(), 500);
   }

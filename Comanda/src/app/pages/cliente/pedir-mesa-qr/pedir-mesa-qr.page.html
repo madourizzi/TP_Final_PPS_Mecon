@@ -37,12 +37,12 @@
     </div>
 </ion-content>
 
-<ion-content *ngIf="pedida">
+<ion-content *ngIf="pedida" color="dark">
     <div *ngIf="pedida" style=" text-align: center">
         <h3 style="font-family: 'Raleway', sans-serif; font-size: 15pt; font-weight: 800;">Seleccione su Mesa Preferida</h3>
         <div class="row" style=" text-align: center">
-            <div class="col-8" style=" text-align: center">
-                <div class="card" *ngFor="let mesa of mesas" style="max-width: 90%; padding: 10px; margin-left: 10%; margin-right: 10%;  ">
+            <div class="col-8" style=" text-align: center" color="light">
+                <div class="card" *ngFor="let mesa of mesas" style="max-width: 90%; padding: 10px; margin-left: 10%; margin-right: 10%; background-color: aliceblue; color: black;  ">
                     <img src="{{mesa.url}}" style="max-width: 100%; margin-top: 5px;">
                     <div class=" card-body ">
                         <h3>Mesa Nº {{mesa.numero}}</h3>
