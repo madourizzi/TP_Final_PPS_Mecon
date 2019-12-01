@@ -4,37 +4,20 @@
             <td colspan="2">
                 <table>
                     <tr>
-                        <td class="title">
-                            <img src="../../../assets/icon/icon.png" style="width:60px; max-width:300px;">
-                        </td>
-
-
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
-        <tr class="information">
-            <td colspan="2">
-                <table>
-                    <tr>
                         <td>
-                            La Comanda de Madou Rizzi Mecon 2019
+                            <img src="../../../assets/icon/icon-simple-02.svg" style="width: 100%; max-width:150px;">
                         </td>
                         <td>
-
-                            <strong> Pago Online </strong>
-                            <hr><strong> Cuenta #000-0000123456 </strong>
-                            <div style="font-weight: bold; font-size:12pt">Mesa Nº {{mesa.numero}}</div>
-                            <div style="font-weight: bold; font-size:12pt">Cliente {{mesa.cliente}}</div>
-
+                            <div style="font-weight: bold; font-size:10pt">Cuenta : #000-0000123456 </div>
+                            <div style="font-weight: bold; font-size:10pt">Mesa Nº {{mesa.numero}}</div>
+                            <div style="font-weight: bold; font-size:10pt">Cliente {{mesa.cliente}}</div>
                         </td>
-
                     </tr>
 
                 </table>
             </td>
         </tr>
+
 
         <tr class="heading">
             <td>
@@ -67,7 +50,15 @@
             </td>
         </tr>
     </table>
-    <button type="button" class="btn btn-primary">Escanear Propina</button>
-    <button type="button" class="btn btn-secondary">Pagar</button>
+
+    <ion-button color="danger" expand="full">
+        Escanear Propina
+    </ion-button>
+    <ion-button color="danger" expand="full">
+        Pagar
+    </ion-button>
+    <ion-button color="warning" expand="full">
+        Programa tu Proxima Reserva
+    </ion-button>
 
 </div>
