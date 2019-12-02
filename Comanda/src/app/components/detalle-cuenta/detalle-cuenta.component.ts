@@ -48,6 +48,12 @@ export class DetalleCuentaComponent implements OnInit {
   }
 
   calcularCuenta() {
+   this. total = 0;
+   this. totalTotal=0;
+   this. totalDesc=0;
+   this. totaProp=0;
+   this.todosPedidos=[];
+   
     this.mesa.pedidos.forEach((pedido) =>
       this.pedidServicio.traerUnPedido(pedido).subscribe((pedidoDb: Pedido) => {
         console.log("pedidodb", pedidoDb);

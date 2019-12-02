@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>detalleMesa {{nroMesa.numero}}</ion-title>
+        <ion-title>Detalle Mesa {{nroMesa.numero}}</ion-title>
         <ion-button slot="end" color="light" routerLink="/cliente">
             <ion-icon name="arrow-back"> </ion-icon> Cliente
         </ion-button>
@@ -9,7 +9,7 @@
 
 <ion-content>
     <ion-list-header color="dark">Estado de Tu Mesa</ion-list-header>
-    <div *ngIf="sacarDetalle">
+    <div>
         <ion-list color="dark">
             <ion-item>
                 <ion-thumbnail slot="start">
@@ -41,26 +41,4 @@
             </ion-list>
         </ion-list>
     </div>
-    <!--  esto se podria poner en el padre  -->
-    <div *ngIf="nroMesa.estado=='cuentaPedida'">
-        <h2>Cerrando<span class="animated infinite fadeOut "> ...</span></h2>
-        app-encuesta
-    </div>
-    <div *ngIf="nroMesa.estado=='pagando'">
-        <h2>Pagando<span class="animated infinite fadeOut "> ...</span></h2>
-        app-Cuenta
-    </div>
-    <div *ngIf="nroMesa.estado=='cerrada'">
-        <h2>Pagando<span class="animated infinite fadeOut "> ...</span></h2>
-        gracias por su visita
-    </div>
-
-
-
-    <ion-footer style="height: 10vh" *ngIf="admin=='cliente'">
-        <ion-toolbar>
-            <ion-button color="danger" style="width: 98%" (click)="enviarPedido()">Terminar Pedido ( {{acumuladorProductos}} )
-            </ion-button>
-        </ion-toolbar>
-    </ion-footer>
 </ion-content>
