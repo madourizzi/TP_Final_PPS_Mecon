@@ -13,10 +13,14 @@ export class Mesa {
   url;
   cliente;
   pedidos: Array<String>
+  descuento: number;
+  propina: number;
 
     constructor() {
       this.cliente="sin asignar";
       this.pedidos= new Array();
+      this.descuento=0;
+      this.propina=0;
     }
 
     dameJSON() {

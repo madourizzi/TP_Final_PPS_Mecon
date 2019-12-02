@@ -12,6 +12,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Pedido } from 'src/app/models/pedido';
 import { ToastService } from 'src/app/services/toast.service';
+import { JuegosService } from 'src/app/juegos/services/juegos.service';
+
+
 
 @Component({
   selector: 'app-cliente',
@@ -29,6 +32,8 @@ export class ClientePage implements OnInit {
   esperandoConfirmacion: boolean;
   usuarioActual: User;
 
+  cuenta;
+
   constructor(
     private spinner: SpinnerService, private router: Router,
     private qr: BarcodeScanner,
@@ -40,10 +45,12 @@ export class ClientePage implements OnInit {
     public fcm: FirebaseX,
     public platform: Platform,
     private toast: ToastService,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    public juegosServicio: JuegosService) {
+
     this.title = "Bienvenido Cliente: ";
     this.usuarioActual = new User();
-
+    this.cuenta = false;
 
   }
 
@@ -53,23 +60,17 @@ export class ClientePage implements OnInit {
     this.menu = false;
     this.confirmar = false;
 
-    try {
-      this.usuarioActual.activo
-    } catch (e) {
-      this.usuarioActual.activo == null
-    }
-
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual en cliente es: ", this.usuarioActual);
-  /*     if (!this.usuarioActual.registrado) {
-        this.registroClienteAlertConfirm();
-      } */
+     
+      /*     if (!this.usuarioActual.registrado) {
+            this.registroClienteAlertConfirm();
+          } */
       this.getTokenControl();
       this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
 
     }, 1500);
- 
 
   }
 
@@ -138,19 +139,52 @@ export class ClientePage implements OnInit {
   ingresarPedido() {
     this.menu = true;
     this.botonera = false;
+    this.cuenta = false;
   }
 
 
   volver($event) {
     this.menu = false;
     this.botonera = true;
+    this.cuenta = false;
+    this.confirmar=false;
   }
 
+  jugar() {
+    console.log(" aca va el juego");
+    setTimeout(() => {
+      this.juegosServicio.iniciarJuegos();
+    }, 1500);
+    console.log(" ok el juego");
+    this.router.navigate(['/Juegos/MemoriaVisual']);
+
+  }
 
   cerrarMesa() {
     console.log("'cuentaPedida'");
     this.mesasServ.actualizarMesaEmpleado(this.mesasServ.mesaActual, 'cuentaPedida');
   }
+
+  verCuenta() {
+    
+    if (!this.cuenta) {
+      this.cuenta = true;
+      this.menu = false;
+      this.botonera = true;
+      this.confirmar = false;
+
+    } else {
+      this.cuenta = false;
+      this.menu = false;
+      this.botonera = true;
+      this.confirmar = false;
+
+    }
+
+
+  }
+
+
 
   recibirPedido($event) {
     this.pedido = $event;
@@ -158,6 +192,7 @@ export class ClientePage implements OnInit {
     this.confirmar = true;
     this.menu = false;
     this.botonera = false;
+    this.cuenta = false;
   }
 
   consultarPedidos() {
@@ -165,7 +200,10 @@ export class ClientePage implements OnInit {
   }
 
   pedirMesaQR() {
-    this.router.navigate(['/pedir-mesa-qr']);
+    this.spinner.show();
+    //para testing
+   this.mesasServ.leerQrPedirMesa();    
+    //this.router.navigate(['/pedir-mesa-qr']);
   }
 
   async hacerEncuesta() {

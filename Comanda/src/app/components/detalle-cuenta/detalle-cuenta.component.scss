@@ -10,6 +10,13 @@
     color: #555;
 }
 
+ion-col,
+ion-row {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
 .invoice-box table {
     width: 100%;
     line-height: inherit;

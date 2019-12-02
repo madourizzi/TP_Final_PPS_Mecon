@@ -29,6 +29,7 @@ export class ListadoPedidosComponent {
   pedidoActual;
   perfil;
   listaProductos;
+  noHayPedido;
   constructor(
     private pedidoService: PedidosService, private mesaService: MesasService
   ) {
@@ -36,6 +37,7 @@ export class ListadoPedidosComponent {
     this.pedidoEmit = new EventEmitter();
     this.modal = false;
     this.perfil = localStorage.getItem('perfil');
+    this.noHayPedido = false;
 
   }
 
@@ -44,15 +46,19 @@ export class ListadoPedidosComponent {
     this.pedidoService.traerTodosPedidos().subscribe((actions => {
       this.pedidos = [];
       actions.forEach((e) => {
-        let data = e.payload.doc.data() as Pedido;
+        let data = e.payload.doc.data() as Pedido; 
         if (data.area == this.perfil || this.perfil == "admin") {
-          /*    if (data.estado != "terminado") { */
-          this.pedidos.push(data);
-          /* } */
+          if (data.estado != "terminado") {
+            this.pedidos.push(data);
+          }
         }
 
       });
       this.detalleMesa = true;
+
+      if (this.pedidos.length == 0) {
+        this.noHayPedido = true;
+      }
 
     }));
 
@@ -74,18 +80,19 @@ export class ListadoPedidosComponent {
     this.pedidoService.actualizarUnPedido(this.pedidoActual, estado);
   }
 
-  terminarPedido(estado, pedido) {
+  terminarPedido(estado, pedido:Pedido) {
     pedido.estado = estado;
     pedido.tiempo_espera = -1;
     this.pedidoService.actualizarUnPedido(pedido, estado);
     let mesa;
     let uno = false;
     this.mesaService
-      .traerUnaMesaUID(pedido.mesa)
-      .subscribe((e) => {
-        mesa = e.payload.data() as Mesa;
+    .traerUnaMesaUID(pedido.mesaId)
+    .subscribe((e) => {
+      mesa = e.payload.data() as Mesa;
+      console.log("mesa, mesa");       
         if (estado == "terminado" && !uno) {
-          this.mesaService.actualizarMesaEmpleado(mesa, "pedidoListo");
+          this.mesaService.actualizarMesaMozo(mesa, "pedidoListo");
           uno = true;
         }
       });

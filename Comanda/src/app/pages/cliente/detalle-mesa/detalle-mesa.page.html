@@ -1,6 +1,9 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>detalleMesa {{nroMesa.numero}}</ion-title>
+        <ion-button slot="end" color="light" routerLink="/cliente">
+            <ion-icon name="arrow-back"> </ion-icon> Cliente
+        </ion-button>
     </ion-toolbar>
 </ion-header>
 
@@ -15,25 +18,7 @@
                 <ion-label>
                     <h3>Mesa Nº {{nroMesa.numero}}</h3>
                     <p>Comensales: {{nroMesa.cantidadComensales}} </p>
-                    <p style="font-weight: bold; color:rgb(203, 25, 219)" *ngIf="nroMesa.estado=='comiendo'">Estado {{nroMesa.estado}} </p>
-                    <p style="font-weight: bold; color:brown" *ngIf="nroMesa.estado=='terminada'">Estado {{nroMesa.estado}} </p>
-                    <p style="font-weight: bold; color:rgb(236, 205, 26)" *ngIf="nroMesa.estado=='reservada'">Estado {{nroMesa.estado}}
-                    </p>
-                    <p style="font-weight: bold; color:rgb(46, 165, 42)" *ngIf="nroMesa.estado=='disponible'">Estado {{nroMesa.estado}}
-                    </p>
-                    <p style="font-weight: bold; color:rgb(9, 88, 6)" *ngIf="nroMesa.estado=='esperandoComida'">Estado {{nroMesa.estado}}
-                    </p>
-                    <p style="font-weight: bold; color:rgb(6, 11, 88)" *ngIf="nroMesa.estado=='solicitada'">Estado {{nroMesa.estado}}
-                    </p>
-                    <p style="font-weight: bold; color:rgb(0, 0, 0)" *ngIf="nroMesa.estado=='inicioServicio'">Estado {{nroMesa.estado}}
-                    </p>
-                    <p style="font-weight: bold; color:rgb(77, 7, 134)" *ngIf="nroMesa.estado=='cuentaPedida'">Estado {{nroMesa.estado}}
-                    </p>
-                    <p style="font-weight: bold; color:rgb(19, 187, 14)" *ngIf="nroMesa.estado=='pagando'">Estado {{nroMesa.estado}}
-                    </p>
-                    <p style="font-weight: bold; color:rgb(138, 8, 8)" *ngIf="nroMesa.estado=='cerrada'">Estado {{nroMesa.estado}}
-                    </p>
-
+                    <p style="font-weight: bold; color:rgb(203, 25, 219)">Estado {{nroMesa.estado}} </p>
                     <ion-button color="dark" (click)="  actualizar()">Actualizar</ion-button>
                 </ion-label>
             </ion-item>
@@ -41,8 +26,8 @@
 
         <ion-list-header color="primary">Pedidos</ion-list-header>
         <ion-list *ngFor="let productos of pedidos">
-            <ion-list-header color="dark">Prodcutos X Area {{productos.area}}
-                <h5>{{productos.estado}}</h5> <span *ngIf="productos.tiempo_espera != -1 " class="animated bounce"> Tiempo {{productos.tiempo_espera}} </span> </ion-list-header>
+            <ion-list-header color="dark">Area {{productos.area | areasPipe}}
+                <h5 style="margin-right: 15px;">{{productos.estado | areasPipe}}</h5> <span *ngIf="productos.tiempo_espera != -1 " class="animated bounce"> Tiempo {{productos.tiempo_espera}} </span> </ion-list-header>
             <ion-list>
                 <ion-item *ngFor="let producto of productos.productos">
                     <ion-label>

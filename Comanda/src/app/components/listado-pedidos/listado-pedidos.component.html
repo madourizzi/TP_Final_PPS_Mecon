@@ -1,21 +1,40 @@
 <ion-list style="height: 75vh; overflow-y: auto;" color="dark">
-    <ion-card *ngFor="let pedido of pedidos">
-        <h5><span class="badge badge-primary" *ngIf="perfil=='admin'">Area: {{pedido.area}} </span> Pedido:<strong> {{pedido.estado}} </strong>
-        </h5>
-        <hr>
-        <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 15)"> 15 min</button>
-        <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 20)"> 20 min</button>
-        <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 30)"> 30 min</button>
-        <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 40)"> 40 min</button>
-        <button type="button" class="btn btn-outline-success btn-xs  btn-rounded waves-effect" *ngIf="pedido.estado=='enPreparacion' && perfil!='admin'" (click)="terminarPedido('terminado', pedido)">Enviar Comida</button>
+    <div *ngIf="!noHayPedido!">
 
-        <!--   <app-mini-detalle-mesa [mesaUID]="pedido.mesa" *ngIf="detalleMesa "></app-mini-detalle-mesa> -->
-        <div class="row">
-            <div class=" col-12" *ngFor="let producto2 of pedido.productos">
-                <ul> {{producto2.nombre}}</ul>
+
+        <ion-card *ngFor="let pedido of pedidos">
+
+            <div class=" card-body ">
+                <div class="row">
+                    <div class="col-4 h2  "> Mesa Nº {{pedido.mesa}}</div>
+                </div>
             </div>
-        </div>
-        <hr>
-        <!--     <button type="button" class="btn btn-danger btn-sm" (click)="eliminarPedido(pedido)">Eliminar</button> -->
-    </ion-card>
+            <h5>
+                <span>Area :<ion-badge *ngIf="perfil=='admin'" appColoresEstadoMesa [estado]="pedido.area" style="font-size:9pt; padding: 2px;"> {{pedido.area}}</ion-badge>
+            
+             </span> Pedido:<strong> {{pedido.estado}} </strong>
+            </h5>
+            <hr>
+            <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 15)"> 15 min</button>
+            <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 20)"> 20 min</button>
+            <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 30)"> 30 min</button>
+            <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 40)"> 40 min</button>
+            <button type="button" class="btn btn-outline-success btn-xs  btn-rounded waves-effect" *ngIf="pedido.estado=='enPreparacion' && perfil!='admin'" (click)="terminarPedido('terminado', pedido)">Enviar Comida</button>
+
+            <div class="row">
+                <div class=" col-12" *ngFor="let producto2 of pedido.productos">
+                    <ul> {{producto2.nombre}}</ul>
+                </div>
+            </div>
+            <hr>
+            <!--     <button type="button" class="btn btn-danger btn-sm" (click)="eliminarPedido(pedido)">Eliminar</button> -->
+        </ion-card>
+    </div>
+    <div *ngIf="noHayPedido!">
+        <ion-card>
+            <h5>
+                no hay pedidos pendientes
+            </h5>
+        </ion-card>
+    </div>
 </ion-list>

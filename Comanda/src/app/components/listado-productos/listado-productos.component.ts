@@ -2,7 +2,6 @@ import { Component, OnInit , EventEmitter, Output} from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Producto } from 'src/app/models/producto';
 import { ToastService } from 'src/app/services/toast.service';
-import { AdminFormPage } from 'src/app/pages/admin-form/admin-form.page';
 import { ProductosService } from 'src/app/services/productos.service';
 import { MesasService } from 'src/app/services/mesas.service';
 import { Pedido } from 'src/app/models/pedido';
@@ -45,11 +44,11 @@ export class ListadoProductosComponent implements OnInit {ç
     console.log("perfil" + this.admin);
    }
 
-  elegir(producto)
+  elegir(producto: Producto)
   {
     //toaster y sumarlo a un array
    this.toastService.confirmationToast("eligio " + producto.nombre);
-   this.acumuladorProductos++;
+   this.acumuladorProductos+= producto.precio;
    this.productosPedidos.productos.push(producto);
    console.log(this.productosPedidos);
    

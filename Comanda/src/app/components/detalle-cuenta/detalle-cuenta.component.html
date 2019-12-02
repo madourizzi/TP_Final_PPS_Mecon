@@ -4,37 +4,20 @@
             <td colspan="2">
                 <table>
                     <tr>
-                        <td class="title">
-                            <img src="../../../assets/icon/icon.png" style="width:60px; max-width:300px;">
-                        </td>
-
-
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
-        <tr class="information">
-            <td colspan="2">
-                <table>
-                    <tr>
                         <td>
-                            La Comanda de Madou Rizzi Mecon 2019
+                            <img src="../../../assets/icon/icon-simple-02.svg" style="width: 100%; max-width:150px;">
                         </td>
                         <td>
-
-                            <strong> Pago Online </strong>
-                            <hr><strong> Cuenta #000-0000123456 </strong>
-                            <div style="font-weight: bold; font-size:12pt">Mesa Nº {{mesa.numero}}</div>
-                            <div style="font-weight: bold; font-size:12pt">Cliente {{mesa.cliente}}</div>
-
+                            <div style="font-weight: bold; font-size:10pt">Cuenta : #000-0000123456 </div>
+                            <div style="font-weight: bold; font-size:10pt">Mesa Nº {{mesa.numero}}</div>
+                            <div style="font-weight: bold; font-size:10pt">Cliente {{mesa.cliente}}</div>
                         </td>
-
                     </tr>
 
                 </table>
             </td>
         </tr>
+
 
         <tr class="heading">
             <td>
@@ -59,6 +42,22 @@
 
 
 
+        <tr class="total" *ngIf="this.mesa.estado=='pagando'">
+            <td>
+                Propina: {{this.mesa.propina }} %
+            </td>
+            <td>
+                {{totaProp | number:'2.1-2'}}
+            </td>
+        </tr>
+        <tr class="total" *ngIf="this.mesa.estado=='pagando'">
+            <td>
+                Descuento: {{this.mesa.descuento }} %
+            </td>
+            <td>
+                {{totalDesc | number:'2.1-2'}}
+            </td>
+        </tr>
         <tr class="total">
             <td></td>
 
@@ -67,7 +66,12 @@
             </td>
         </tr>
     </table>
-    <button type="button" class="btn btn-primary">Escanear Propina</button>
-    <button type="button" class="btn btn-secondary">Pagar</button>
+
+    <ion-button color="primary" expand="full" (click)="propina()" *ngIf="this.mesa.estado=='pagando'">
+        Escanear Propina
+    </ion-button>
+    <ion-button color="danger" expand="full" (click)="enviarPago();" *ngIf="this.mesa.estado=='pagando'">
+        Pagar
+    </ion-button>
 
 </div>

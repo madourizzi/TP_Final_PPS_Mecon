@@ -1,0 +1,6 @@
+
+<button [hidden]="!ocultartablero" *ngFor="let boton of listadoBotones" style="padding: 10%;" (click)="editar(boton);" class="btn btn-{{boton.btnColor}}">
+</button>
+<button [hidden]="ocultartablero" *ngFor="let boton of listadoBotonesRandom"  style="padding: 10%;" class="btn btn-{{boton.btnColor}}">
+</button>
+

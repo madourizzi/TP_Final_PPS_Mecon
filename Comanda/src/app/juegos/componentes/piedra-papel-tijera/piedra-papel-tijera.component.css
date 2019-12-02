@@ -1,0 +1,36 @@
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  .piedra {    
+    background: url('../../../../assets/piedra.png') no-repeat center yellow; 
+    width: 85px; 
+    height: 85px;
+    margin: 5px;
+  }
+  .piedra:focus,  .piedra:hover {    
+    background: url('../../../../assets/piedra.png') no-repeat center orangered; 
+   
+  }
+
+
+  .tijera {    
+    background: url('../../../../assets/tijera.png') no-repeat center yellow; 
+    width: 85px; 
+    height: 85px;
+    margin: 5px;
+  }
+
+  .papel {    
+    background: url('../../../../assets/papel.png') no-repeat center yellow; 
+    width: 85px; 
+    height: 85px;
+    margin: 5px;
+  }
+  .papel:focus,  .papel:hover,  .tijera:focus,  .tijera:hover {    
+    background-color:  orangered; 
+ 
+  }
+
+
+ 

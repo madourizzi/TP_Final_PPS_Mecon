@@ -8,6 +8,7 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 import { User } from 'src/app/models/user';
 import { Pedido } from 'src/app/models/pedido';
 import { Producto } from 'src/app/models/producto';
+import { JuegosService } from 'src/app/juegos/services/juegos.service';
 
 @Component({
   selector: 'app-listado-mesas',
@@ -24,7 +25,9 @@ export class ListadoMesasComponent implements OnInit {
 
 
 
-  constructor(private mesasService: MesasService, private pedidoServicio: PedidosService, private usuarioServ: UsersService,
+  constructor(private mesasService: MesasService,  private juegoServicio: JuegosService,
+    private pedidoServicio: PedidosService, 
+    private usuarioServ: UsersService,
     private toastService: ToastService) {
     this.mesas = new Array();
     this.productosPedidos = new Array();
@@ -37,6 +40,8 @@ export class ListadoMesasComponent implements OnInit {
       });
 
     });
+
+    this.enviar= new EventEmitter();
 
 
   }
@@ -52,9 +57,10 @@ export class ListadoMesasComponent implements OnInit {
     this.mesasService.actualizarMesaEmpleado(mesa, "pagando");
   }
 
-  cerrarMesa(mesa, estado) {
+ async cerrarMesa(mesa:Mesa, estado) {
     this.mesasService.actualizarMesaEmpleado(mesa, estado);
-    setTimeout(() => this.limpiarUnaMesa(mesa), 5000);
+    let usua = await this.usuarioServ.traerUnUsuarioPorMailMozo(mesa.cliente)
+    setTimeout(() => this.limpiarUnaMesa(mesa), 15000);
 
   }
 
@@ -69,8 +75,6 @@ export class ListadoMesasComponent implements OnInit {
   }
 
   entregarPedido(mesa: Mesa) {
-
-    let contadorEntregado = 0;
     let varioPedido = new Array();
     mesa.pedidos.forEach(element => {
       this.pedidoServicio.traerUnPedido(element).subscribe((e: Pedido) => {
@@ -79,65 +83,40 @@ export class ListadoMesasComponent implements OnInit {
       });
     });
 
+    
 
-
-
-    setTimeout(()=>{
-
-      
-    varioPedido.forEach(ele => {
-      console.log("vario", ele);
-      if (ele.estado == 'terminado') {
-        this.pedidoServicio.actualizarUnPedido(ele, 'entregado');
-      }
-      else {
-        contadorEntregado++;
-      }
+    setTimeout(() => {
+      varioPedido.forEach(ele => {
+        console.log("vario", ele);
+        if (ele.estado == 'terminado') {
+          this.pedidoServicio.actualizarUnPedido(ele, 'entregado');
+        }
+        varioPedido = [];
+      }, 4000)
     });
-
-
-    console.log(contadorEntregado , varioPedido.length) ;
-
-    if (contadorEntregado == varioPedido.length) {
-      localStorage.setItem('pedidosP', 'comiendo');
-      this.mesasService.actualizarMesaEmpleado(mesa, 'comiendo');
-    }
-    else {
-      this.mesasService.actualizarMesaEmpleado(mesa, 'esperandoComida');
-
-    }
-
-    contadorEntregado = 0;
-    varioPedido = [];
-
-
-    }, 2000)
-
-
-
-
+    this.mesasService.actualizarMesaEmpleado(mesa, 'esperandoComida');
   }
 
 
-
-
+  enviarProducto(producto)
+    {
+       this.enviar.emit(producto);        
+    }
 
 
   limpiarTodasLasMesas() {
+      let pedi = this.eliminarPedidos();      //  this.eliminarClientes();
 
-    let pedi = this.eliminarPedidos();
-    //  this.eliminarClientes();
+      let mesass = this.mesasService.TraerMesas().subscribe(actions => {
+        actions.map(a => {
+          const data = a.payload.doc.data() as Mesa;
+          this.mesasService.limpiarMesa(data);
+          console.log('mesas');
 
-    let mesass = this.mesasService.TraerMesas().subscribe(actions => {
-      actions.map(a => {
-        const data = a.payload.doc.data() as Mesa;
-        this.mesasService.limpiarMesa(data);
-        console.log('mesas');
-
+        });
       });
-    });
 
-    setTimeout(() => {
+      setTimeout(() => {
       pedi.unsubscribe();
       mesass.unsubscribe();
     }, 3000);
@@ -167,6 +146,7 @@ export class ListadoMesasComponent implements OnInit {
         const data = a.payload.doc.data() as User;
         if (data.registrado) {
           data.registrado = false;
+          
           console.log("true a false");
           this.usuarioServ.actualizarUsuario(data);
         }

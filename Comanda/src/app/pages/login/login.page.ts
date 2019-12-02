@@ -9,6 +9,7 @@ import { Roles } from 'src/app/models/enums/perfil.enum';
 
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/users.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class LoginPage implements OnInit {
   };
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthService, private spinner: SpinnerService, 
     private userServ: UsersService,
     private formBuilder: FormBuilder,
     private toastService: ToastService,
@@ -109,6 +110,7 @@ export class LoginPage implements OnInit {
         });
       })
       .catch(error => {
+        this.spinner.hide();
         console.log(error);
         if (error.code === 'auth/user-not-found') {
           this.toastService.errorToast('Usuario no encontrado.');
@@ -166,6 +168,10 @@ export class LoginPage implements OnInit {
         break;
       case 'cliente2':
         this.form.get('mail').setValue('rolando@gmail.com');
+        this.form.get('password').setValue('123456');
+        break;
+      case 'cliente3':
+        this.form.get('mail').setValue('2luloop@gmail.com');
         this.form.get('password').setValue('123456');
         break;
       case Roles.cervecero:

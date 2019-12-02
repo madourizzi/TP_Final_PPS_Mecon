@@ -54,7 +54,8 @@ export class PedidosService {
       if(productosDelArea.productos.length>0)
       {
         productosDelArea.area= area;
-        productosDelArea.mesa = mesa.uid;
+        productosDelArea.mesaId = mesa.uid;
+        productosDelArea.mesa = mesa.numero;
         productosDelArea.estado = "aConfirmar";
         let id = this.db.createId();
         productosDelArea.uid = id;
@@ -66,12 +67,12 @@ export class PedidosService {
   }
 
   eliminarPedido(uid)
-  {
+  {    
     this.db.collection("pedidos").doc(uid).delete();
   }
 
   traerTodosPedidos() {
-    return this.db.collection('pedidos').snapshotChanges();
+    return this.db.collection('pedidos',ref => ref.orderBy('estado','asc')).snapshotChanges();
   }
 
   traerUnPedido(id) {
@@ -106,10 +107,7 @@ export class PedidosService {
 
   async AceptarPedido(pedido: Pedido) {
     pedido.estado = "pendiente";
-
     this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
-
-
       console.log('Documento editado exitósamente');
 
     }, (error) => {
