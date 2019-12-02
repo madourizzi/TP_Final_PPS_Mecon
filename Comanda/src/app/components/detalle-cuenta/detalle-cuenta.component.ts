@@ -18,6 +18,9 @@ export class DetalleCuentaComponent implements OnInit {
 
   mesa: Mesa;
   total = 0;
+  totalTotal=0;
+  totalDesc=0;
+  totaProp=0;
   todosPedidos: Array<Producto>
   constructor(private pedidServicio: PedidosService,
     private toast: ToastService, private mesasServ: MesasService,public juegosServicio: JuegosService
@@ -27,16 +30,15 @@ export class DetalleCuentaComponent implements OnInit {
 
   ngOnInit() {
     this.mesa = this.mesasServ.mesaActual;
-
     this.mesa.descuento = this.juegosServicio.aplicarDescuento();
-    console.log("this.mesa.descuento", this.mesa.descuento);
-    
+    console.log("this.mesa.descuento", this.mesa.descuento);    
     this.calcularCuenta();
   }
 
   enviarPago()
   {
-    this.mesasServ.actualizarMesaMozo(this.mesa, 'pagoEnviado');
+    this.mesasServ.actualizarMesaMozo(this.mesa, 'pagoEnviado');  
+    
   }
 
   async propina() {
@@ -55,15 +57,16 @@ export class DetalleCuentaComponent implements OnInit {
             this.todosPedidos.push(e);
             this.total += e.stock;
           });
-          if (this.mesa.propina >= 0 && this.mesa.propina >= 20 && this.mesa.descuento != null) {
-            this.total -= this.total * (this.mesa.descuento / 100);
-            this.total += this.total * (this.mesa.propina / 100);
+         
+            this.totalDesc = this.total * (this.mesa.descuento / 100);
+            this.totaProp = this.total * (this.mesa.propina / 100);
+            this.total= this.total - this.totalDesc+this.totaProp;
             if(this.mesa.estado!= 'pagoEnviado')
             {
               this.mesasServ.actualizarMesaMozo(this.mesa, "pagando");
             }
            
-          }
+          
         }
       })
     );

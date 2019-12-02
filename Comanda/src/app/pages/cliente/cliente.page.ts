@@ -158,6 +158,7 @@ export class ClientePage implements OnInit {
     this.router.navigate(['/Juegos/MemoriaVisual']);
 
   }
+
   cerrarMesa() {
     console.log("'cuentaPedida'");
     this.mesasServ.actualizarMesaEmpleado(this.mesasServ.mesaActual, 'cuentaPedida');
@@ -198,8 +199,8 @@ export class ClientePage implements OnInit {
   pedirMesaQR() {
     this.spinner.show();
     //para testing
-    //this.mesasServ.leerQrPedirMesa();    
-    this.router.navigate(['/pedir-mesa-qr']);
+   this.mesasServ.leerQrPedirMesa();    
+    //this.router.navigate(['/pedir-mesa-qr']);
   }
 
   async hacerEncuesta() {

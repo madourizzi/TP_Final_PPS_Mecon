@@ -66,7 +66,7 @@ export class PedidosService {
   }
 
   eliminarPedido(uid)
-  {
+  {    
     this.db.collection("pedidos").doc(uid).delete();
   }
 
@@ -106,10 +106,7 @@ export class PedidosService {
 
   async AceptarPedido(pedido: Pedido) {
     pedido.estado = "pendiente";
-
     this.db.collection("pedidos").doc(pedido.uid).set(pedido).then(() => {
-
-
       console.log('Documento editado exitósamente');
 
     }, (error) => {

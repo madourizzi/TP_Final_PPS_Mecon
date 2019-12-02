@@ -45,8 +45,34 @@ export class UsersService {
     })
   }
 
+  traerUnUsuarioPorMailMozo(mail) {
+    let usuario = new User();
+   this.dbRef.snapshotChanges().subscribe(e => {
+      e.map(a => {
+        const data = a.payload.doc.data() as User;
+
+        if (data.email == mail) {
+          usuario= data;      
+          console.info("traerUnUsuarioPorMail(mail)", this.usuarioActual);
+        }
+      });
+    })
+    return usuario;
+  }
+
+  limpiarDescuento(usuario:User)
+  {
+    let ref = this.dbRef.doc(usuario.uid).collection('descuentos').doc('juego').set(
+      {
+        jugadas: 0,
+        descuento: 0
+      }
+    );
+  }
+
 
   limpiarUsuarioActual() {
+  
     return this.usuarioActual=null;
   }
 

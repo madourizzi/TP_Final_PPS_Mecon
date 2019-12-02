@@ -8,6 +8,7 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 import { User } from 'src/app/models/user';
 import { Pedido } from 'src/app/models/pedido';
 import { Producto } from 'src/app/models/producto';
+import { JuegosService } from 'src/app/juegos/services/juegos.service';
 
 @Component({
   selector: 'app-listado-mesas',
@@ -24,7 +25,7 @@ export class ListadoMesasComponent implements OnInit {
 
 
 
-  constructor(private mesasService: MesasService, 
+  constructor(private mesasService: MesasService,  private juegoServicio: JuegosService,
     private pedidoServicio: PedidosService, 
     private usuarioServ: UsersService,
     private toastService: ToastService) {
@@ -56,9 +57,11 @@ export class ListadoMesasComponent implements OnInit {
     this.mesasService.actualizarMesaEmpleado(mesa, "pagando");
   }
 
-  cerrarMesa(mesa, estado) {
+ async cerrarMesa(mesa:Mesa, estado) {
     this.mesasService.actualizarMesaEmpleado(mesa, estado);
-    setTimeout(() => this.limpiarUnaMesa(mesa), 5000);
+    let usua = await this.usuarioServ.traerUnUsuarioPorMailMozo(mesa.cliente)
+    this.juegoServicio.limpiarDescuento(usua);
+    setTimeout(() => this.limpiarUnaMesa(mesa), 15000);
 
   }
 
@@ -95,13 +98,11 @@ export class ListadoMesasComponent implements OnInit {
     this.mesasService.actualizarMesaEmpleado(mesa, 'esperandoComida');
   }
 
+
   enviarProducto(producto)
     {
        this.enviar.emit(producto);        
     }
-  
-
-
 
 
   limpiarTodasLasMesas() {
@@ -146,6 +147,7 @@ export class ListadoMesasComponent implements OnInit {
         const data = a.payload.doc.data() as User;
         if (data.registrado) {
           data.registrado = false;
+          
           console.log("true a false");
           this.usuarioServ.actualizarUsuario(data);
         }

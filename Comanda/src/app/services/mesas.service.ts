@@ -10,6 +10,7 @@ import { UsersService } from './users.service';
 import { getRandomColor } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { SpinnerService } from './spinner.service';
+import { PedidosService } from './pedidos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class MesasService {
   private listaMesasMozoObservable: Observable<Mesa[]>;
 
 
+
   public mesas: Array<Mesa>;
   public mesasId: Array<any>;
   //public mesasDisponibles: Array<Mesa>;
@@ -28,7 +30,7 @@ export class MesasService {
   mesaActual: Mesa = null;
 
   constructor(
-    public http: HttpClient, private router: Router,
+    public http: HttpClient, private router: Router, private pedidoSer: PedidosService,
     private objFirebase: AngularFirestore,
     private qrService: LectorQrService,
     public toastCtrl: ToastController,
@@ -66,10 +68,16 @@ export class MesasService {
     return this.objFirebase.collection("mesa").doc(id).set(JSON.parse(JSON.stringify(nuevoUsuario)), { merge: true });
   }
 
-  limpiarMesa(mesaABlanquear: Mesa) {
-    mesaABlanquear.cliente = "sin asignar";
-    mesaABlanquear.propina = 0;
-    mesaABlanquear.descuento = 0;
+  limpiarMesa(mesaABlanquear: Mesa) 
+  {
+    this.usuarioServ.limpiarDescuento(this.usuarioServ.traerUnUsuarioPorMailMozo(mesaABlanquear.cliente));
+    mesaABlanquear.pedidos.forEach(e=>
+      {
+        this.pedidoSer.eliminarPedido(e)
+      });
+      mesaABlanquear.cliente = "sin asignar";
+      mesaABlanquear.propina = 0;
+     mesaABlanquear.descuento = 0;
     mesaABlanquear.pedidos = new Array();
     mesaABlanquear.estado = "disponible";
     return this.objFirebase.collection("mesa").doc(mesaABlanquear.uid).set(JSON.parse(JSON.stringify(mesaABlanquear)), { merge: true });

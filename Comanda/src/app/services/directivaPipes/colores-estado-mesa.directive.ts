@@ -37,7 +37,6 @@ export class ColoresEstadoMesaDirective {
         case 'ceuntaPedida':
           this.el.nativeElement.style = "--background: #f04141";
           break;
-
         case 'ceuntaPedida':
           this.el.nativeElement.style = "--background: #7044ff";
           break;

@@ -65,16 +65,17 @@ export class JuegosService {
   //aca descarga el descuento y vuelve a cero las jugadas y descuento
   aplicarDescuento() {
     let descuentoAplicado = this.jugadorActual.descuento;
-    let ref = this.afs.collection('users').doc(this.usuarioActual.uid).collection('descuentos').doc('juego').set(
+    return descuentoAplicado;
+  }
+
+  limpiarDescuento(usuario:User)
+  {
+    let ref = this.afs.collection('users').doc(usuario.uid).collection('descuentos').doc('juego').set(
       {
         jugadas: 0,
         descuento: 0
       }
     );
-    this.jugadorActual.descuento = 0;
-    this.jugadorActual.jugadas = 0;
-    console.log("descuentoAplicado", descuentoAplicado);
-    return descuentoAplicado;
   }
 
 

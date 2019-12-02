@@ -17,6 +17,7 @@ export class ConfirmarPedidoComponent implements OnInit {
   total: number;
   acumuladorProductos = 0;
   @Output() final :EventEmitter<any>;
+  todo;
 
   /*   @Input() backButton: Boolean;
   
@@ -28,6 +29,7 @@ export class ConfirmarPedidoComponent implements OnInit {
     this.pedidoCOnfirmado = false;
     this.total = 0;
     this.final= new EventEmitter();
+    this.todo=true;
 
   }
 
@@ -51,7 +53,12 @@ export class ConfirmarPedidoComponent implements OnInit {
     this.pedidoCOnfirmado = true;
     this.mesaServicio.mesaActual.pedidos = this.pedidoServ.crearPedidoXArea(this.pedidoAConfirmar, this.mesaServicio.mesaActual);
     this.mesaServicio.actualizarMesa(this.mesaServicio.mesaActual, "pedidoAConfirmar");
-    setTimeout(()=> this.final.emit(true),6000); 
+    setTimeout(()=>
+    {
+      this.final.emit(true);
+      this.pedidoCOnfirmado = false;
+      this.todo=false;
+    } ,6000); 
 
   }
 

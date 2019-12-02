@@ -44,18 +44,18 @@
 
         <tr class="total">
             <td>
-                Propina: {{this.mesa.propina}}
+                Propina: {{this.mesa.propina }} %
             </td>
             <td>
-                {{this.total * (this.mesa.propina / 100)}}
+                {{totaProp | number:'2.1-2'}}
             </td>
         </tr>
         <tr class="total">
             <td>
-                Descuento: {{this.mesa.descuento}}
+                Descuento: {{this.mesa.descuento }} %
             </td>
             <td>
-                {{ this.total * (this.mesa.descuento / 100)}}
+                {{totalDesc | number:'2.1-2'}}
             </td>
         </tr>
         <tr class="total">

@@ -78,6 +78,7 @@ export class MesaPage implements OnInit {
       actions.map(a => {
         const data = a.payload.doc.data() as Mesa;
         this.mesasService.limpiarMesa(data);
+     
         console.log('mesas');        
       });
     });   
