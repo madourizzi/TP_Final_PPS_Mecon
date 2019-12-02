@@ -201,9 +201,9 @@ export class ClientePage implements OnInit {
 
   pedirMesaQR() {
     this.spinner.show();
-    //para testing
-  // this.mesasServ.leerQrPedirMesa();    
-    this.router.navigate(['/pedir-mesa-qr']);
+ //para testing
+  this.mesasServ.leerQrPedirMesa();    
+    //this.router.navigate(['/pedir-mesa-qr']);
   }
 
   async hacerEncuesta() {
