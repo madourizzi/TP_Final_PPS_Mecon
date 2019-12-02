@@ -86,8 +86,11 @@ exports.createUser = functions.firestore
         const tokens = new Array();
 
         devices.forEach((result: { data: () => { token: any, perfil: string }; }) => {
-            const token = result.data().token;
-            tokens.push(token)
+            if (result.data().perfil === 'admin') {
+                const token = result.data().token;
+
+                tokens.push(token)
+            }
         })
 
         return admin.messaging().sendToDevice(tokens, payload)
@@ -142,7 +145,7 @@ exports.SolicitudMesa = functions.https.onRequest(async (req, res) => {
 
     devices.forEach((result: { data: () => { token: any, perfil: string }; }) => {
 
-        if (result.data().perfil === 'mozo' || result.data().perfil === 'administrador') {
+        if (result.data().perfil === 'mozo' || result.data().perfil === 'admin') {
             const token = result.data().token;
 
             tokens.push(token)

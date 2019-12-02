@@ -7,6 +7,8 @@ export class EncuestaCliente {
     valorMesa;
     valorRestaurant;
     sugerencia;
+    fotos: Array<string>;
+
 
     constructor(
       uid?: string,

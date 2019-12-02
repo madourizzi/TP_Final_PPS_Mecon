@@ -44,58 +44,29 @@ export class EncuestaClientePage implements OnInit {
     private toast: ToastService,
   ) {
     this.url = this.router.url;
-    this.cliente=JSON.parse(localStorage.getItem('usuario'));
+    this.cliente = JSON.parse(localStorage.getItem('usuario'));
     this.perfil = localStorage.getItem('perfil');
     this.cantFotos = 1;
     this.puedeSacarFoto = true;
-
+    this.array_fotos = new Array<string>();
+    this.array_fotos_storage = new Array<string>();
   }
 
 
   ngOnInit() {
     this.puedeSacarFoto = true;
+    console.log('usuario en encuesta?', this.cliente)
   }
 
 
-  async Guardar() {
-    if (this.array_fotos) {
-      await this.GuardarFoto(this.perfil);
-    }
 
-    let encuesta = new EncuestaCliente();
-    encuesta.cliente = this.cliente.nombre;
-    encuesta.sugerencia = this.sugerencia;
-    encuesta.valorMozo = this.valorMozo;
-    encuesta.valorCocinero = this.valorCocinero;
-    encuesta.valorBartender = this.valorBartender;
-    encuesta.valorRestaurant = this.valorRestaurant;
-    encuesta.valorMesa = this.valorMesa;
-
-    let encuestaJs = encuesta.dameJSON();
-    this.encuestaServ.cargarEncuestaCliente(encuestaJs);
-    this.VaciarInputs();
-
-    setTimeout(() => {
-      this.router.navigate(['/cliente']);
-    }, 600);
-
-  }
-
-  VaciarInputs() {
-    this.valorMozo = 0;
-    this.valorCocinero = 0;
-    this.valorBartender = 0;
-    this.valorMesa = "malo";
-    this.valorRestaurant = 0
-    this.sugerencia = "";
-  }
 
   async SacarFoto() {
 
     if (this.cantFotos != 4) {
 
       const options: CameraOptions = {
-        quality: 50,
+        quality: 10,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
@@ -105,7 +76,7 @@ export class EncuestaClientePage implements OnInit {
 
       let hora = new Date();
       const result = await this.camera.getPicture(options);
-      const fotos = storage().ref('fotos_encuesta_cliente/' + hora + this.cliente.uid + this.cantFotos);
+      const fotos = storage().ref('fotos_encuesta_cliente/' + hora + this.cliente.email + this.cantFotos);
       const imagen = 'data:image/jpeg;base64,' + result;
       fotos.putString(imagen, 'data_url');
       this.cantFotos++;
@@ -121,19 +92,15 @@ export class EncuestaClientePage implements OnInit {
   async GuardarFoto(idUsuario) {
 
     await this.array_fotos.forEach(async f => {
-      let filename = 'fotos_encuesta/' + idUsuario + Date.now();
+      let filename = 'fotos_encuesta_cliente/' + idUsuario + Date.now();
       await storage().ref(filename).putString(f, 'data_url');
-
       await firebase.storage().ref().child(filename).getDownloadURL().then(async (url) => {
         this.array_fotos_storage.push(url);
-
       }).catch((data) => {
         console.log(data);
       });
     })
-
     this.array_fotos.splice(0);
-
   }
 
 
@@ -146,20 +113,15 @@ export class EncuestaClientePage implements OnInit {
         mediaType: this.camera.MediaType.PICTURE,
         correctOrientation: true
       }
-
       await this.camera.getPicture(options).then((imageData) => {
         this.array_fotos.push('data:image/jpeg;base64,' + imageData)
-
       }, (error) => {
         this.toast.errorToast("No se pudieron guardar las fotos.")
-
       });
-
     }
     else {
       this.toast.errorToast("Solo puedes tomar 3 fotos.")
     }
-
   }
 
   onLogout() {
@@ -168,5 +130,69 @@ export class EncuestaClientePage implements OnInit {
     this.authService.logout();
   }
 
+  VaciarInputs() {
+    this.valorMozo = 0;
+    this.valorCocinero = 0;
+    this.valorBartender = 0;
+    this.valorMesa = "malo";
+    this.valorRestaurant = 0
+    this.sugerencia = "";
+  }
+
+  GuardarEncuesta() {
+    if (this.array_fotos) {
+      this.GuardarFoto(JSON.parse(sessionStorage.getItem("usuario")).uid).then(() => {
+        let encuesta = new EncuestaCliente();
+        encuesta.cliente = this.cliente.nombre;
+        encuesta.sugerencia = this.sugerencia;
+        encuesta.valorMozo = this.valorMozo;
+        encuesta.valorCocinero = this.valorCocinero;
+        encuesta.valorBartender = this.valorBartender;
+        encuesta.valorRestaurant = this.valorRestaurant;
+        encuesta.valorMesa = this.valorMesa;
+        encuesta.fotos = this.array_fotos_storage;
+        let encuestaJs = encuesta.dameJSON();
+        this.encuestaServ.GuardarEncuesta(encuestaJs).then(() => {
+          setTimeout(() => {
+            this.toast.confirmationToast("encuesta enviada")
+
+          }, 2000);
+        }).catch(() => {
+          setTimeout(() => {
+            this.toast.errorToast("No se guardo la encuesta");
+          }, 2000);
+        })
+        this.VaciarInputs();
+        setTimeout(() => {
+          this.router.navigate(['/cliente']);
+        }, 600);
+      })
+    }
+    else {
+      let encuesta = new EncuestaCliente();
+      encuesta.cliente = this.cliente.nombre;
+      encuesta.sugerencia = this.sugerencia;
+      encuesta.valorMozo = this.valorMozo;
+      encuesta.valorCocinero = this.valorCocinero;
+      encuesta.valorBartender = this.valorBartender;
+      encuesta.valorRestaurant = this.valorRestaurant;
+      encuesta.valorMesa = this.valorMesa;
+      let encuestaJs = encuesta.dameJSON();
+      this.encuestaServ.GuardarEncuesta(encuestaJs).then(() => {
+
+        setTimeout(() => {
+          this.toast.confirmationToast("encuesta enviada")
+        }, 2000);
+      }).catch(() => {
+        setTimeout(() => {
+          this.toast.errorToast("No se guardo la encuesta");
+        }, 2000);
+      })
+      this.VaciarInputs();
+      setTimeout(() => {
+        this.router.navigate(['/cliente']);
+      }, 600);
+    }
+  }
 
 }

@@ -68,6 +68,24 @@ export class EncuestasService {
     return this.objFirebase.collection<EncuestaEmpleado>("encuestas_ingreso_empleado").add(encuestaAGuardarJSON);
   }
 
+  GuardarEncuesta(encuesta: EncuestaCliente) {
+
+    let uid = this.objFirebase.createId();
+    encuesta.uid = uid;
+    console.log(encuesta);
+
+    return this.objFirebase.collection<any>("encuestas_cliente").doc(uid).set(encuesta).then(async (data) => {
+      let toast = this.toastCtrl.create({
+        message: "En Madou Rizzi valoramos tu opinión. Gracias!",
+        duration: 3000,
+        position: 'middle'
+      });
+
+      (await toast).present();
+      console.log(data);
+    })
+  }
+  
   async cargarEncuestaCliente(encuestaAGuardarJSON: EncuestaCliente) {
 
     let id = this.objFirebase.createId();

@@ -112,12 +112,19 @@ console.log('dale plis', this.encuestas) */
     //Si el atributo es basuraPiso/usaBienBaño/limpiaMesa, que son checkbox, solamente los sumo, no saco el promedio
     if (encuestasAGraficar.length !== 0) {
       graphLabels.forEach(function (label) {
-        if (label === "valorMesa") {
+        console.log('encuestas? ',encuestasAGraficar)
+        if (label === "valorc") {
           data.push(round((encuestasAGraficar.map(encuesta => { return encuesta[label] }).reduce(function (total, sum) { return total + sum })), 2))
         } else {
           data.push(round((encuestasAGraficar.map(encuesta => { return encuesta[label] }).reduce(function (total, sum) { return total + sum })) / encuestasAGraficar.length, 2))
         }
         colors.push(getRandomColor());
+        /* if (label === "valorRestaurant") {
+          data.push(round((encuestasAGraficar.map(encuesta => { return encuesta[label] }).reduce(function (total, sum) { return total + sum })), 2))
+        } else {
+          data.push(round((encuestasAGraficar.map(encuesta => { return encuesta[label] }).reduce(function (total, sum) { return total + sum })) / encuestasAGraficar.length, 2))
+        }
+        colors.push(getRandomColor()); */
       });
     }
     graphLabels[graphLabels.indexOf("valorMozo")] = "Atención de los mozos";

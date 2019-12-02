@@ -90,9 +90,14 @@
     </ion-item>
 
 
-    <ion-button full (click)="Guardar()">Enviar</ion-button>
+    <ion-button full (click)="GuardarEncuesta()">Enviar</ion-button>
   </form>
 
+  <div *ngIf="array_fotos_storage">
+  <div *ngFor="let image of array_fotos_storage">
+    <img [src]="image">{{image}}
+    </div>
+  </div>
 </ion-content>
 
 <ion-footer>
