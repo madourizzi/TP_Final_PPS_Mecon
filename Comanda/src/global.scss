@@ -9,15 +9,14 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
-
 .my-custom-modal-css .modal-wrapper {
     height: 100%;
     width: 100%;
     max-height: 100%;
     min-height: 100%;
- }
- 
- .splash {
+}
+
+.splash {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -25,119 +24,114 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(240, 135, 161,1);
-    background: -moz-radial-gradient(center, ellipse cover, rgba(240, 135, 161,1) 0%, rgba(232,2,61,1) 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(240, 135, 161,1)), color-stop(100%, rgba(57,83,254,1)));
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(240, 135, 161,1) 0%, rgba(232,2,61,1) 100%);
-    background: -o-radial-gradient(center, ellipse cover, rgba(240, 135, 161,1) 0%, rgba(232,2,61,1) 100%);
-    background: -ms-radial-gradient(center, ellipse cover, rgba(240, 135, 161,1) 0%, rgba(232,2,61,1) 100%);
-    background: radial-gradient(ellipse at center, rgba(240, 135, 161,1) 0%, rgba(232,2,61,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29f8ff', endColorstr='#3953fe', GradientType=1 );
- }
+    background: rgba(188, 41, 17, 1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(188, 41, 17, 1) 0%, rgba(232, 2, 61, 1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(188, 41, 17, 1)), color-stop(100%, rgba(57, 83, 254, 1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(188, 41, 17, 1) 0%, rgba(232, 2, 61, 1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(188, 41, 17, 1) 0%, rgba(232, 2, 61, 1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(188, 41, 17, 1) 0%, rgba(232, 2, 61, 1) 100%);
+    background: radial-gradient(ellipse at center, rgba(188, 41, 17, 1) 0%, rgba(232, 2, 61, 1) 100%);
+    /*   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#29f8ff', endColorstr='#3953fe', GradientType=1); */
+}
 
- .spinner {
-    background-image: url(./assets/icon/icon.png);
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
+.spinner {
+    background-image: url(./assets/icon/icon-simple-02.svg);
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
     display: block;
     width: 150px;
-    height: 150px;  
-    background-size: cover; /* Resize the background image to cover the entire container */
- }
+    height: 150px;
+    background-size: cover;
+    /* Resize the background image to cover the entire container */
+}
 
- .spinnerInterceptor {  
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.7);
-  width: 100%;
-  height: 100%;
+.spinnerInterceptor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
     img {
-      display: block;
-      height: 15%;
+        display: block;
+        height: 15%;
     }
     color: whitesmoke;
     text-align: center;
     font-weight: bold;
     font-size: 24px;
- }
+}
 
- .texto {
+.texto {
     color: whitesmoke;
     text-align: center;
- }
+}
 
- .titulo {
+.titulo {
     position: fixed;
     top: 30px;
     font-weight: bold;
-    font-size: 2.5rem;    
+    font-size: 2.5rem;
     font-family: "Arial Black", Gadget, sans-serif;
     //font-style: oblique;
- }
+}
 
- .nombre {
+.nombre {
     position: fixed;
     bottom: 30px;
     font-size: 1.5rem;
     font-family: Arial, Helvetica, sans-serif;
- }
+}
 
- @-webkit-keyframes heartBeat {
+@-webkit-keyframes heartBeat {
     0% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
-  
     14% {
-      -webkit-transform: scale(1.3);
-      transform: scale(1.3);
+        -webkit-transform: scale(1.3);
+        transform: scale(1.3);
     }
-  
     28% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
-  
     42% {
-      -webkit-transform: scale(1.3);
-      transform: scale(1.3);
+        -webkit-transform: scale(1.3);
+        transform: scale(1.3);
     }
-  
     70% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
-  }
-  
-  @keyframes heartBeat {
+}
+
+@keyframes heartBeat {
     0% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
-  
     14% {
-      -webkit-transform: scale(1.3);
-      transform: scale(1.3);
+        -webkit-transform: scale(1.3);
+        transform: scale(1.3);
     }
-  
     28% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
-  
     42% {
-      -webkit-transform: scale(1.3);
-      transform: scale(1.3);
+        -webkit-transform: scale(1.3);
+        transform: scale(1.3);
     }
-  
     70% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
+        -webkit-transform: scale(1);
+        transform: scale(1);
     }
-  }
-  
-  .heartBeat {
+}
+
+.heartBeat {
     -webkit-animation-name: heartBeat;
     animation-name: heartBeat;
     -webkit-animation-duration: 1.3s;
@@ -145,4 +139,4 @@
     -webkit-animation-timing-function: ease-in-out;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-  }
+}

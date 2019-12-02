@@ -38,7 +38,7 @@ export class MemoriaVisualComponent implements OnInit {
     this.Tiempo = 3;
     this.nuevoJuego = new JuegoMemoria();
     console.info("Inicio memoria");
-    this.juegosServicio.iniciarJuegos();
+    //this.juegosServicio.iniciarJuegos();
 
     
    

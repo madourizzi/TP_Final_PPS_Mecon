@@ -8,6 +8,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 })
 export class CocinaPage implements OnInit {
 
+  title="Cocina";
   constructor(private spinner: SpinnerService) { }
 
   ngOnInit() {

@@ -1,6 +1,7 @@
-<app-header titulo="La Comanda - MadouRizzi" color="success" [backButton]="false"></app-header>
-
 <ion-content padding color="dark">
+    <div class="animated rubberBand delay-4s">
+        <img src="../../../assets/icon/icon_Mesa de trabajo 1.svg" alt="">
+    </div>
     <form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
         <ion-item color="light">
             <ion-icon name="mail" slot="start"></ion-icon>
@@ -23,47 +24,58 @@
             </div>
         </ng-container>
         <br>
-
-        <ion-button color="success" expand="block" type="submit" [disabled]="!form.valid">
-            Entrar
-        </ion-button>
-
-        <ion-button expand="block" color="secondary" routerLink="/register">Registrar</ion-button>
-        <ion-button expand="block" color="light" (click)="entrarAnonimo()">Entrar Anonimo</ion-button>
-       
-        <br>
-
     </form>
 
-    <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab vertical="top" horizontal="end" slot="fixed" style="margin-top: 22vh;">
         <ion-fab-button color="warning">
             <ion-icon name="person"></ion-icon>
         </ion-fab-button>
-
-
         <ion-fab-list side="bottom">
             <ion-fab-button size="large" color="primary" (click)="cargarDatos(this.rolesEnum.admin)">
                 Adm
             </ion-fab-button>
 
-            <ion-fab-button side="bottom" size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.cliente)">
+            <ion-fab-button side="bottom" size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.mozo)">
                 Mozo
             </ion-fab-button>
 
-            <ion-fab-button size="large" color="tertiary" (click)="cargarDatos(this.rolesEnum.candyBar)">
+            <ion-fab-button size="large" color="tertiary" (click)="cargarDatos(this.rolesEnum.cocina)">
                 Cocina
             </ion-fab-button>
-            <!-- 
-            <ion-fab-button size="large" color="success" (click)="cargarDatos(this.rolesEnum.barman)">
-                <ion-icon name="bulb"></ion-icon>
-            </ion-fab-button> -->
 
-            <ion-fab-button size="large" color="warning" (click)="cargarDatos(this.rolesEnum.cocina)">
-                <ion-icon name="card"></ion-icon>
+            <ion-fab-button size="large" color="success" (click)="cargarDatos(this.rolesEnum.barman)">
+                tragos
             </ion-fab-button>
-            <ion-fab-button size="large" color="secondary" (click)="cargarDatos(this.rolesEnum.mozo)">
-                Cliente
+
+            <ion-fab-button size="large" color="danger" (click)="cargarDatos(this.rolesEnum.cervecero)">
+                Birra
+            </ion-fab-button>
+            <ion-fab-button size="large" color="warning" (click)="cargarDatos(this.rolesEnum.candyBar)">
+                Postre
+            </ion-fab-button>
+        </ion-fab-list>
+        <ion-fab-list side="start">
+            <ion-fab-button size="large" color="warning" (click)="cargarDatos('cliente1')">
+                Silvia
+            </ion-fab-button>
+            <ion-fab-button size="large" color="danger" (click)="cargarDatos('cliente2')">
+                Rolando
+            </ion-fab-button>
+            <ion-fab-button size="large" color="warning" (click)="cargarDatos('cliente3')">
+                noReg
             </ion-fab-button>
         </ion-fab-list>
     </ion-fab>
 </ion-content>
+
+<ion-footer color="dark">
+    <ion-toolbar color="dark" class="mb-5" class="animated flash delay-5s">
+        <ion-button color="danger" style="height: 50px;" size="large" expand="full" type="submit" [disabled]="!form.valid" (click)="onSubmitLogin()"> Entrar</ion-button>
+    </ion-toolbar>
+
+    <ion-toolbar color="dark">
+        <ion-button color="warning" expand="full" routerLink="/register">Registrar</ion-button>
+        <ion-button color="light" expand="full" (click)="entrarAnonimo()">Entrar Anonimo</ion-button>
+    </ion-toolbar>
+
+</ion-footer>

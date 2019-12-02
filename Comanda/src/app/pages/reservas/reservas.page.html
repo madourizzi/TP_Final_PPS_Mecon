@@ -1,41 +1,38 @@
 <ion-header>
 
-  <ion-toolbar>
-    <ion-title routerLink="/admin"><ion-icon name="arrow-back"></ion-icon> Listado de Reservas</ion-title>
-    <ion-buttons *ngIf="this.url !== '/login'" slot="end">
-      <ion-button (click)="onLogout()">
-          <ion-icon class="icon" name="exit"></ion-icon>
-      </ion-button>
-  </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title> Listado de Reservas</ion-title>
+        <ion-button slot="end" color="light" routerLink="/admin">
+            <ion-icon name="arrow-back"> </ion-icon> Admin
+        </ion-button>
+        <!--     <ion-button *ngIf="!botonera" slot="end" color="light" (click)=" volver()">
+        <ion-icon *ngIf="!botonera" name="arrow-back">RRHH</ion-icon>
+    </ion-button> -->
+
+    </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content padding class="bartenderMenu">
 
-  <ion-title> Lista de reservas </ion-title>
+    <ion-title> Lista de reservas </ion-title>
 
-  <ion-list>
-    <div *ngFor="let reserva of lista_de_reservas">
-      <ion-card *ngIf="reserva.estado=='pendiente'" padding
-        style="background-color: rgba(77, 76, 76, 0.589); color: white">
-        Cliente: {{ reserva.cliente}}
-        <br>
-        Fecha: {{ reserva.fecha }}
-        Hora: {{ reserva.hora }}
-        <br>
-        Mesa: {{ reserva.mesas }}
-        <br>
-        Estado: {{reserva.estado}}
-        <br>
+    <ion-list>
+        <div *ngFor="let reserva of lista_de_reservas">
+            <ion-card *ngIf="reserva.estado=='pendiente'" padding style="background-color: rgba(77, 76, 76, 0.589); color: white">
+                Cliente: {{ reserva.cliente}}
+                <br> Fecha: {{ reserva.fecha }} Hora: {{ reserva.hora }}
+                <br> Mesa: {{ reserva.mesas }}
+                <br> Estado: {{reserva.estado}}
+                <br>
 
-        <ion-button color="success" (click)="AutorizarReserva(reserva)">Autorizar</ion-button>
-        <ion-button color="danger" (click)="CancelarReserva(reserva)">Cancelar</ion-button>
+                <ion-button color="success" (click)="AutorizarReserva(reserva)">Autorizar</ion-button>
+                <ion-button color="danger" (click)="CancelarReserva(reserva)">Cancelar</ion-button>
 
-      </ion-card>
-    </div>
-  </ion-list>
+            </ion-card>
+        </div>
+    </ion-list>
 
 
 </ion-content>

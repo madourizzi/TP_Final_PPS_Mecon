@@ -1,11 +1,8 @@
 <ion-content padding color="dark">
-    <h2 style="color:aliceblue">Alta Mesa</h2>
-
-
     <div class="ion-text-center">
-        <ion-avatar class="mb-3" size="large" style="align-self: center; margin: auto; height: 200px; width: 200px;">
-            <img class="icon" *ngIf="!selectedFiles" src="../../../assets/images/nofoto.jpg" alt="">
-            <img class="icon" *ngIf="selectedFiles" [src]="foto" alt="">
+        <ion-avatar class="mb-3" style="align-self: center; margin: auto; height: 100px; width: 100px;">
+            <img class="icon" *ngIf="!foto" src="../../../assets/images/nofoto.jpg" alt="">
+            <img class="icon" *ngIf="foto" [src]="foto" alt="">
         </ion-avatar>
     </div>
 
@@ -21,7 +18,7 @@
             </div>
         </ng-container>
         <ion-item color="light">
-            <ion-icon name="body" slot="start"></ion-icon>
+            <ion-icon name="people" slot="start"></ion-icon>
             <ion-label position="floating"></ion-label>
             <ion-input formControlName="cantidadComensales" maxlength="100" name="cantidadComensales" type="number" placeholder="cantidadComensales"></ion-input>
         </ion-item>
@@ -31,7 +28,7 @@
             </div>
         </ng-container>
         <ion-item color="light">
-            <ion-icon name="beer" slot="start"></ion-icon>
+            <ion-icon name="bookmark" slot="start"></ion-icon>
             <ion-label position="floating"></ion-label>
             <ion-input formControlName="tipoMesa" name="tipoMesa" type="text" placeholder="tipoMesa"></ion-input>
         </ion-item>
@@ -41,7 +38,7 @@
             </div>
         </ng-container>
         <ion-item color="light">
-            <ion-icon name="logo-usd" slot="start"></ion-icon>
+            <ion-icon name="qr-scanner" slot="start"></ion-icon>
             <ion-label position="floating"></ion-label>
             <ion-input formControlName="codigoQr" name="codigoQr" type="text" placeholder="codigoQr"></ion-input>
         </ion-item>
@@ -52,7 +49,7 @@
         </ng-container>
         <hr>
 
-        <ion-button color="secondary" expand="block" type="submit" [disabled]="!form.valid">
+        <ion-button color="warning" expand="full" type="submit" [disabled]="!form.valid">
             Ingresar Nueva Mesa
         </ion-button>
 

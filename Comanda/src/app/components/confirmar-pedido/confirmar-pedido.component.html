@@ -6,7 +6,7 @@
                 <img src="{{producto.url}}">
             </ion-avatar>
             <ion-label>{{producto.nombre}}</ion-label>
-            <button ion-button clear color="dark" (click)="delete(chip3)" style="margin-left:80%">
+            <button ion-button clear color="dark" (click)="delete(chip3)">
       <ion-icon name="close-circle" (click)="eliminar(producto)"></ion-icon>
     </button>
         </ion-chip>
@@ -14,7 +14,7 @@
 
     <ion-footer style="max-height: 20vh">
         <ion-toolbar>
-            <ion-button color="secondary" style="width: 98%" (click)="confirmar()">Confirmar Pedido ( {{pedidoAConfirmar.productos.length}} )</ion-button>
+            <ion-button color="secondary" style="width: 98%" (click)="confirmar()">Confirmar Pedido ( <span style="font-size: 11pt; font-weight: bolder;">${{total}} )</span></ion-button>
         </ion-toolbar>
     </ion-footer>
 </ion-content>

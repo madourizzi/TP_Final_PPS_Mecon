@@ -12,15 +12,12 @@ import { TatetiComponent } from './juegos/componentes/tateti/tateti.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
-  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule', canActivate: [AuthGuard] },
   { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
   //////
-  { path: 'admin-form', loadChildren: './pages/admin-form/admin-form.module#AdminFormPageModule' },
   { path: 'cocina', loadChildren: './pages/cocina/cocina.module#CocinaPageModule' },
   { path: 'mozo', loadChildren: './pages/mozo/mozo.module#MozoPageModule' },
   { path: 'spinner', loadChildren: './pages/spinner/spinner.module#SpinnerPageModule' },
   ///
-
   { path: 'barman', loadChildren: './pages/barman/barman.module#BarmanPageModule' },
   { path: 'cervecero', loadChildren: './pages/cervecero/cervecero.module#CerveceroPageModule' },
   { path: 'candy-bar', loadChildren: './pages/candy-bar/candy-bar.module#CandyBarPageModule' },
@@ -40,11 +37,12 @@ const routes: Routes = [
   { path: 'cliente-registro', loadChildren: './pages/cliente/cliente-registro/cliente-registro.module#ClienteRegistroPageModule' },
   { path: 'reserva', loadChildren: './pages/reserva/reserva.module#ReservaPageModule' },
   { path: 'encuesta-cliente', loadChildren: './pages/encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' },
-
-  //routing juegos
-  { path: 'Juegos/PPT', component: PiedraPapelTijeraComponent },
-  { path: 'Juegos/MemoriaVisual', component: MemoriaVisualComponent },
-  { path: 'Juegos/Tateti', component: TatetiComponent },
+  { path: 'ver-encuestas', loadChildren: './pages/ver-encuestas/ver-encuestas.module#VerEncuestasPageModule' },
+  
+//routing juegos
+{ path: 'Juegos/PPT', component: PiedraPapelTijeraComponent },
+{ path: 'Juegos/MemoriaVisual', component: MemoriaVisualComponent },
+{ path: 'Juegos/Tateti', component: TatetiComponent },
 
 
 
@@ -53,7 +51,6 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]

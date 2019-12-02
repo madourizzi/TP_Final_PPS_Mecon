@@ -24,26 +24,17 @@ export class JuegosService {
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("actual en cliente en juego : ", this.usuarioActual);
-
+      this.iniciarJuegos();
     }, 50);
-
-
-
-
-
-
-
   }
 
 
   iniciarJuegos() {
-
     this.traerDatosJugador().subscribe((jugador) => {
       console.log("el jugado: ", jugador);
       if (jugador != undefined) {
         this.jugadorActual = jugador[0];
         console.log("el jugado actual en cliente jugando: ", this.jugadorActual);
-
       }
       else {
         this.jugadorActual.uid = this.usuarios.usuarioActual.uid;
@@ -73,12 +64,7 @@ export class JuegosService {
 
   //aca descarga el descuento y vuelve a cero las jugadas y descuento
   aplicarDescuento() {
-    
-    setTimeout(() => {
-      this.iniciarJuegos();
-    }, 100);
-
-    let descuento = this.jugadorActual.descuento;
+    let descuentoAplicado = this.jugadorActual.descuento;
     let ref = this.afs.collection('users').doc(this.usuarioActual.uid).collection('descuentos').doc('juego').set(
       {
         jugadas: 0,
@@ -87,8 +73,8 @@ export class JuegosService {
     );
     this.jugadorActual.descuento = 0;
     this.jugadorActual.jugadas = 0;
-
-    return descuento;
+    console.log("descuentoAplicado", descuentoAplicado);
+    return descuentoAplicado;
   }
 
 

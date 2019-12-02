@@ -18,7 +18,7 @@ export class ToastService {
       position: 'top',
       color: 'danger',
       closeButtonText: 'Cerrar',
-      duration: 2000
+      duration: 3000
     })
     .then( res => {
       this.vibration.vibrate(1000);
@@ -38,7 +38,21 @@ export class ToastService {
     })
     .then( res => {
       this.vibration.vibrate(1000);
-   //   this.smartAudioService.play('confirmation');
+      res.present();
+    });
+  }
+
+  confirmationToastEncuesta(message: string) {
+    this.toastController.create({
+      message: message,
+      showCloseButton: true,
+      color: 'success',
+      position: 'bottom',
+      closeButtonText: 'Cerrar',
+      duration: 4000
+    })
+    .then( res => {
+      this.vibration.vibrate(1000);
       res.present();
     });
   }

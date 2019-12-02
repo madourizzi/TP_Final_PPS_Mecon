@@ -9,6 +9,7 @@ import { Roles } from 'src/app/models/enums/perfil.enum';
 
 import { User } from 'src/app/models/user';
 import { UsersService } from 'src/app/services/users.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class LoginPage implements OnInit {
   };
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthService, private spinner: SpinnerService, 
     private userServ: UsersService,
     private formBuilder: FormBuilder,
     private toastService: ToastService,
@@ -85,7 +86,7 @@ export class LoginPage implements OnInit {
                   this.router.navigate(['/mozo']);
                   break;
                 case "cocina":
-                          localStorage.setItem("perfil", 'cocina');
+                  localStorage.setItem("perfil", 'cocina');
                   this.router.navigate(['/cocina']);
                   break;
                 case "barra":
@@ -109,6 +110,7 @@ export class LoginPage implements OnInit {
         });
       })
       .catch(error => {
+        this.spinner.hide();
         console.log(error);
         if (error.code === 'auth/user-not-found') {
           this.toastService.errorToast('Usuario no encontrado.');
@@ -142,34 +144,48 @@ export class LoginPage implements OnInit {
 
 
 
-  cargarDatos(rol: Roles) {
+  cargarDatos(rol) {
     switch (rol) {
       case Roles.admin:
         this.form.get('mail').setValue('mariano@gmail.com');
         this.form.get('password').setValue('123456');
         break;
-      case Roles.barman:
-        this.form.get('mail').setValue('lucilarizzi@hotmail.com');
-        this.form.get('password').setValue('lulo1234');
-        break;
-      case Roles.candyBar:
-        this.form.get('mail').setValue('mecha@gmail.com');
-        this.form.get('password').setValue('123456');
-        break;
-      case Roles.cliente:
+      case Roles.mozo:
         this.form.get('mail').setValue('nano@gmail.com');
         this.form.get('password').setValue('123456');
         break;
+      case Roles.barman:
+        this.form.get('mail').setValue('lucila@hotmail.com');
+        this.form.get('password').setValue('lulo1234');
+        break;
       case Roles.cocina:
+        this.form.get('mail').setValue('mecha@gmail.com');
+        this.form.get('password').setValue('123456');
+        break;
+      case 'cliente1':
         this.form.get('mail').setValue('silvia@gmail.com');
         this.form.get('password').setValue('123456');
         break;
-      case Roles.mozo:
+      case 'cliente2':
         this.form.get('mail').setValue('rolando@gmail.com');
         this.form.get('password').setValue('123456');
         break;
+      case 'cliente3':
+        this.form.get('mail').setValue('2luloop@gmail.com');
+        this.form.get('password').setValue('123456');
+        break;
+      case Roles.cervecero:
+        this.form.get('mail').setValue('popo@popo.com');
+        this.form.get('password').setValue('111111');
+        break;
+      case Roles.candyBar:
+        this.form.get('mail').setValue('pepe@pepe.com');
+        this.form.get('password').setValue('111111');
+        break;
 
     }
+
+    this.onSubmitLogin();
   }
 
 

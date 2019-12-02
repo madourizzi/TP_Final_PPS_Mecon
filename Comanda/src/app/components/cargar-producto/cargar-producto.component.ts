@@ -226,7 +226,9 @@ export class CargarProductoComponent implements OnInit {
         break;
       case 3:
         this.selectedFiles = false;
-        this.afs.collection('producto').add(JSON.parse(JSON.stringify(this.productoActual)))
+        let id = this.afs.createId();
+        this.productoActual.uid = id;
+        this.afs.collection('producto').doc(this.productoActual.uid).set(JSON.parse(JSON.stringify(this.productoActual)));
         break;
       default:
         alert("carga cancelada");

@@ -8,6 +8,9 @@ import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms'
 import { Router } from '@angular/router';
 import { MesasService } from 'src/app/services/mesas.service';
 import { AuthService } from 'src/app/services/auth.service';
+import * as firebase from 'firebase';
+import { ToastService } from 'src/app/services/toast.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-encuesta-cliente',
@@ -26,7 +29,9 @@ export class EncuestaClientePage implements OnInit {
   puedeSacarFoto: boolean;
   cantFotos: number;
   url: string;
-
+  array_fotos: string[];
+  array_fotos_storage: string[];
+  perfil;
 
   constructor(
     private builder: FormBuilder,
@@ -35,26 +40,30 @@ export class EncuestaClientePage implements OnInit {
     private usuarios: UsersService,
     private router: Router,
     private mesaServe: MesasService,
-    private authService: AuthService
+    private authService: AuthService,
+    private toast: ToastService,
   ) {
     this.url = this.router.url;
-    setTimeout(() => {
-      this.cliente = this.usuarios.traerUsuarioActual();
-      console.log("el usuario actual en encuesta cliente es: ", this.cliente);
-    }, 1500);
+    this.cliente=JSON.parse(localStorage.getItem('usuario'));
+    this.perfil = localStorage.getItem('perfil');
     this.cantFotos = 1;
     this.puedeSacarFoto = true;
-    console.log('this', this.cliente)
+
   }
 
 
   ngOnInit() {
-    console.log('PagesEncuestaClientePage');
     this.puedeSacarFoto = true;
   }
-  Guardar() {
+
+
+  async Guardar() {
+    if (this.array_fotos) {
+      await this.GuardarFoto(this.perfil);
+    }
+
     let encuesta = new EncuestaCliente();
-    encuesta.cliente = this.cliente;
+    encuesta.cliente = this.cliente.nombre;
     encuesta.sugerencia = this.sugerencia;
     encuesta.valorMozo = this.valorMozo;
     encuesta.valorCocinero = this.valorCocinero;
@@ -65,6 +74,11 @@ export class EncuestaClientePage implements OnInit {
     let encuestaJs = encuesta.dameJSON();
     this.encuestaServ.cargarEncuestaCliente(encuestaJs);
     this.VaciarInputs();
+
+    setTimeout(() => {
+      this.router.navigate(['/cliente']);
+    }, 600);
+
   }
 
   VaciarInputs() {
@@ -100,6 +114,50 @@ export class EncuestaClientePage implements OnInit {
         this.puedeSacarFoto == false;
       }
 
+    }
+
+  }
+
+  async GuardarFoto(idUsuario) {
+
+    await this.array_fotos.forEach(async f => {
+      let filename = 'fotos_encuesta/' + idUsuario + Date.now();
+      await storage().ref(filename).putString(f, 'data_url');
+
+      await firebase.storage().ref().child(filename).getDownloadURL().then(async (url) => {
+        this.array_fotos_storage.push(url);
+
+      }).catch((data) => {
+        console.log(data);
+      });
+    })
+
+    this.array_fotos.splice(0);
+
+  }
+
+
+  async TomarFoto() {
+    if (this.array_fotos.length <= 2) {
+      const options: CameraOptions = {
+        quality: 50,
+        destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        correctOrientation: true
+      }
+
+      await this.camera.getPicture(options).then((imageData) => {
+        this.array_fotos.push('data:image/jpeg;base64,' + imageData)
+
+      }, (error) => {
+        this.toast.errorToast("No se pudieron guardar las fotos.")
+
+      });
+
+    }
+    else {
+      this.toast.errorToast("Solo puedes tomar 3 fotos.")
     }
 
   }

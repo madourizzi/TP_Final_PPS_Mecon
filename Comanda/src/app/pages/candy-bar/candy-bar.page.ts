@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-candy-bar',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CandyBarPage implements OnInit {
 
-  constructor() { }
+  title ="postres";
+  constructor(private spinner: SpinnerService) { }
 
   ngOnInit() {
+    this.spinner.hide();
   }
+
 
 }

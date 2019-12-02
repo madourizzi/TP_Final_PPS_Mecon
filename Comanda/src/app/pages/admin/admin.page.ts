@@ -47,8 +47,8 @@ export class AdminPage implements OnInit {
     this.botonera = true;
     this.editarUsuario = false;
     this.altaMesa=false;
-    setTimeout(() => {
-      this.usuarioActual = this.usuarios.traerUsuarioActual();
+    setTimeout(async () => {
+      this.usuarioActual = await this.usuarios.traerUsuarioActual();
       console.log("el usuario actual en ADMIN es: ", this.usuarioActual);
 
       this.getTokenControl();

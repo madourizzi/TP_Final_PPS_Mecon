@@ -1,12 +1,7 @@
-<ion-header translucent>
-    <ion-toolbar color="success">
-        <ion-title>Registración
-            <ion-icon name="logo-android"></ion-icon>
-        </ion-title>
-    </ion-toolbar>
-</ion-header>
-
 <ion-content fullscreen class="ion-padding" color="dark">
+    <div>
+        <img src="../../../assets/registro-14.png" alt=""> </div>
+
 
     <ion-item color="dark">
         <ion-label floating color="light">
@@ -20,13 +15,22 @@
         </ion-label>
         <ion-input type="password" name="password" [(ngModel)]="user.password" placeholder=" Ingrese su password">
         </ion-input>
+
     </ion-item>
-
-    <ion-item-divider color="dark">
-        <ion-button size="large" color="secondary" (click)="onRegister()">Registrar</ion-button>
-        <ion-button size="large" routerLink="/login">Login</ion-button>
-    </ion-item-divider>
-
+    <ion-item color="dark">
+        <ion-label floating color="light">
+            <ion-icon size="large" name="lock"></ion-icon>
+        </ion-label>
+        <ion-input type="password" name="password" [(ngModel)]="pass2" placeholder=" Reingrese su password">
+        </ion-input>
+    </ion-item>
     <div id="contenido"></div>
-
 </ion-content>
+
+
+<ion-footer color="dark">
+    <ion-toolbar color="dark" class="mb-5">
+        <ion-button color="danger" size="large" expand="full" (click)="onRegister()" style="height: 50px;">Registrar</ion-button>
+        <ion-button color="light" size="small" expand="full" routerLink="/login">Volver</ion-button>
+    </ion-toolbar>
+</ion-footer>

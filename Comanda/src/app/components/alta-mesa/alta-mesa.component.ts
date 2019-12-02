@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
@@ -27,7 +27,7 @@ import { MesasService } from 'src/app/services/mesas.service';
 export class AltaMesaComponent implements OnInit {
   form: FormGroup;
   rolesEnum: Roles;
-  mesaActual: Mesa;
+  @Input() mesaActual: Mesa;
 
   selectedFiles;
   fileName;
@@ -90,16 +90,23 @@ export class AltaMesaComponent implements OnInit {
 
     });
 
-
-    this.mesaActual = new Mesa();
-
     this.url = ('/admin-form/');
 
   }
 
   ngOnInit() {
-    console.log("entro a cargar producto");    
+    console.log("entro a cargar producto", this.mesaActual);    
     this.opcionElegida=3;
+    try {
+      this.form.controls['numero'].setValue(this.mesaActual.numero);
+      this.form.controls['cantidadComensales'].setValue(this.mesaActual.cantidadComensales);
+      this.form.controls['tipoMesa'].setValue(this.mesaActual.tipoMesa);
+      this.form.controls['codigoQr'].setValue(this.mesaActual.codigoQr);
+      this.foto = this.mesaActual.url;
+    } catch(e)
+    {
+      this.mesaActual = new Mesa();
+    }
   }
 
 

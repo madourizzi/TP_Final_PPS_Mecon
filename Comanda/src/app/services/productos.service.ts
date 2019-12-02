@@ -34,8 +34,8 @@ export class ProductosService {
 
   }
 
-  traerTodosProductos() {
-    return this.db.collection('producto').snapshotChanges();
+  traerTodosProductos() {   
+    return this.db.collection('producto', ref => ref.orderBy('tipo','asc')).snapshotChanges();
   }
 
 
