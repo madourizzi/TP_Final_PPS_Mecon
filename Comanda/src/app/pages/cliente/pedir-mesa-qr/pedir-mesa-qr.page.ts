@@ -38,6 +38,7 @@ export class PedirMesaQrPage implements OnInit {
 
     if(this.comensales>0 && this.comensales <=16)
     {
+      this.mesas=[]
       this.spinner.show();
       setTimeout(async () => {
         this.mesas = new Array();
