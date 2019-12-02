@@ -134,7 +134,7 @@ export class EncuestaClientePage implements OnInit {
     this.valorMozo = 0;
     this.valorCocinero = 0;
     this.valorBartender = 0;
-    this.valorMesa = "malo";
+    this.valorMesa = 0;
     this.valorRestaurant = 0
     this.sugerencia = "";
   }
@@ -147,10 +147,10 @@ export class EncuestaClientePage implements OnInit {
         encuesta.sugerencia = this.sugerencia;
         encuesta.valorMozo = this.valorMozo;
         encuesta.valorCocinero = this.valorCocinero;
-        encuesta.valorBartender = this.valorBartender;
-        encuesta.valorRestaurant = this.valorRestaurant;
-        encuesta.valorMesa = this.valorMesa;
-        encuesta.fotos = this.array_fotos_storage;
+        encuesta.valorBartender =  this.valorBartender;
+        encuesta.valorRestaurant = parseInt( this.valorRestaurant) ;
+        encuesta.valorMesa = parseInt(this.valorMesa);
+        // encuesta.fotos = this.array_fotos_storage;
         let encuestaJs = encuesta.dameJSON();
         this.encuestaServ.GuardarEncuesta(encuestaJs).then(() => {
           setTimeout(() => {
