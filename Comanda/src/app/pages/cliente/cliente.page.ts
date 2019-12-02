@@ -12,6 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Pedido } from 'src/app/models/pedido';
 import { ToastService } from 'src/app/services/toast.service';
+import { JuegosService } from 'src/app/juegos/services/juegos.service';
 
 
 
@@ -44,7 +45,8 @@ export class ClientePage implements OnInit {
     public fcm: FirebaseX,
     public platform: Platform,
     private toast: ToastService,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    public juegosServicio: JuegosService) {
 
     this.title = "Bienvenido Cliente: ";
     this.usuarioActual = new User();
@@ -61,6 +63,7 @@ export class ClientePage implements OnInit {
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("el usuario actual en cliente es: ", this.usuarioActual);
+     
       /*     if (!this.usuarioActual.registrado) {
             this.registroClienteAlertConfirm();
           } */
@@ -68,7 +71,6 @@ export class ClientePage implements OnInit {
       this.mesasServ.traerMesaPorUsuarioMail(this.usuarioActual.email);
 
     }, 1500);
-
 
   }
 
@@ -149,6 +151,11 @@ export class ClientePage implements OnInit {
 
   jugar() {
     console.log(" aca va el juego");
+    setTimeout(() => {
+      this.juegosServicio.iniciarJuegos();
+    }, 1500);
+    console.log(" ok el juego");
+    this.router.navigate(['/Juegos/MemoriaVisual']);
 
   }
   cerrarMesa() {
@@ -157,11 +164,12 @@ export class ClientePage implements OnInit {
   }
 
   verCuenta() {
+    
     if (!this.cuenta) {
       this.cuenta = true;
       this.menu = false;
       this.botonera = true;
- 
+
     } else {
       this.cuenta = false;
       this.menu = false;

@@ -27,16 +27,31 @@ import { Shake } from '@ionic-native/shake/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ArchivosService } from './services/archivos.service';
 import { File } from '@ionic-native/file/ngx';
-import { AngularFireStorageModule , AngularFireStorage,  AngularFireUploadTask} from '@angular/fire/storage';
-import { FcmService} from '../app/services/fcm.service';
+import { AngularFireStorageModule, AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { FcmService } from '../app/services/fcm.service';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { EstadosMesaPipePipe } from './services/directivaPipes/estados-mesa-pipe.pipe';
 import { ColoresEstadoMesaDirective } from './services/directivaPipes/colores-estado-mesa.directive';
 import { AreasPipePipe } from './services/directivaPipes/areas-pipe.pipe';
+import { MemoriaVisualComponent } from './juegos/componentes/memoria-visual/memoria-visual.component';
+import { PiedraPapelTijeraComponent } from './juegos/componentes/piedra-papel-tijera/piedra-papel-tijera.component';
+import { TatetiComponent } from './juegos/componentes/tateti/tateti.component';
+import { JuegosComponent } from './juegos/componentes/juegos/juegos.component';
+import { ColoresListaComponent } from './juegos/componentes/colores-lista/colores-lista.component';
+import { ColoresMenuComponent } from './juegos/componentes/colores-menu/colores-menu.component';
 
 @NgModule({
-  declarations: [AppComponent, EstadosMesaPipePipe],
+  declarations: [
+    AppComponent,
+    EstadosMesaPipePipe,
+    JuegosComponent,
+    MemoriaVisualComponent,
+    PiedraPapelTijeraComponent,
+    TatetiComponent,
+    ColoresListaComponent,
+    ColoresMenuComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -50,7 +65,7 @@ import { AreasPipePipe } from './services/directivaPipes/areas-pipe.pipe';
     HttpClientModule, AngularFireStorageModule,
   ],
   providers: [
-    StatusBar,  BarcodeScanner, ArchivosService, File,
+    StatusBar, BarcodeScanner, ArchivosService, File,
     SplashScreen,
     SmartAudioService,
     NativeAudio,
@@ -58,7 +73,7 @@ import { AreasPipePipe } from './services/directivaPipes/areas-pipe.pipe';
     AngularFirestore,
     AngularFireDatabase,
     Base64,
-    Camera, 
+    Camera,
     ImagePicker,
     Shake,
     FcmService,
@@ -74,6 +89,6 @@ import { AreasPipePipe } from './services/directivaPipes/areas-pipe.pipe';
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-    ]
+  ]
 })
-export class AppModule {}
+export class AppModule { }

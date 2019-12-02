@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { NologinGuard } from './guards/nologin.guard';
+import { PiedraPapelTijeraComponent } from './juegos/componentes/piedra-papel-tijera/piedra-papel-tijera.component';
+import { MemoriaVisualComponent } from './juegos/componentes/memoria-visual/memoria-visual.component';
+import { TatetiComponent } from './juegos/componentes/tateti/tateti.component';
+
 
 
 
@@ -33,9 +37,12 @@ const routes: Routes = [
   { path: 'cliente-registro', loadChildren: './pages/cliente/cliente-registro/cliente-registro.module#ClienteRegistroPageModule' },
   { path: 'reserva', loadChildren: './pages/reserva/reserva.module#ReservaPageModule' },
   { path: 'encuesta-cliente', loadChildren: './pages/encuesta-cliente/encuesta-cliente.module#EncuestaClientePageModule' },
-  { path: 'ver-encuestas', loadChildren: './pages/ver-encuestas/ver-encuestas.module#VerEncuestasPageModule' }
-
+  { path: 'ver-encuestas', loadChildren: './pages/ver-encuestas/ver-encuestas.module#VerEncuestasPageModule' },
   
+//routing juegos
+{ path: 'Juegos/PPT', component: PiedraPapelTijeraComponent },
+{ path: 'Juegos/MemoriaVisual', component: MemoriaVisualComponent },
+{ path: 'Juegos/Tateti', component: TatetiComponent },
 
 
 

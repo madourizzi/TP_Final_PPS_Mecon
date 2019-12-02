@@ -5,6 +5,8 @@ import { MesasService } from 'src/app/services/mesas.service';
 import { Pedido } from 'src/app/models/pedido';
 import { Mesa } from 'src/app/models/mesa';
 import { ToastService } from 'src/app/services/toast.service';
+import { JuegosService } from 'src/app/juegos/services/juegos.service';
+
 
 
 @Component({
@@ -18,12 +20,16 @@ export class DetalleCuentaComponent implements OnInit {
   total = 0;
   todosPedidos: Array<Producto>
   constructor(private pedidServicio: PedidosService,
-    private toast: ToastService, private mesasServ: MesasService) {
+    private toast: ToastService, private mesasServ: MesasService,public juegosServicio: JuegosService
+   ) {
     this.todosPedidos = new Array();
   }
 
   ngOnInit() {
     this.mesa = this.mesasServ.mesaActual;
+
+    this.mesa.descuento = this.juegosServicio.aplicarDescuento();
+    console.log("this.mesa.descuento", this.mesa.descuento);
     
     this.calcularCuenta();
   }

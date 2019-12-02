@@ -1,0 +1,8 @@
+.gris {
+    border: #fff solid 1px;  height: 10vh; width: 10vh; 
+}
+
+.gris:focus,
+.gris:active {
+   border: #fff solid 1px;  
+}

@@ -1,0 +1,73 @@
+
+#snackbar {
+    visibility: hidden;        
+    color: #fff;
+    min-width: 300px;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    margin-left: 35px;  
+    font-size: 17px;
+}
+#snackbar.Ganador {
+    background-color: #059F2F;
+}
+#snackbar.Perdedor {
+    background-color: #FF0000;
+}
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 300px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 300px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 300px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 300px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+.gris {
+    border: #fff solid 1px;  height: 10vh; width: 10vh;
+}
+
+.gris:focus,
+.gris:active {
+   border: #fff solid 1px;  
+}
+
+
+.floating-action-button {
+    position: relative;
+    top: 100px;
+    margin-left: 50px;
+  }
+  ul.dropdown-menu {
+    box-shadow: none;
+    border: 0;
+    min-width:0;
+    background:transparent
+  }
+
+  .swal-title {
+    margin: 0px;
+    font-size: 16px;
+    box-shadow: 0px 1px 1px rgba(252, 3, 3, 0.21);
+    margin-bottom: 28px;
+  }
