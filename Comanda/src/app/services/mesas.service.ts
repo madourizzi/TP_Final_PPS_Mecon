@@ -68,16 +68,14 @@ export class MesasService {
     return this.objFirebase.collection("mesa").doc(id).set(JSON.parse(JSON.stringify(nuevoUsuario)), { merge: true });
   }
 
-  limpiarMesa(mesaABlanquear: Mesa) 
-  {
-    this.usuarioServ.limpiarDescuento(this.usuarioServ.traerUnUsuarioPorMailMozo(mesaABlanquear.cliente));
-    mesaABlanquear.pedidos.forEach(e=>
-      {
-        this.pedidoSer.eliminarPedido(e)
-      });
-      mesaABlanquear.cliente = "sin asignar";
-      mesaABlanquear.propina = 0;
-     mesaABlanquear.descuento = 0;
+ async limpiarMesa(mesaABlanquear: Mesa) {
+  this.usuarioServ.limpiarDescuento( await this.usuarioServ.traerUnUsuarioPorMailMozo(mesaABlanquear.cliente));
+    mesaABlanquear.pedidos.forEach(e => {
+      this.pedidoSer.eliminarPedido(e)
+    });
+    mesaABlanquear.cliente = "sin asignar";
+    mesaABlanquear.propina = 0;
+    mesaABlanquear.descuento = 0;
     mesaABlanquear.pedidos = new Array();
     mesaABlanquear.estado = "disponible";
     return this.objFirebase.collection("mesa").doc(mesaABlanquear.uid).set(JSON.parse(JSON.stringify(mesaABlanquear)), { merge: true });
@@ -112,10 +110,10 @@ export class MesasService {
    */
   async propinaQr() {
 
-  return this.qrService.abrirScanner().then(async QRdata => {
+    return this.qrService.abrirScanner().then(async QRdata => {
       switch (QRdata) {
         case 'propina0':
-         return 0;
+          return 0;
         case 'propina5':
           return 5;
         case 'propina10':
@@ -124,8 +122,8 @@ export class MesasService {
           return 15;
         case 'propina20':
           return 20;
-          default:
-            return this.mesaActual.propina;
+        default:
+          return this.mesaActual.propina;
 
 
       }
@@ -230,6 +228,10 @@ export class MesasService {
 
   traerUnaMesaUID(id) {
     return this.objFirebase.collection('mesa').doc(id).snapshotChanges();
+  }
+
+  traerUnaMesaUIDGet(id) {
+    return this.objFirebase.collection('mesa').get(id);
   }
 
 

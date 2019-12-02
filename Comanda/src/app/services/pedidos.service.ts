@@ -55,6 +55,7 @@ export class PedidosService {
       {
         productosDelArea.area= area;
         productosDelArea.mesa = mesa.uid;
+        productosDelArea.mesa = mesa.numero;
         productosDelArea.estado = "aConfirmar";
         let id = this.db.createId();
         productosDelArea.uid = id;

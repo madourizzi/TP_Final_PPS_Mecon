@@ -18,17 +18,18 @@ import { DetalleCuentaComponent } from './detalle-cuenta/detalle-cuenta.componen
 import { BotonesEnviarPedidoAreasComponent } from './botones-enviar-pedido-areas/botones-enviar-pedido-areas.component';
 import { ColoresEstadoMesaDirective } from '../services/directivaPipes/colores-estado-mesa.directive';
 import { AreasPipePipe } from '../services/directivaPipes/areas-pipe.pipe';
+import { DatoMesaPipe } from '../services/directivaPipes/dato-mesa.pipe';
 
 
 
 @NgModule({
   declarations: [
-    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent, ColoresEstadoMesaDirective, AreasPipePipe,
+    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent, ColoresEstadoMesaDirective, AreasPipePipe, DatoMesaPipe,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent,ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent, AltaMesaComponent
   ],
   exports: [ 
-    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent,  AreasPipePipe,
+    HeaderComponent, ListadoClientesComponent, DetalleCuentaComponent, BotonesEnviarPedidoAreasComponent,  AreasPipePipe, DatoMesaPipe,
     ImageComponent, AdmPerfilUsuarioComponent, CargarProductoComponent, ListadoProductosComponent, ConfirmarPedidoComponent,
     ListadoEmpleadosComponent, ListadoPedidosComponent, EstadoPedidoComponent, AltaMesaComponent, ListadoMesasComponent , AltaMesaComponent
   ],

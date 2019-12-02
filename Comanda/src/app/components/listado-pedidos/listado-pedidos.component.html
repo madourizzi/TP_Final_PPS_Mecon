@@ -4,12 +4,11 @@
 
         <ion-card *ngFor="let pedido of pedidos">
 
-            <!--   <div class=" card-body ">
-                    <div class="row">
-                        <div class="col-4 h2  "> Mesa Nº {{nroMesa.numero}}</div>
-                        <div class="col-4  " style="font-weight: bold; color:brown">Estado {{nroMesa.estado}} </div>
-                    </div>
-            </div> -->
+            <div class=" card-body ">
+                <div class="row">
+                    <div class="col-4 h2  "> Mesa Nº {{pedido.mesa}}</div>
+                </div>
+            </div>
             <h5>
                 <span>Area :<ion-badge *ngIf="perfil=='admin'" appColoresEstadoMesa [estado]="pedido.area" style="font-size:9pt; padding: 2px;"> {{pedido.area}}</ion-badge>
             

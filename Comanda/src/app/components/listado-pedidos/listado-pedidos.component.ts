@@ -29,6 +29,7 @@ export class ListadoPedidosComponent {
   pedidoActual;
   perfil;
   listaProductos;
+  noHayPedido;
   constructor(
     private pedidoService: PedidosService, private mesaService: MesasService
   ) {
@@ -36,6 +37,7 @@ export class ListadoPedidosComponent {
     this.pedidoEmit = new EventEmitter();
     this.modal = false;
     this.perfil = localStorage.getItem('perfil');
+    this.noHayPedido = false;
 
   }
 
@@ -44,15 +46,19 @@ export class ListadoPedidosComponent {
     this.pedidoService.traerTodosPedidos().subscribe((actions => {
       this.pedidos = [];
       actions.forEach((e) => {
-        let data = e.payload.doc.data() as Pedido;
+        let data = e.payload.doc.data() as Pedido; 
         if (data.area == this.perfil || this.perfil == "admin") {
-          /*    if (data.estado != "terminado") { */
-          this.pedidos.push(data);
-          /* } */
+          if (data.estado != "terminado") {
+            this.pedidos.push(data);
+          }
         }
 
       });
       this.detalleMesa = true;
+
+      if (this.pedidos.length == 0) {
+        this.noHayPedido = true;
+      }
 
     }));
 

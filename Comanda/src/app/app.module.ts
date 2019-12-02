@@ -40,6 +40,7 @@ import { TatetiComponent } from './juegos/componentes/tateti/tateti.component';
 import { JuegosComponent } from './juegos/componentes/juegos/juegos.component';
 import { ColoresListaComponent } from './juegos/componentes/colores-lista/colores-lista.component';
 import { ColoresMenuComponent } from './juegos/componentes/colores-menu/colores-menu.component';
+import { DatoMesaPipe } from './services/directivaPipes/dato-mesa.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ColoresMenuComponent } from './juegos/componentes/colores-menu/colores-
     PiedraPapelTijeraComponent,
     TatetiComponent,
     ColoresListaComponent,
-    ColoresMenuComponent
+    ColoresMenuComponent,
+    
   ],
   entryComponents: [],
   imports: [
