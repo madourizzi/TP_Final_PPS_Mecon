@@ -53,7 +53,7 @@ export class DetalleCuentaComponent implements OnInit {
    this. totalDesc=0;
    this. totaProp=0;
    this.todosPedidos=[];
-   
+
     this.mesa.pedidos.forEach((pedido) =>
       this.pedidServicio.traerUnPedido(pedido).subscribe((pedidoDb: Pedido) => {
         console.log("pedidodb", pedidoDb);
@@ -61,20 +61,23 @@ export class DetalleCuentaComponent implements OnInit {
           pedidoDb.productos.forEach((e: Producto) => {
             this.todosPedidos.push(e);
             this.total += e.stock;
-          });
-         
-            this.totalDesc = this.total * (this.mesa.descuento / 100);
-            this.totaProp = this.total * (this.mesa.propina / 100);
-            this.total= this.total - this.totalDesc+this.totaProp;
-            if(this.mesa.estado!= 'pagoEnviado')
-            {
-              this.mesasServ.actualizarMesaMozo(this.mesa, "pagando");
-            }
-           
+            console.log("this.total", this.total);
+            console.log("this.total", this.total);            
+          }); 
           
         }
       })
     );
+    setTimeout(()=>{
+      this.totalDesc = this.total * (this.mesa.descuento / 100);
+      this.totaProp = this.total * (this.mesa.propina / 100);
+
+      this.total= this.total  + this.totaProp - this.totalDesc;
+      if(this.mesa.estado!= 'pagoEnviado')
+      {
+        this.mesasServ.actualizarMesaMozo(this.mesa, "pagando");
+      }
+    }, 2500);
   }
 }
 

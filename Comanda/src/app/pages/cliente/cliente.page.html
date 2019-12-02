@@ -31,7 +31,7 @@
                 <div *ngIf="mesasServ.mesaActual !=null" style="height:92vh; ">
                     <ion-row style="height:40%;" *ngIf="mesasServ.mesaActual.estado !='pagando'">
                         <ion-col style="height:100%; background-color: rgb(172, 6, 6); color: seashell;" (click)="consultarPedidos() ">
-                            <h1 style="font-family: 'Raleway', sans-serif; font-size: 32pt; font-weight: 800; margin-left:10px ;">CONSULTA TU MESA
+                            <h1 style="font-family: 'Raleway', sans-serif; font-size: 25pt; font-weight: 800; margin-left:10px ;">CONSULTA TU MESA
                             </h1>
                         </ion-col>
                     </ion-row>
@@ -63,13 +63,13 @@
                     </ion-row>
                     <ion-row style="height:10%; " *ngIf="mesasServ.mesaActual.estado =='cuentaPedida'">
                         <ion-col class="col-12 " style=" height:100%; background-color: rgb(13, 87, 71); color: seashell; " (click)=" hacerEncuesta() ">
-                            <h1 style="font-family: 'Raleway', sans-serif; font-size: 32pt; font-weight: 800; margin-left:10px ;"> Encuesta
+                            <h1 style="font-family: 'Raleway', sans-serif; font-size: 25pt; font-weight: 800; margin-left:10px ;"> Encuesta
                             </h1>
                         </ion-col>
                     </ion-row>
                     <ion-row style="height:10%;" *ngIf="mesasServ.mesaActual.estado !='pagando'">
                         <ion-col class="col-12 " style=" height:100%; background-color: rgb(10, 184, 146); color: seashell; " (click)=" reservarMesa() ">
-                            <h1 style="font-family: 'Raleway', sans-serif; font-size: 32pt; font-weight: 800; margin-left:10px ;">RESERVA
+                            <h1 style="font-family: 'Raleway', sans-serif; font-size: 25pt; font-weight: 800; margin-left:10px ;">RESERVA
                             </h1>
                         </ion-col>
                     </ion-row>

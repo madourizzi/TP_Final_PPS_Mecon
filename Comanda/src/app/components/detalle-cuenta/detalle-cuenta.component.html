@@ -47,7 +47,7 @@
                 Propina: {{this.mesa.propina }} %
             </td>
             <td>
-                {{totaProp | number:'2.1-2'}}
+                {{totaProp | number:'.1-2'}}
             </td>
         </tr>
         <tr class="total" *ngIf="this.mesa.estado=='pagando'">
@@ -55,14 +55,14 @@
                 Descuento: {{this.mesa.descuento }} %
             </td>
             <td>
-                {{totalDesc | number:'2.1-2'}}
+                {{totalDesc | number:'.1-2'}}
             </td>
         </tr>
         <tr class="total">
             <td></td>
 
             <td>
-                Total: {{total}}
+                Total: {{total | number:'.1-2'}}
             </td>
         </tr>
     </table>
