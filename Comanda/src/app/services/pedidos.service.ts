@@ -54,7 +54,7 @@ export class PedidosService {
       if(productosDelArea.productos.length>0)
       {
         productosDelArea.area= area;
-        productosDelArea.mesa = mesa.uid;
+        productosDelArea.mesaId = mesa.uid;
         productosDelArea.mesa = mesa.numero;
         productosDelArea.estado = "aConfirmar";
         let id = this.db.createId();

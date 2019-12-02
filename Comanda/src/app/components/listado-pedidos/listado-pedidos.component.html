@@ -21,8 +21,6 @@
             <button type="button" class="full btn btn-info btn-sm" *ngIf="pedido.estado=='pendiente' && perfil!='admin'" (click)="tomarPedido(pedido, 40)"> 40 min</button>
             <button type="button" class="btn btn-outline-success btn-xs  btn-rounded waves-effect" *ngIf="pedido.estado=='enPreparacion' && perfil!='admin'" (click)="terminarPedido('terminado', pedido)">Enviar Comida</button>
 
-
-
             <div class="row">
                 <div class=" col-12" *ngFor="let producto2 of pedido.productos">
                     <ul> {{producto2.nombre}}</ul>

@@ -72,13 +72,11 @@ export class MesaPage implements OnInit {
   
   limpiarTodasLasMesas() {
 
-    //this.eliminarClientes();
     
     let mesass = this.mesasService.TraerMesas().subscribe(actions => {
       actions.map(a => {
         const data = a.payload.doc.data() as Mesa;
-        this.mesasService.limpiarMesa(data);
-     
+        this.mesasService.limpiarMesa(data);     
         console.log('mesas');        
       });
     });   

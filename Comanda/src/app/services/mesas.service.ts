@@ -69,7 +69,7 @@ export class MesasService {
   }
 
  async limpiarMesa(mesaABlanquear: Mesa) {
-  this.usuarioServ.limpiarDescuento( await this.usuarioServ.traerUnUsuarioPorMailMozo(mesaABlanquear.cliente));
+
     mesaABlanquear.pedidos.forEach(e => {
       this.pedidoSer.eliminarPedido(e)
     });
@@ -149,7 +149,7 @@ export class MesasService {
     mesasDisponible.forEach(async (mesa: Mesa) => {
       console.log("entra a mesas disponibole foreach");
 
-      if (mesa.estado === 'disponible' && mesa.cantidadComensales >= comensales && (comensales + 5) >= mesa.cantidadComensales) {
+      if (mesa.estado === 'disponible' && mesa.cantidadComensales >= comensales && (comensales + 2) >= mesa.cantidadComensales) {
 
         mesasReturn.push(mesa);
         const toast = await this.toastCtrl.create({
@@ -230,11 +230,6 @@ export class MesasService {
     return this.objFirebase.collection('mesa').doc(id).snapshotChanges();
   }
 
-  traerUnaMesaUIDGet(id) {
-    return this.objFirebase.collection('mesa').get(id);
-  }
-
-
   async confirmarServicio(mesa) {
     this.actualizarMesaMozo(mesa, 'inicioServicio');
     const toast = await this.toastCtrl.create({
@@ -268,6 +263,11 @@ export class MesasService {
   actualizarMesaEmpleado(mesa: Mesa, estado) {
     mesa.estado = estado;
     return this.objFirebase.collection('mesa').doc(mesa.uid).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
+  }
+
+  actualizarMesaId(mesa, estado) {
+    mesa.estado = estado;
+    return this.objFirebase.collection('mesa').doc(mesa).set(JSON.parse(JSON.stringify(mesa)), { merge: true });
   }
 
 

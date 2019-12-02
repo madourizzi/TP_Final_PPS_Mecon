@@ -80,18 +80,19 @@ export class ListadoPedidosComponent {
     this.pedidoService.actualizarUnPedido(this.pedidoActual, estado);
   }
 
-  terminarPedido(estado, pedido) {
+  terminarPedido(estado, pedido:Pedido) {
     pedido.estado = estado;
     pedido.tiempo_espera = -1;
     this.pedidoService.actualizarUnPedido(pedido, estado);
     let mesa;
     let uno = false;
     this.mesaService
-      .traerUnaMesaUID(pedido.mesa)
-      .subscribe((e) => {
-        mesa = e.payload.data() as Mesa;
+    .traerUnaMesaUID(pedido.mesaId)
+    .subscribe((e) => {
+      mesa = e.payload.data() as Mesa;
+      console.log("mesa, mesa");       
         if (estado == "terminado" && !uno) {
-          this.mesaService.actualizarMesaEmpleado(mesa, "pedidoListo");
+          this.mesaService.actualizarMesaMozo(mesa, "pedidoListo");
           uno = true;
         }
       });
