@@ -1,7 +1,5 @@
-<div *ngIf="todo">
-
-    <ion-content *ngIf="!pedidoCOnfirmado">
-
+<ion-content *ngIf="!pedidoCOnfirmado">
+    <div *ngIf="todo">
         <ion-list style="height: 75vh" color="dark">
             <ion-list-header color="dark">Su pedido es</ion-list-header>
             <ion-chip *ngFor="let producto of pedidoAConfirmar.productos">
@@ -20,17 +18,17 @@
                 <ion-button color="secondary" style="width: 98%" (click)="confirmar()">Confirmar Pedido ( <span style="font-size: 11pt; font-weight: bolder;">${{total}} )</span></ion-button>
             </ion-toolbar>
         </ion-footer>
-    </ion-content>
+    </div>
+</ion-content>
 
-    <ion-content color="dark" *ngIf="pedidoCOnfirmado">
-        <div style="height: 93vh; padding: 20px" class="animated slideInLeft">
-            <ion-row style="height:100%; ">
-                <ion-col class="col-12" style="height:98%; background-color: rgb(0, 110, 255); color: seashell;  border-radius: 15px; ">
-                    <ion-icon name="alert" style="zoom: 4"></ion-icon>
-                    <ion-label>Su pedido ha sido Confirmado</ion-label>
-                    <ion-label>TOTAL: $ {{total}}</ion-label>
-                </ion-col>
-            </ion-row>
-        </div>
-    </ion-content>
-</div>
+<ion-content color="dark" *ngIf="pedidoCOnfirmado">
+    <div style="height: 93vh; padding: 20px" class="animated slideInLeft">
+        <ion-row style="height:100%; ">
+            <ion-col class="col-12" style="height:98%; background-color: rgb(0, 110, 255); color: seashell;  border-radius: 15px; ">
+                <ion-icon name="alert" style="zoom: 4"></ion-icon>
+                <ion-label>Su pedido ha sido Confirmado</ion-label>
+                <ion-label>TOTAL: $ {{total}}</ion-label>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>

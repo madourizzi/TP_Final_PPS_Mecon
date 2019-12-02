@@ -60,7 +60,6 @@ export class ListadoMesasComponent implements OnInit {
  async cerrarMesa(mesa:Mesa, estado) {
     this.mesasService.actualizarMesaEmpleado(mesa, estado);
     let usua = await this.usuarioServ.traerUnUsuarioPorMailMozo(mesa.cliente)
-    this.juegoServicio.limpiarDescuento(usua);
     setTimeout(() => this.limpiarUnaMesa(mesa), 15000);
 
   }

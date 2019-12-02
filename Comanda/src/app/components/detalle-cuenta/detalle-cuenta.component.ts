@@ -37,8 +37,7 @@ export class DetalleCuentaComponent implements OnInit {
 
   enviarPago()
   {
-    this.mesasServ.actualizarMesaMozo(this.mesa, 'pagoEnviado');  
-    
+    this.mesasServ.actualizarMesaMozo(this.mesa, 'pagoEnviado');      
   }
 
   async propina() {

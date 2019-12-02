@@ -56,8 +56,6 @@ export class ConfirmarPedidoComponent implements OnInit {
     setTimeout(()=>
     {
       this.final.emit(true);
-      this.pedidoCOnfirmado = false;
-      this.todo=false;
     } ,6000); 
 
   }

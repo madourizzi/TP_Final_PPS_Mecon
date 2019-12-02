@@ -147,6 +147,7 @@ export class ClientePage implements OnInit {
     this.menu = false;
     this.botonera = true;
     this.cuenta = false;
+    this.confirmar=false;
   }
 
   jugar() {
@@ -170,11 +171,13 @@ export class ClientePage implements OnInit {
       this.cuenta = true;
       this.menu = false;
       this.botonera = true;
+      this.confirmar = false;
 
     } else {
       this.cuenta = false;
       this.menu = false;
       this.botonera = true;
+      this.confirmar = false;
 
     }
 
