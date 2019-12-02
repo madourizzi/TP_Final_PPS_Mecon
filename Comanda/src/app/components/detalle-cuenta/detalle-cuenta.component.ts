@@ -71,7 +71,6 @@ export class DetalleCuentaComponent implements OnInit {
     setTimeout(()=>{
       this.totalDesc = this.total * (this.mesa.descuento / 100);
       this.totaProp = this.total * (this.mesa.propina / 100);
-
       this.total= this.total  + this.totaProp - this.totalDesc;
       if(this.mesa.estado!= 'pagoEnviado')
       {
