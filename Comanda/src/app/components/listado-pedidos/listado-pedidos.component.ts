@@ -33,7 +33,6 @@ export class ListadoPedidosComponent {
   constructor(
     private pedidoService: PedidosService, private mesaService: MesasService
   ) {
-
     this.pedidoEmit = new EventEmitter();
     this.modal = false;
     this.perfil = localStorage.getItem('perfil');
