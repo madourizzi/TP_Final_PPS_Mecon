@@ -19,20 +19,10 @@ export class JuegosService {
 
   constructor(public afs: AngularFirestore,
     private usuarios: UsersService, private router: Router) {
-
-
     setTimeout(() => {
       this.usuarioActual = this.usuarios.traerUsuarioActual();
       console.log("actual en cliente en juego : ", this.usuarioActual);
-
     }, 50);
-
-
-
-
-
-
-
   }
 
 
